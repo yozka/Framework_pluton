@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Clean" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{84BB3AC7-8504-40A1-8729-79867BFD4EF0}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Source\GraphicsElement\fwAnimation.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationLoop.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationLoopOnce.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationLoopSin.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationLoopSin2.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationOnce.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationOnceSinFade.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationOnceTween.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationShow.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationShowTween.cs" />
+    <Compile Include="Source\GraphicsElement\fwBackgroundBand.cs" />
+    <Compile Include="Source\GraphicsElement\fwBackgroundSprite.cs" />
+    <Compile Include="Source\GraphicsElement\fwInterface_camera.cs" />
+    <Compile Include="Source\GraphicsElement\Lightning\fwLCircle.cs" />
+    <Compile Include="Source\GraphicsElement\Lightning\fwLLightningBolt.cs" />
+    <Compile Include="Source\GraphicsElement\Lightning\fwLLine.cs" />
+    <Compile Include="Source\GraphicsElement\fwShadowEdge.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Back.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Bounce.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Circular.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Cubic.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Elastic.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Exponential.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Linear.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Quadratic.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Quartic.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Quintic.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Sinusoidal.cs" />
+    <Compile Include="Source\GraphicsElement\Tween\Tweener.cs" />
+    <Compile Include="Source\GUI\Align\fwAlignCentral.cs" />
+    <Compile Include="Source\GUI\Align\fwAlignFrame.cs" />
+    <Compile Include="Source\GUI\Align\fwAlignHorizontalCenter.cs" />
+    <Compile Include="Source\GUI\Align\fwAlignSysButton.cs" />
+    <Compile Include="Source\GUI\Align\fwAlignVertical.cs" />
+    <Compile Include="Source\GUI\Animator\fwFrameMoveAnimator.cs" />
+    <Compile Include="Source\GUI\Buttons\fwButtonIcon.cs" />
+    <Compile Include="Source\GUI\Buttons\fwButtonText.cs" />
+    <Compile Include="Source\GUI\Buttons\fwButtonTextData.cs" />
+    <Compile Include="Source\GUI\fwCheckbox.cs" />
+    <Compile Include="Source\GUI\fwControlButton.cs" />
+    <Compile Include="Source\GUI\fwDisplayScore.cs" />
+    <Compile Include="Source\GUI\fwDisplayTime.cs" />
+    <Compile Include="Source\GUI\fwDockMenu.cs" />
+    <Compile Include="Source\GUI\fwDockwidget.cs" />
+    <Compile Include="Source\GUI\fwFrame.cs" />
+    <Compile Include="Source\GUI\fwLabel.cs" />
+    <Compile Include="Source\GUI\fwMessageBox.cs" />
+    <Compile Include="Source\GUI\fwPaginator.cs" />
+    <Compile Include="Source\GUI\fwPanel.cs" />
+    <Compile Include="Source\GUI\fwScrollAreaHorizontal.cs" />
+    <Compile Include="Source\GUI\fwScrollAreaVertical.cs" />
+    <Compile Include="Source\GUI\fwScrollHorizontal.cs" />
+    <Compile Include="Source\GUI\fwScrollVertical.cs" />
+    <Compile Include="Source\GUI\fwTabs.cs" />
+    <Compile Include="Source\GUI\fwTextEdit.cs" />
+    <Compile Include="Source\GUI\fwTitle.cs" />
+    <Compile Include="Source\GUI\fwWidget.cs" />
+    <Compile Include="Source\Platform\iOS\fwAnalytics.cs" />
+    <Compile Include="Source\Platform\iOS\fwCulture.cs" />
+    <Compile Include="Source\Platform\iOS\fwJson.cs" />
+    <Compile Include="Source\Platform\iOS\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\iOS\fwStorage.cs" />
+    <Compile Include="Source\Platform\iOS\fwVibration.cs" />
+    <Compile Include="Source\Platform\iOS\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwAnalytics.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwJson.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwAnalytics.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwCulture.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwStorage.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\fwAnalytics.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\fwCulture.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\fwJson.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\fwStorage.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\fwVibration.cs" />
+    <Compile Include="Source\System\Devices\fwDevices.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwStorage.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwVibration.cs" />
+    <Compile Include="Source\System\fwDateTime.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwCulture.cs" />
+    <Compile Include="Source\System\Devices\fwMusic.cs" />
+    <Compile Include="Source\System\Devices\proxiAnalytics.cs" />
+    <Compile Include="Source\System\Devices\proxiSound.cs" />
+    <Compile Include="Source\System\Devices\fwSound.cs" />
+    <Compile Include="Source\System\fwFonts.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwJson.cs" />
+    <Compile Include="Source\System\License\fwLicense_free.cs" />
+    <Compile Include="Source\System\Network\fwNetworkWeb.cs" />
+    <Compile Include="Source\System\Network\fwWebCommand.cs" />
+    <Compile Include="Source\System\Network\fwWebParameters.cs" />
+    <Compile Include="Source\System\Network\fwWebQuery.cs" />
+    <Compile Include="Source\System\Network\fwWebRequest.cs" />
+    <Compile Include="Source\System\fwScreen.cs" />
+    <Compile Include="Source\System\fwScreenFrame.cs" />
+    <Compile Include="Source\System\fwScreenManager.cs" />
+    <Compile Include="Source\System\fwSpriteBatch.cs" />
+    <Compile Include="Source\System\fwSpriteContent.cs" />
+    <Compile Include="Source\System\fwSpritePrimitives.cs" />
+    <Compile Include="Source\System\Stream\fwBinaryReader.cs" />
+    <Compile Include="Source\System\Stream\fwBinaryWriter.cs" />
+    <Compile Include="Source\System\Stream\fwMemberData.cs" />
+    <Compile Include="Source\System\Stream\fwStream.cs" />
+    <Compile Include="Source\System\Stream\fwStreamMemory.cs" />
+    <Compile Include="Source\System\Stream\fwTypeContent.cs" />
+    <Compile Include="Source\Utils\fwCollections.cs" />
+    <Compile Include="Source\Utils\fwHelper.cs" />
+    <Compile Include="Source\Utils\fwPathWave.cs" />
+    <Compile Include="Source\Utils\fwSingleton.cs" />
+    <Compile Include="Source\Utils\fwVector.cs" />
+    <Compile Include="Source\Utils\fwPointExt.cs" />
+    <Compile Include="Source\Utils\fwStringExt.cs" />
+
+
+
+
+  </ItemGroup>
+
+  <Target Name="Rebuild">
+  </Target>
+  <Target Name="Clean">
+  </Target>
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
