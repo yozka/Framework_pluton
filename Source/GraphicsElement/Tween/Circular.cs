@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace tweener
 {
+    //твин
     public static class circular
     {
         public static float easeIn(float t, float b, float c, float d)
