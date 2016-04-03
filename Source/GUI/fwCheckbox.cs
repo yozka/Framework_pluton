@@ -1,4 +1,4 @@
-#region Using framework
+п»ї#region Using framework
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,7 +22,7 @@ namespace Pluton.GUI
      ///=========================================================================================
     ///
     /// <summary>
-    /// Чек бокс
+    /// Р§РµРє Р±РѕРєСЃ
     /// 
     /// </summary>
     /// 
@@ -43,7 +43,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
 
 
-        protected string mText; //текст кнопки
+        protected string mText; //С‚РµРєСЃС‚ РєРЅРѕРїРєРё
         ///--------------------------------------------------------------------------------------
 
 
@@ -57,7 +57,7 @@ namespace Pluton.GUI
          ///=====================================================================================
         ///
         /// <summary>
-        /// Конструктор
+        /// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ namespace Pluton.GUI
         ///=====================================================================================
         ///
         /// <summary>
-        /// Отрисовка контрола
+        /// РћС‚СЂРёСЃРѕРІРєР° РєРѕРЅС‚СЂРѕР»Р°
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
@@ -92,13 +92,13 @@ namespace Pluton.GUI
             Color colorText = Color.White;
             Color colorSprite = Color.White;
 
-            //кнопка нажата, выведем другой тип картинок
+            //РєРЅРѕРїРєР° РЅР°Р¶Р°С‚Р°, РІС‹РІРµРґРµРј РґСЂСѓРіРѕР№ С‚РёРї РєР°СЂС‚РёРЅРѕРє
             if (m_pushDown)
             {
                 colorText = new Color(255, 108, 0);
             }
 
-            //кнопка заблокирована, то поменяем прозрачность
+            //РєРЅРѕРїРєР° Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅР°, С‚Рѕ РїРѕРјРµРЅСЏРµРј РїСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ
             if (!m_enabled)
             {
                 colorText = colorText * 0.5f;
@@ -106,7 +106,7 @@ namespace Pluton.GUI
             }
 
 
-            //отрисуем кнопки
+            //РѕС‚СЂРёСЃСѓРµРј РєРЅРѕРїРєРё
             float scale = 1.0f;
             Vector2 pos = new Vector2(rect.Left + cImgWidth / 2, rect.Top + (rect.Height - cImgHeight) / 2 + cImgHeight / 2);
             spriteBatch.Draw(spriteBatch.getSprite(spriteID), pos, null, colorSprite, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), scale, SpriteEffects.None, 0);
@@ -114,7 +114,7 @@ namespace Pluton.GUI
 
 
             spriteBatch.flush();
-            //отрисуем название
+            //РѕС‚СЂРёСЃСѓРµРј РЅР°Р·РІР°РЅРёРµ
             SpriteFont font = AFonts.normal;
             Vector2 sz = font.MeasureString(mText);
             Vector2 sw = new Vector2(rect.Width, rect.Height);
@@ -134,7 +134,7 @@ namespace Pluton.GUI
          ///=====================================================================================
         ///
         /// <summary>
-        /// нажатие на кнопку
+        /// РЅР°Р¶Р°С‚РёРµ РЅР° РєРЅРѕРїРєСѓ
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-#region Using framework
+п»ї#region Using framework
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,7 +22,7 @@ namespace Pluton.GUI
     ///=========================================================================================
     ///
     /// <summary>
-    /// Кнопка c надписью
+    /// РљРЅРѕРїРєР° c РЅР°РґРїРёСЃСЊСЋ
     /// 
     /// </summary>
     /// 
@@ -43,7 +43,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
 
 
-        protected string mText; //текст кнопки
+        protected string mText; //С‚РµРєСЃС‚ РєРЅРѕРїРєРё
         ///--------------------------------------------------------------------------------------
 
 
@@ -57,7 +57,7 @@ namespace Pluton.GUI
         ///=====================================================================================
         ///
         /// <summary>
-        /// Конструктор
+        /// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ namespace Pluton.GUI
          ///=====================================================================================
         ///
         /// <summary>
-        /// установка текста
+        /// СѓСЃС‚Р°РЅРѕРІРєР° С‚РµРєСЃС‚Р°
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ namespace Pluton.GUI
         ///=====================================================================================
         ///
         /// <summary>
-        /// Отрисовка контрола
+        /// РћС‚СЂРёСЃРѕРІРєР° РєРѕРЅС‚СЂРѕР»Р°
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
@@ -117,14 +117,14 @@ namespace Pluton.GUI
             float scale = 1.0f;
             Color colorText = ATheme.buttonText_color;
             
-            //кнопка нажата, выведем другой тип картинок
+            //РєРЅРѕРїРєР° РЅР°Р¶Р°С‚Р°, РІС‹РІРµРґРµРј РґСЂСѓРіРѕР№ С‚РёРї РєР°СЂС‚РёРЅРѕРє
             if (m_pushDown)
             {
                 scrButton = new Rectangle(0, cImgHeight * 1, cImgWidth, cImgHeight);
                 scale = 1.02f;
             }
 
-            //кнопка заблокирована, то поменяем прозрачность
+            //РєРЅРѕРїРєР° Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅР°, С‚Рѕ РїРѕРјРµРЅСЏРµРј РїСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ
             if (!m_enabled)
             {
                 scrButton = new Rectangle(0, cImgHeight * 2, cImgWidth, cImgHeight);
@@ -136,13 +136,13 @@ namespace Pluton.GUI
                 colorText = ATheme.buttonText_colorCheck;
             }
 
-            //отрисуем кнопки
+            //РѕС‚СЂРёСЃСѓРµРј РєРЅРѕРїРєРё
             Vector2 pos = rect.Center.toVector2();
             spriteBatch.Draw(spriteBatch.getSprite(ATheme.buttonText_spriteID), pos, scrButton, Color.White, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), scale, SpriteEffects.None, 0.5f);
 
      
 
-            //отрисуем название
+            //РѕС‚СЂРёСЃСѓРµРј РЅР°Р·РІР°РЅРёРµ
             SpriteFont font = AFonts.normal;
             Vector2 sz = font.MeasureString(mText);
             Vector2 sw = new Vector2(rect.Width, rect.Height);
