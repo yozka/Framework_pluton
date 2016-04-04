@@ -167,7 +167,14 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void setDefault()
         {
-            mEnabled = MediaPlayer.State != MediaState.Playing;
+            try
+            {
+                mEnabled = MediaPlayer.State != MediaState.Playing;
+            }
+            catch 
+            {
+                mEnabled = true;
+            }
         }
         ///--------------------------------------------------------------------------------------
 

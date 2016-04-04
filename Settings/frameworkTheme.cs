@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework.Graphics;
+п»їusing Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 
@@ -16,18 +16,18 @@ namespace Pluton.GUI
      ///=========================================================================================
     ///
     /// <summary>
-    /// Схема текстур и размерность виджетов
+    /// РЎС…РµРјР° С‚РµРєСЃС‚СѓСЂ Рё СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ РІРёРґР¶РµС‚РѕРІ
     /// </summary>
     /// 
     ///------------------------------------------------------------------------------------------
     public class ATheme
     {
 
-        //клематис clematis seeds
+        //РєР»РµРјР°С‚РёСЃ clematis seeds
 
 
         /*
-         * Панельки 
+         * РџР°РЅРµР»СЊРєРё 
          *
          */
         public const uint   panel_A_spriteID        = sprite.gui_window_panel_a;
@@ -92,7 +92,7 @@ namespace Pluton.GUI
 
         /*
          * Dockwidget
-         * окно с именем и кнопками
+         * РѕРєРЅРѕ СЃ РёРјРµРЅРµРј Рё РєРЅРѕРїРєР°РјРё
          * 
          */ 
         public const uint   dockwidget_title_A_spriteID         = sprite.gui_window_panel_title_a;
@@ -127,8 +127,8 @@ namespace Pluton.GUI
         public static readonly Color    dockwidget_colorCaptionTextShadow   = new Color(177, 36, 52);
         public static readonly Color    dockwidget_colorCaptionText         = new Color(255, 233, 236);
 
-        //системная кнопка виджета
-        //закрытие диалога
+        //СЃРёСЃС‚РµРјРЅР°СЏ РєРЅРѕРїРєР° РІРёРґР¶РµС‚Р°
+        //Р·Р°РєСЂС‹С‚РёРµ РґРёР°Р»РѕРіР°
         public const uint   dockwidget_cancelSpriteID = sprite.gui_button_icon;
         public const int    dockwidget_sysTop  = -10;
         public const int    dockwidget_sysLeft = -30;
@@ -138,7 +138,7 @@ namespace Pluton.GUI
 
 
         /*
-         * Кнопки 
+         * РљРЅРѕРїРєРё 
          *
          */
         public const uint   buttonText_spriteID = sprite.gui_button_text;
@@ -157,7 +157,7 @@ namespace Pluton.GUI
 
         /*
          * 
-         * Пагинатор
+         * РџР°РіРёРЅР°С‚РѕСЂ
          * 
          * 
          */
@@ -175,7 +175,7 @@ namespace Pluton.GUI
 
         /*
          * 
-         * виджет показа времени
+         * РІРёРґР¶РµС‚ РїРѕРєР°Р·Р° РІСЂРµРјРµРЅРё
          * 
          * 
          */
@@ -191,7 +191,7 @@ namespace Pluton.GUI
 
         /*
          * 
-         * виджет показа очков
+         * РІРёРґР¶РµС‚ РїРѕРєР°Р·Р° РѕС‡РєРѕРІ
          * 
          * 
          */
@@ -209,7 +209,7 @@ namespace Pluton.GUI
 
 
         /*
-         * таб вкладки 
+         * С‚Р°Р± РІРєР»Р°РґРєРё 
          *
          */
         public const uint   tabs_spriteID   = sprite.gui_tab;
@@ -227,7 +227,7 @@ namespace Pluton.GUI
 
 
         /// <summary>
-        /// Цвет текста описания юнита
+        /// Р¦РІРµС‚ С‚РµРєСЃС‚Р° РѕРїРёСЃР°РЅРёСЏ СЋРЅРёС‚Р°
         /// </summary>
         public static readonly Color colorTextDescription = new Color(127, 64, 39);
 
@@ -237,14 +237,14 @@ namespace Pluton.GUI
 
 
         /*
-         * МЕНЮ
+         * РњР•РќР®
          * 
-         * Цвет текста в меню
+         * Р¦РІРµС‚ С‚РµРєСЃС‚Р° РІ РјРµРЅСЋ
          * 
         */
         public const uint            dockmenu_spriteID  = sprite.gui_icon_popup_menu;
-        public static readonly Color dockmenu_shadow    = new Color(153, 56, 82); //тень
-        public static readonly Color dockmenu_text      = new Color(242, 242, 242); //основной текст
+        public static readonly Color dockmenu_shadow    = new Color(153, 56, 82); //С‚РµРЅСЊ
+        public static readonly Color dockmenu_text      = new Color(242, 242, 242); //РѕСЃРЅРѕРІРЅРѕР№ С‚РµРєСЃС‚
 
 
 
