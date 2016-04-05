@@ -280,7 +280,7 @@ namespace Pluton.SystemProgram.Devices
             sound.loadSettings(storage);
             music.loadSettings(storage);
             marketplace.loadSettings(storage);
-
+            vibration.loadSettings(storage);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -299,6 +299,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void saveSettings()
         {
+            vibration.saveSettings(storage);
             marketplace.saveSettings(storage);
             culture.saveSettings(storage);
             sound.saveSettings(storage);

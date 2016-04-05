@@ -104,7 +104,7 @@ namespace Pluton.GUI
                 ix = (frame.contentWidth  - (iw * ic)) / 2 - ADockwidgetButton.cWidth / 2;
             }
 
-            int iy = frame.height - ADockwidgetButton.cHeight + 15;
+            int iy = frame.height + ATheme.dockwidget_butTop;
 
             bool wave = false;
             bool waveDown = false;

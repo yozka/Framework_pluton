@@ -24,23 +24,54 @@ namespace Pluton.SystemProgram.Devices
     public class AVibrationDevice
     {
         ///--------------------------------------------------------------------------------------
-        private bool m_vibration = false;
-        private VibrateController vc = VibrateController.Default;
-        private int[] m_current = null; //текущий массив палитры вибраций
-        private int m_index = 0;//текущий индекс прослушивания в палитре
-        private TimeSpan m_timeNext = TimeSpan.Zero;
+        private readonly VibrateController mRig = null;
 
 
-        /* описание партитуры вибрации в милесекундах
-         * четные числа - вбирация
-         * нечетные числа - ожидание
-         * ------------------------------------------------- #       #       #
-         */
-        private readonly int[] m_vibSelectMenu = new int[] { 50, 100, 100 };
-        private readonly int[] m_vibGetCheese = new int[] { 100, 100, 100 };
-        private readonly int[] m_vibNewCat = new int[] { 50, 50, 50 };
-        private readonly int[] m_vibCatAttacs = new int[] { 50, 100, 100, 100, 50 };
+        private bool        mEnabled    = true;
+        private int[]       mCurrent    = null; //текущий массив палитры вибраций
+        private int         mIndex      = 0;    //текущий индекс прослушивания в палитре
+        private TimeSpan    mTimeNext   = TimeSpan.Zero;
         ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public AVibrationDevice()
+        {
+            mRig = VibrateController.Default;
+
+            gVibration.setInstance(this);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// проверка, вибрация существует или нет
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public bool isVibration()
+        {
+            return true;
+        }
+        ///--------------------------------------------------------------------------------------
+
 
 
 
@@ -58,17 +89,48 @@ namespace Pluton.SystemProgram.Devices
         {
             get
             {
-                return m_vibration;
+                return mEnabled;
             }
             set
             {
-                m_vibration = value;
-                if (!m_vibration)
+                mEnabled = value;
+                if (!mEnabled)
                 {
-                    m_index = 0;
-                    m_timeNext = TimeSpan.Zero;
-                    m_current = null;
+                    mIndex = 0;
+                    mTimeNext = TimeSpan.Zero;
+                    mCurrent = null;
                 }
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// начало вибрации
+        /// 
+        /// описание партитуры вибрации в милесекундах
+        /// четные числа - вбирация
+        /// нечетные числа - ожидание
+        /// private readonly int[] m_vibSelectMenu = new int[] { 50, 100, 100 };
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void playOne(int[] tone)
+        {
+            if (mEnabled)
+            {
+                mIndex = 0;
+                mTimeNext = TimeSpan.Zero;
+                mCurrent = tone;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -88,41 +150,60 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void update(TimeSpan gameTime)
         {
-            if (m_vibration && m_current != null)
+            if (mEnabled && mCurrent != null)
             {
-                m_timeNext -= gameTime;
-                if (m_timeNext.TotalMilliseconds < 0)
+                mTimeNext -= gameTime;
+                if (mTimeNext.TotalMilliseconds < 0)
                 {
                     //следующий сонг
-                    int iLength = m_current.Length;
-                    if (m_index < iLength)
+                    int iLength = mCurrent.Length;
+                    if (mIndex < iLength)
                     {
                         //длительность звучания
-                        int time = m_current[m_index];
-                        vc.Start(TimeSpan.FromMilliseconds(time));
+                        int time = mCurrent[mIndex];
+                        mRig.Start(TimeSpan.FromMilliseconds(time));
 
                         //длительность паузы после звучания
-                        m_index++;
-                        if (m_index < iLength)
+                        mIndex++;
+                        if (mIndex < iLength)
                         {
-                            time += m_current[m_index];//пауза после звука
-                            m_index++;//следующий сонг
+                            time += mCurrent[mIndex];//пауза после звука
+                            mIndex++;//следующий сонг
                         }
-                        m_timeNext = TimeSpan.FromMilliseconds(time);
+                        mTimeNext = TimeSpan.FromMilliseconds(time);
                     }
 
                     //првоерка, если сонг проигран, то обнулим все
-                    if (m_index >= iLength)
+                    if (mIndex >= iLength)
                     {
-                        m_index = 0;
-                        m_timeNext = TimeSpan.Zero;
-                        m_current = null;
+                        mIndex = 0;
+                        mTimeNext = TimeSpan.Zero;
+                        mCurrent = null;
                     }
                 }
-
-
             }
+        }
+        ///--------------------------------------------------------------------------------------
 
+
+
+
+
+
+
+
+
+
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// Загрузка настроек
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void loadSettings(AStorage settings)
+        {
+            mEnabled = settings.readBoolean("vibration", mEnabled);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -135,18 +216,13 @@ namespace Pluton.SystemProgram.Devices
         ///=====================================================================================
         ///
         /// <summary>
-        /// выбор пункта меню
+        /// Сохранение настроек
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public void vibSelectMenu()
+        public void saveSettings(AStorage settings)
         {
-            if (m_vibration)
-            {
-                m_index = 0;
-                m_timeNext = TimeSpan.Zero;
-                m_current = m_vibSelectMenu;
-            }
+            settings.writeBoolean("vibration", mEnabled);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -155,68 +231,12 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// Мыша взяла сыр
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public void vibGetCheese()
-        {
-            if (m_vibration)
-            {
-                m_index = 0;
-                m_timeNext = TimeSpan.Zero;
-                m_current = m_vibGetCheese;
-            }
-        }
-        ///--------------------------------------------------------------------------------------
 
 
 
 
 
 
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// Появился новый кот
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public void vibNewCat()
-        {
-            if (m_vibration)
-            {
-                m_index = 0;
-                m_timeNext = TimeSpan.Zero;
-                m_current = m_vibNewCat;
-            }
-        }
-        ///--------------------------------------------------------------------------------------
-
-
-
-
-
-
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// Уменьшились жизни, напали кошки
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public void vibCatAttacs()
-        {
-            if (m_vibration)
-            {
-                m_index = 0;
-                m_timeNext = TimeSpan.Zero;
-                m_current = m_vibCatAttacs;
-            }
-        }
 
 
     }

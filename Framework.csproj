@@ -114,6 +114,7 @@
     <Compile Include="Source\Platform\WindowsGL\fwInputDevice.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwVibration.cs" />
+    <Compile Include="Source\System\Devices\proxiVibration.cs" />
     <Compile Include="Source\System\fwDateTime.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwCulture.cs" />
     <Compile Include="Source\System\Devices\fwMusic.cs" />

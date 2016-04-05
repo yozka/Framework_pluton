@@ -38,7 +38,7 @@ namespace Pluton.GUI
 
 
         protected string mSoundClick = string.Empty; //звук по умолчанию
-
+        protected int[] mVibroTone = new int[] { 30 };
         //тригер срабатывания, кнопка начент действовать после 10n показов
         //
         //protected bool m_triger      = false;
@@ -89,7 +89,7 @@ namespace Pluton.GUI
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// Отрисовка контрола
@@ -193,10 +193,7 @@ namespace Pluton.GUI
                 if (!m_pushDown)
                 {
                     m_pushDown = true;
-                    if (signal_pushDown != null)
-                    {
-                        signal_pushDown();
-                    }
+                    pushDown();
                     return true;
                 }
                 //уничтожим обработанный индекс
@@ -278,6 +275,28 @@ namespace Pluton.GUI
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// первый раз отжали на кнопку
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void pushDown()
+        {
+            if (mVibroTone != null)
+            {
+                gVibration.playOne(mVibroTone);
+            }
+            
+            if (signal_pushDown != null)
+            {
+                signal_pushDown();
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
 
 
 
@@ -297,6 +316,9 @@ namespace Pluton.GUI
             {
                 gSound.play(mSoundClick);
             }
+
+
+
             if (signal_click != null)
             {
                 signal_click();

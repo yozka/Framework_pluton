@@ -32,14 +32,14 @@ namespace Pluton.GUI
                         AControlButton
     {
         ///--------------------------------------------------------------------------------------
-        static public readonly int cWidth = 260;
-        static public readonly int cHeight = 80;
+        private const int cWidth        = ATheme.checkbox_width;
+        private const int cHeight       = ATheme.checkbox_height;
         ///--------------------------------------------------------------------------------------
 
 
         ///--------------------------------------------------------------------------------------
-        static private readonly int cImgWidth = 64;
-        static private readonly int cImgHeight = 64;
+        private const int cImgWidth     = ATheme.checkbox_imgWidth;
+        private const int cImgHeight    = ATheme.checkbox_imgHeight;
         ///--------------------------------------------------------------------------------------
 
 
@@ -87,22 +87,22 @@ namespace Pluton.GUI
             //base.onRender(gameTime, spriteBatch, rect);
 
 
-            uint spriteID = m_checkbox ? sprite.gui_element_checkmark_cheked : sprite.gui_element_checkmark_empty;
+            uint spriteID = m_checkbox ? ATheme.checkbox_chekedSpriteID : ATheme.checkbox_emptySpriteID;
 
-            Color colorText = Color.White;
-            Color colorSprite = Color.White;
+            Color colorText = ATheme.checkbox_color;
+            Color colorSprite = ATheme.checkbox_color;
 
             //кнопка нажата, выведем другой тип картинок
             if (m_pushDown)
             {
-                colorText = new Color(255, 108, 0);
+                colorText = ATheme.checkbox_colorPushDown;
             }
 
             //кнопка заблокирована, то поменяем прозрачность
             if (!m_enabled)
             {
                 colorText = colorText * 0.5f;
-                colorSprite = Color.DarkGray;
+                colorSprite = colorText * 0.5f;
             }
 
 
