@@ -212,15 +212,32 @@ namespace Pluton.SystemProgram
 
 
 
-
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
-        /// Отрисовка бордюра
+        /// Отрисовка линии
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
         public void drawLine(Vector2 A, Vector2 B, float thickness, Color color)
+        {
+            drawLine(A, B, thickness, color, 0.0f);
+
+        }
+        ///--------------------------------------------------------------------------------------
+      
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Отрисовка линни
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void drawLine(Vector2 A, Vector2 B, float thickness, Color color, float depth)
         {
             Vector2 tangent = B - A;
             float rotation = (float)Math.Atan2(tangent.Y, tangent.X);
@@ -231,7 +248,7 @@ namespace Pluton.SystemProgram
             Vector2 middleScale = new Vector2(tangent.Length(), thicknessScale);
 
 
-            m_spriteBatch.Draw(textureWhite, A, null, color, rotation, new Vector2(0, 0.5f), middleScale, SpriteEffects.None, 0f);
+            m_spriteBatch.Draw(textureWhite, A, null, color, rotation, new Vector2(0, 0.5f), middleScale, SpriteEffects.None, depth);
         }
         ///--------------------------------------------------------------------------------------
 
