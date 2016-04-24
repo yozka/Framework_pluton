@@ -234,9 +234,14 @@ namespace Pluton.GUI
 
 
             uint spriteIcon = mSpriteIconID;
+            bool check = false;
             if (m_checkbox && mSpriteIconCheckID != 0)
             {
                 spriteIcon = mSpriteIconCheckID;
+            }
+            else
+            {
+                check = m_checkbox;
             }
 
 
@@ -256,6 +261,11 @@ namespace Pluton.GUI
                 spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + new Vector2(0, -3), null, colorSprite * alpha, 0, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None, 0.2f);
             }
 
+            //чекбокс по умолчанию
+            if (check)
+            {
+                spriteBatch.Draw(spriteBatch.getSprite(sprite.gui_circle), pos + new Vector2(-40 * fScale), null, colorSprite * alpha, 0, new Vector2(64 / 2), fScaleIcon * 0.8f, SpriteEffects.None, 0.1f);
+            }
 
             //spriteBatch.primitives.drawBorder(rect, 2, Color.Blue);
         }
