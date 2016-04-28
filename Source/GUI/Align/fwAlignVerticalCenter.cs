@@ -18,20 +18,20 @@ namespace Pluton.GUI
 
 
 
-     ///=========================================================================================
+    ///=========================================================================================
     ///
     /// <summary>
-    /// Штуковина, которая горизонтально располаживает виджеты
+    /// Штуковина, которая вертикально располаживает виджеты
     /// </summary>
     /// 
     ///------------------------------------------------------------------------------------------
-    public class AAlignHorizontalCenter
+    public class AAlignVerticalCenter
             :
                 AAlignFrame
     {
 
         ///--------------------------------------------------------------------------------------
-        private readonly bool mResizeHeight = false;
+        private readonly bool mResizeWidth = false;
         ///--------------------------------------------------------------------------------------
 
 
@@ -46,7 +46,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public AAlignHorizontalCenter(AFrame frame)
+        public AAlignVerticalCenter(AFrame frame)
             :
                 base(frame)
         {
@@ -65,11 +65,11 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public AAlignHorizontalCenter(AFrame frame, bool resizeHeight)
+        public AAlignVerticalCenter(AFrame frame, bool resizeWidth)
             :
                 base(frame)
         {
-            mResizeHeight = resizeHeight;
+            mResizeWidth = resizeWidth;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -83,14 +83,13 @@ namespace Pluton.GUI
         ///
         /// <summary>
         /// пересборка содержимого фрейма
-        /// выставим всех по горизонтали
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
         protected override void onResize()
         {
             //сначала выесним общий размер всех контролов
-            int iWidthAll = 0;
+            int iHeightAll = 0;
             int iCount = 0;
             foreach (AWidget obj in frame.childs)
             {
@@ -98,16 +97,16 @@ namespace Pluton.GUI
                 {
                     continue;
                 }
-                iWidthAll += obj.width;
+                iHeightAll += obj.height;
                 iCount++;
             }
 
-            int iLeft = (frame.contentWidth - iWidthAll) / 2;
 
-            
-          
             //пробежимся по всем системным кнопкам, и выставим им позицию по умолчанию
-            int iHeight = frame.contentHeight;
+            int iWidth = frame.contentWidth;
+            int iTop = 0;
+            int iHeight = frame.contentHeight / iCount;
+
             foreach (AWidget obj in frame.childs)
             {
                 if (obj is ADockwidgetButton)
@@ -115,18 +114,21 @@ namespace Pluton.GUI
                     continue;
                 }
 
-                if (mResizeHeight)
+                if (mResizeWidth)
                 {
-                    obj.top = 0;
-                    obj.height = iHeight;
+                    obj.left = 0;
+                    obj.width = iWidth;
                 }
                 else
                 {
-                    obj.top = (iHeight - obj.height) / 2;
+                    obj.left = (iWidth - obj.width) / 2;
                 }
 
-                obj.left = iLeft;
-                iLeft += obj.width;
+
+                obj.top = iTop;
+
+                int hg = Math.Max(iHeight, obj.height);
+                iTop += hg;
             }
         }
         ///--------------------------------------------------------------------------------------

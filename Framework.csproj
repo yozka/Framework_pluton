@@ -64,6 +64,7 @@
     <Compile Include="Source\GUI\Align\fwAlignHorizontalCenter.cs" />
     <Compile Include="Source\GUI\Align\fwAlignSysButton.cs" />
     <Compile Include="Source\GUI\Align\fwAlignVertical.cs" />
+    <Compile Include="Source\GUI\Align\fwAlignVerticalCenter.cs" />
     <Compile Include="Source\GUI\Animator\fwFrameMoveAnimator.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonIcon.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonText.cs" />
