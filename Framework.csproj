@@ -17,6 +17,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <OutputPath>.\</OutputPath>
@@ -91,7 +93,9 @@
     <Compile Include="Source\Platform\iOS\fwAnalytics.cs" />
     <Compile Include="Source\Platform\iOS\fwCulture.cs" />
     <Compile Include="Source\Platform\iOS\fwJson.cs" />
-    <Compile Include="Source\Platform\iOS\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\iOS\Marketplace\fwAPI_payment.cs" />
+    <Compile Include="Source\Platform\iOS\Marketplace\fwAPI_products.cs" />
+    <Compile Include="Source\Platform\iOS\Marketplace\fwMarketplace.cs" />
     <Compile Include="Source\Platform\iOS\fwStorage.cs" />
     <Compile Include="Source\Platform\iOS\fwVibration.cs" />
     <Compile Include="Source\Platform\iOS\fwInputDevice.cs" />

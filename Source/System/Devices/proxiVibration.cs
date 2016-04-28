@@ -67,10 +67,11 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public static void setInstance(AVibrationDevice parent)
         {
+            /*
             if (mParent != null)
             {
                 throw new Exception("Вибрация уже проброшен");
-            }
+            }*/
             mParent = parent;
         }
         ///--------------------------------------------------------------------------------------
