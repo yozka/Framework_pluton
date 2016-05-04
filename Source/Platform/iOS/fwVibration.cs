@@ -24,13 +24,7 @@ namespace Pluton.SystemProgram.Devices
     public class AVibrationDevice
     {
         ///--------------------------------------------------------------------------------------
-        //private readonly VibrateController mRig = null;
-
-
-        private bool mEnabled = true;
-        private int[] mCurrent = null; //текущий массив палитры вибраций
-        private int mIndex = 0;    //текущий индекс прослушивания в палитре
-        private TimeSpan mTimeNext = TimeSpan.Zero;
+        private bool mEnabled = false;
         ///--------------------------------------------------------------------------------------
 
 
@@ -48,9 +42,6 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public AVibrationDevice()
         {
-            //mRig = VibrateController.Default;
-
-
             gVibration.setInstance(this);
         }
         ///--------------------------------------------------------------------------------------
@@ -95,12 +86,6 @@ namespace Pluton.SystemProgram.Devices
             set
             {
                 mEnabled = value;
-                if (!mEnabled)
-                {
-                    mIndex = 0;
-                    mTimeNext = TimeSpan.Zero;
-                    mCurrent = null;
-                }
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -129,9 +114,14 @@ namespace Pluton.SystemProgram.Devices
         {
             if (mEnabled)
             {
-                mIndex = 0;
-                mTimeNext = TimeSpan.Zero;
-                mCurrent = tone;
+                try
+                {
+                    SystemSound.Vibrate.PlaySystemSound();
+                }
+                catch
+                {
+
+                }
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -151,50 +141,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void update(TimeSpan gameTime)
         {
-            if (mEnabled && mCurrent != null)
-            {
-                mTimeNext -= gameTime;
-                if (mTimeNext.TotalMilliseconds < 0)
-                {
-                    //следующий сонг
-                    int iLength = mCurrent.Length;
-                    if (mIndex < iLength)
-                    {
-                        //длительность звучания
-                        int time = mCurrent[mIndex];
-                        //mRig.Start(TimeSpan.FromMilliseconds(time));
-
-                        try
-                        {
-                            SystemSound.Vibrate.PlaySystemSound();
-                        }
-                        catch 
-                        {
-
-                        }
-
-
-
-
-                        //длительность паузы после звучания
-                        mIndex++;
-                        if (mIndex < iLength)
-                        {
-                            time += mCurrent[mIndex];//пауза после звука
-                            mIndex++;//следующий сонг
-                        }
-                        mTimeNext = TimeSpan.FromMilliseconds(time);
-                    }
-
-                    //првоерка, если сонг проигран, то обнулим все
-                    if (mIndex >= iLength)
-                    {
-                        mIndex = 0;
-                        mTimeNext = TimeSpan.Zero;
-                        mCurrent = null;
-                    }
-                }
-            }
+            
         }
         ///--------------------------------------------------------------------------------------
 

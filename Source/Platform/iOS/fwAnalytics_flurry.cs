@@ -105,10 +105,13 @@ namespace Pluton.SystemProgram.Devices
         {
             if (properties != null)
             {
-                var param = new Foundation.NSDictionary();
+                var param = new Foundation.NSMutableDictionary();
                 foreach (var key in properties.Keys)
                 {
-                    param[new NSString(key)] = new NSString(properties[key]);
+                    var nsKey = new NSString(key);
+                    var nsValue = new NSString(properties[key]);
+
+                    param[nsKey] = nsValue;
                 }
                 Flurry.Analytics.FlurryAgent.LogEvent(eventName, param);
             }
@@ -132,7 +135,8 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void trackException(Exception ex)
         {
-            Flurry.Analytics.FlurryAgent.LogError(ex.Message, ex);
+            var error = new Foundation.NSException("flurryError", ex.Message, new NSDictionary());
+            Flurry.Analytics.FlurryAgent.LogError("flurryError", ex.Message, error);
         }
         ///--------------------------------------------------------------------------------------
 
