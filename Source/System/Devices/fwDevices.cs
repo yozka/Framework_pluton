@@ -58,7 +58,7 @@ namespace Pluton.SystemProgram.Devices
         /// <summary>
         /// система аналитики
         /// </summary>
-        public readonly AAnalytics analytics;
+        public readonly AAnalytics_group analytics;
 
 
 
@@ -167,7 +167,7 @@ namespace Pluton.SystemProgram.Devices
             music           = new AMusicDevice();
             sound           = new ASoundDevice();
             input           = new AInputDevice(screenManager.Game);
-            analytics       = new AAnalytics();
+            analytics       = new AAnalytics_group();
             network         = new ANetworkWeb(getDeviceGuid());
  
             dateTime        = new ADateTime();
