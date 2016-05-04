@@ -1,34 +1,33 @@
-﻿#region Using framework
-using System;
-using System.Collections.Generic;
+﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-#endregion
-
-
+using System.Collections.Generic;
+using Microsoft.Phone.Tasks;
+using Microsoft.ApplicationInsights;
 
 namespace Pluton.SystemProgram.Devices
 {
     ///--------------------------------------------------------------------------------------
 
- 
+
 
 
 
      ///=====================================================================================
     ///
     /// <summary>
-    /// Глобальный доступ для аналитики
-    /// 
+    /// Система аналитики приложения
     /// </summary>
     /// 
     ///--------------------------------------------------------------------------------------
-    public class gAnalytics
+    public class AAnalytics_microsoft
+            :
+                IAnalytics
     {
         ///--------------------------------------------------------------------------------------
-        private static IAnalytics mParent = null;
+        private readonly TelemetryClient mApi = null;
         ///--------------------------------------------------------------------------------------
+
+
 
 
 
@@ -43,9 +42,26 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public gAnalytics()
+        public AAnalytics_microsoft(TelemetryClient api)
         {
+            mApi = api;
+        }
+        ///--------------------------------------------------------------------------------------
 
+
+
+      
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Начало запуска программы
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void startSession()
+        {
 
         }
         ///--------------------------------------------------------------------------------------
@@ -56,18 +72,16 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-
-
          ///=====================================================================================
         ///
         /// <summary>
-        /// привязка
+        /// выключение сесси
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public static void setInstance(IAnalytics parent)
+        public void endSession()
         {
-            mParent = parent;
+
         }
         ///--------------------------------------------------------------------------------------
 
@@ -77,7 +91,6 @@ namespace Pluton.SystemProgram.Devices
         
 
 
-
          ///=====================================================================================
         ///
         /// <summary>
@@ -85,11 +98,15 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public static void trackEvent(string eventName, IDictionary<string, string> properties)
+        public void trackEvent(string eventName, IDictionary<string, string> properties)
         {
-            if (mParent != null)
+            if (properties == null)
             {
-                mParent.trackEvent(eventName, properties);
+                mApi.TrackEvent(eventName);
+            }
+            else
+            {
+                mApi.TrackEvent(eventName, properties);
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -97,9 +114,8 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-
-
-
+        
+        
          ///=====================================================================================
         ///
         /// <summary>
@@ -107,23 +123,11 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public static void trackException(Exception ex)
+        public void trackException(Exception ex)
         {
-            if (mParent != null)
-            {
-                mParent.trackException(ex);
-            }
+            mApi.TrackException(ex);
         }
         ///--------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-        ///--------------------------------------------------------------------------------------
-
 
 
 
