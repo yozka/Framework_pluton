@@ -64,7 +64,10 @@ namespace Pluton.SystemProgram.Devices
     public class AMarketplace
     {
         ///--------------------------------------------------------------------------------------
-        private IAsyncOperation<ListingInformation> mMarket = null;
+        //private IAsyncOperation<ListingInformation> mMarket = null;
+        private ListingInformation mInfo = null;
+        private bool mUpdateInfo = false;
+
         private IReadOnlyDictionary<string, ProductListing> mProducts = null;
         
         private static string mCurrentPoductID = null; //текущий обрабатываемый продукт
@@ -213,6 +216,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
+
          ///=====================================================================================
         ///
         /// <summary>
@@ -222,6 +226,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         private bool refreshInformation()
         {
+            /*
             if (mProducts != null)
             {
                 return true;
@@ -243,8 +248,49 @@ namespace Pluton.SystemProgram.Devices
                     mProducts = market.ProductListings;
                 }
             }
-
             return mProducts != null ? true : false;
+
+            */
+
+
+            if (mProducts != null)
+            {
+                return true;
+            }
+
+            if (mUpdateInfo)
+            {
+                return false;
+            }
+
+            asyncRefreshInfo();
+            return mProducts != null ? true : false;
+
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// обновление информации о покупках
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private async void asyncRefreshInfo()
+        {
+            mUpdateInfo = true;
+            mInfo = await CurrentApp.LoadListingInformationAsync();
+            if (mInfo != null)
+            {
+                mProducts = mInfo.ProductListings;
+                mUpdateInfo = false;
+            }
+
+
+
         }
         ///--------------------------------------------------------------------------------------
 

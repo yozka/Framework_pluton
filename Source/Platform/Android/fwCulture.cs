@@ -52,17 +52,15 @@ namespace Pluton.SystemProgram.Devices
             try
             {
 #endif
-
-                foreach (var lang in AFrameworkSettings.culture)
-                {
-                    mInfo.Add(new CultureInfo(lang));
-                }
+                mInfo.Add(new CultureInfo("en-US"));
+         
+                mInfo.Add(new CultureInfo("ru-RU"));
+                mInfo.Add(new CultureInfo("es-ES"));
 #if (NO_EXCEPTION)
 #else
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                gAnalytics.trackException(e);
                 
             }
 #endif
@@ -97,8 +95,6 @@ namespace Pluton.SystemProgram.Devices
 
             mLange = settings.readString("culture", mLange);
             Resources.strings.Culture = new CultureInfo(mLange);
-
-            string pl = Resources.strings.GUI_menu_play;
         }
         ///--------------------------------------------------------------------------------------
 
