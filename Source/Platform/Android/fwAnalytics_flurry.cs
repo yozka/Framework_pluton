@@ -2,7 +2,10 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-
+using Android;
+using Android.Content;
+using Android.OS;
+using Android.App;
 
 namespace Pluton.SystemProgram.Devices
 {
@@ -48,6 +51,7 @@ namespace Pluton.SystemProgram.Devices
         public AAnalytics_flurry(string sessionID)
         {
             mSessionID = sessionID;
+            Flurry.Analytics.FlurryAgent.Init(Application.Context, mSessionID);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -65,7 +69,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void startSession()
         {
-            //Flurry.Analytics.FlurryAgent.StartSession(mSessionID);
+            Flurry.Analytics.FlurryAgent.OnStartSession(Application.Context, mSessionID);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -83,7 +87,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void endSession()
         {
-            
+            Flurry.Analytics.FlurryAgent.OnEndSession(Application.Context);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -102,23 +106,14 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void trackEvent(string eventName, IDictionary<string, string> properties)
         {
-            /*
             if (properties != null)
             {
-                var param = new Foundation.NSMutableDictionary();
-                foreach (var key in properties.Keys)
-                {
-                    var nsKey = new NSString(key);
-                    var nsValue = new NSString(properties[key]);
-
-                    param[nsKey] = nsValue;
-                }
-                Flurry.Analytics.FlurryAgent.LogEvent(eventName, param);
+                Flurry.Analytics.FlurryAgent.LogEvent(eventName, properties);
             }
             else
             {
                 Flurry.Analytics.FlurryAgent.LogEvent(eventName);
-            }*/
+            }
         }
         ///--------------------------------------------------------------------------------------
 
@@ -135,9 +130,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void trackException(Exception ex)
         {
-            /*
-            var error = new Foundation.NSException("flurryError", ex.Message, new NSDictionary());
-            Flurry.Analytics.FlurryAgent.LogError("flurryError", ex.Message, error);*/
+
         }
         ///--------------------------------------------------------------------------------------
 

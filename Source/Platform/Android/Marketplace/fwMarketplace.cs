@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Pluton.SystemProgram.Devices
 {
     ///--------------------------------------------------------------------------------------
-
+    using Com.Appodeal.Ads;
     ///--------------------------------------------------------------------------------------
 
 
@@ -51,7 +51,17 @@ namespace Pluton.SystemProgram.Devices
 
 
 
+        private static Android.App.Activity mActivity = null;
 
+        public static void initActivity(Android.App.Activity activity)
+        {
+            Appodeal.SetTesting(true);
+
+            mActivity = activity;
+
+            String appKey = "75dd58108fe5c39204288f13ca6cac063b3cc38edc1b51bb";
+            Appodeal.Initialize(mActivity, appKey, Appodeal.REWARDED_VIDEO);
+        }
 
 
 
@@ -66,7 +76,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public AMarketplace()
         {
-
+           
         }
         ///--------------------------------------------------------------------------------------
 
@@ -231,7 +241,7 @@ namespace Pluton.SystemProgram.Devices
         public string getDescription(string productID)
         {
             updateStore();
-            return null;
+            return "test";
         }
         ///--------------------------------------------------------------------------------------
 
@@ -251,7 +261,7 @@ namespace Pluton.SystemProgram.Devices
         public string getName(string productID)
         {
             updateStore();
-            return null;
+            return "test";
         }
         ///--------------------------------------------------------------------------------------
 
@@ -270,13 +280,14 @@ namespace Pluton.SystemProgram.Devices
         public string getFormattedPrice(string productID)
         {
             updateStore();
-            return null;
+            return "0.0rub";
         }
         ///--------------------------------------------------------------------------------------
 
 
 
 
+        
 
 
          ///=====================================================================================
@@ -288,7 +299,12 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool productBuy(string productID)
         {
-            return false;
+            Appodeal.SetTesting(true);
+            Appodeal.SetLogging(true);
+            Appodeal.Show(mActivity, Appodeal.REWARDED_VIDEO);
+
+
+            return true;
         }
         ///--------------------------------------------------------------------------------------
 

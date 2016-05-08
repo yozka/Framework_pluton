@@ -69,7 +69,7 @@ namespace Pluton.SystemProgram.Devices
         {
             if (mParent != null)
             {
-                throw new Exception("Звук уже проброшен");
+                //throw new Exception("Звук уже проброшен");
             }
             mParent = parent;
         }

@@ -3,6 +3,13 @@ using Microsoft.Devices;
 using Microsoft.Xna.Framework;
 
 
+using Android;
+using Android.Content;
+using Android.OS;
+using Android.App;
+
+
+
 namespace Pluton.SystemProgram.Devices
 {
     ///--------------------------------------------------------------------------------------
@@ -23,7 +30,13 @@ namespace Pluton.SystemProgram.Devices
     public class AVibrationDevice
     {
         ///--------------------------------------------------------------------------------------
-        private bool mEnabled = false;
+        private readonly Vibrator mVibrator = null;
+
+
+        private bool mEnabled = true;
+        private int[] mCurrent = null; //текущий массив палитры вибраций
+        private int mIndex = 0;    //текущий индекс прослушивания в палитре
+        private TimeSpan mTimeNext = TimeSpan.Zero;
         ///--------------------------------------------------------------------------------------
 
 
@@ -41,6 +54,11 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public AVibrationDevice()
         {
+            mVibrator = Application.Context.GetSystemService(Context.VibratorService) as Vibrator;
+
+
+
+
             gVibration.setInstance(this);
         }
         ///--------------------------------------------------------------------------------------
@@ -85,6 +103,12 @@ namespace Pluton.SystemProgram.Devices
             set
             {
                 mEnabled = value;
+                if (!mEnabled)
+                {
+                    mIndex = 0;
+                    mTimeNext = TimeSpan.Zero;
+                    mCurrent = null;
+                }
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -113,15 +137,9 @@ namespace Pluton.SystemProgram.Devices
         {
             if (mEnabled)
             {
-                /*
-                try
-                {
-                    SystemSound.Vibrate.PlaySystemSound();
-                }
-                catch
-                {
-
-                }*/
+                mIndex = 0;
+                mTimeNext = TimeSpan.Zero;
+                mCurrent = tone;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -141,7 +159,38 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void update(TimeSpan gameTime)
         {
-            
+            if (mEnabled && mCurrent != null)
+            {
+                mTimeNext -= gameTime;
+                if (mTimeNext.TotalMilliseconds < 0)
+                {
+                    //следующий сонг
+                    int iLength = mCurrent.Length;
+                    if (mIndex < iLength)
+                    {
+                        //длительность звучания
+                        int time = mCurrent[mIndex];
+                        mVibrator.Vibrate(time);
+
+                        //длительность паузы после звучания
+                        mIndex++;
+                        if (mIndex < iLength)
+                        {
+                            time += mCurrent[mIndex];//пауза после звука
+                            mIndex++;//следующий сонг
+                        }
+                        mTimeNext = TimeSpan.FromMilliseconds(time);
+                    }
+
+                    //првоерка, если сонг проигран, то обнулим все
+                    if (mIndex >= iLength)
+                    {
+                        mIndex = 0;
+                        mTimeNext = TimeSpan.Zero;
+                        mCurrent = null;
+                    }
+                }
+            }
         }
         ///--------------------------------------------------------------------------------------
 
