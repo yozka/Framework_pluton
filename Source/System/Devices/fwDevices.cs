@@ -110,6 +110,15 @@ namespace Pluton.SystemProgram.Devices
 
 
 
+
+        /// <summary>
+        /// Рекламная система
+        /// </summary>
+        public readonly AAdvertisements advertisements;
+
+
+
+
         /*
          * информация по устройству, фпс и память
          */
@@ -173,6 +182,7 @@ namespace Pluton.SystemProgram.Devices
             dateTime        = new ADateTime();
             license         = new ALicense(this);
             marketplace     = new AMarketplace();
+            advertisements  = new AAdvertisements();
         }
         ///--------------------------------------------------------------------------------------
 

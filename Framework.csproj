@@ -90,6 +90,13 @@
     <Compile Include="Source\GUI\fwTextEdit.cs" />
     <Compile Include="Source\GUI\fwTitle.cs" />
     <Compile Include="Source\GUI\fwWidget.cs" />
+    <Compile Include="Source\Platform\Android\fwAnalytics_flurry.cs" />
+    <Compile Include="Source\Platform\Android\fwCulture.cs" />
+    <Compile Include="Source\Platform\Android\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\Android\fwJson.cs" />
+    <Compile Include="Source\Platform\Android\fwStorage.cs" />
+    <Compile Include="Source\Platform\Android\fwVibration.cs" />
+    <Compile Include="Source\Platform\Android\Marketplace\fwMarketplace.cs" />
     <Compile Include="Source\Platform\iOS\fwAnalytics_flurry.cs" />
     <Compile Include="Source\Platform\iOS\fwCulture.cs" />
     <Compile Include="Source\Platform\iOS\fwJson.cs" />
@@ -115,6 +122,7 @@
     <Compile Include="Source\Platform\WindowsPhone8\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwVibration.cs" />
+    <Compile Include="Source\System\Devices\fwAdvertisements.cs" />
     <Compile Include="Source\System\Devices\fwAnalytics.cs" />
     <Compile Include="Source\System\Devices\fwDevices.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwInputDevice.cs" />
@@ -176,6 +184,9 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Source\Platform\Android\ADS\" />
   </ItemGroup>
   <Target Name="Rebuild">
   </Target>
