@@ -90,6 +90,7 @@
     <Compile Include="Source\GUI\fwTextEdit.cs" />
     <Compile Include="Source\GUI\fwTitle.cs" />
     <Compile Include="Source\GUI\fwWidget.cs" />
+    <Compile Include="Source\Platform\Android\ADS\fwAdvertisement_appodeal.cs" />
     <Compile Include="Source\Platform\Android\fwAnalytics_flurry.cs" />
     <Compile Include="Source\Platform\Android\fwCulture.cs" />
     <Compile Include="Source\Platform\Android\fwInputDevice.cs" />
@@ -185,9 +186,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Source\Platform\Android\ADS\" />
-  </ItemGroup>
+  <ItemGroup />
   <Target Name="Rebuild">
   </Target>
   <Target Name="Clean">
