@@ -96,7 +96,9 @@ namespace Pluton.SystemProgram.Devices
         {
              mServiceConnection = new InAppBillingServiceConnection(activity, publicKey);
       
-   /* чото этот код не работает
+
+            /*
+   // чото этот код не работает
             Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
             serviceIntent.SetPackage("com.android.vending");
 
@@ -104,7 +106,7 @@ namespace Pluton.SystemProgram.Devices
             Context bbs = activity.ApplicationContext;
 
             bool rt =  bbs.BindService(serviceIntent, mServiceConnection, Bind.AutoCreate);
- */
+            */
 
 
 
@@ -329,6 +331,25 @@ namespace Pluton.SystemProgram.Devices
                 return true;
             }
 
+
+            var list = mServiceConnection.BillingHandler.GetPurchases(ItemType.Product);
+            if (list == null)
+            {
+                return false;
+            }
+
+            foreach (var purchase in list)
+            {
+                if (purchase.ProductId != productID)
+                {
+                    continue;
+                }
+
+                mPurchases[productID] = purchase;
+                mLastError.Remove(productID);
+                mError = false;
+                return true;
+            }
             return false;
         }
         ///--------------------------------------------------------------------------------------
@@ -480,10 +501,17 @@ namespace Pluton.SystemProgram.Devices
                 return false;
             }
 
+            if (isProductBuy(productID))
+            {
+                return true;
+            }
+
+
             if (!mProducts.ContainsKey(productID))
             {
                 return false;
             }
+
 
             mPurchases.Remove(productID);
             mError = false;
