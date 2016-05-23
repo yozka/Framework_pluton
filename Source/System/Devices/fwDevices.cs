@@ -264,10 +264,10 @@ namespace Pluton.SystemProgram.Devices
             //FPS
             m_frameCounter++;
 
-            Vector2 pos = pointExt.toVector2(ASpriteBatch.viewPort) - AFonts.fontinSmall.MeasureString(m_info);
+            Vector2 pos = pointExt.toVector2(ASpriteBatch.viewPort) - AFonts.small.MeasureString(m_info);
 
             spriteBatch.begin();
-            spriteBatch.DrawString(AFonts.fontinSmall, m_info, pos, Color.White * 0.8f);
+            spriteBatch.DrawString(AFonts.small, m_info, pos, Color.White * 0.8f);
             spriteBatch.end();
 #endif
         }

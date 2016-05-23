@@ -3,7 +3,11 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Collections.Generic;
+using System.Reflection;
 #endregion
+
+
+
 
 
 
@@ -11,13 +15,60 @@ using System.Collections.Generic;
 namespace Pluton.SystemProgram.Devices
 {
     ///--------------------------------------------------------------------------------------
+    using System.Resources;
+    using Windows.ApplicationModel.Resources;
+    using Windows.Globalization.Collation;
+    using Resources;
     ///--------------------------------------------------------------------------------------
 
 
 
+    ///=====================================================================================
+    ///
+    /// <summary>
+    /// Загрузчик ресурсов
+    /// </summary>
+    /// 
+    ///--------------------------------------------------------------------------------------
+    public class AStringsManager : ResourceManager
+    {
+        private readonly ResourceLoader mResource;
+        private readonly ResourceLoader mResourceDefault;
+
+        private AStringsManager(string baseName, string defaultName, Assembly assembly)
+            : base(baseName, assembly)
+        {
+            mResource = ResourceLoader.GetForViewIndependentUse(baseName);
+            mResourceDefault = ResourceLoader.GetForViewIndependentUse(defaultName);
+        }
 
 
-     ///=====================================================================================
+        public static void register(string baseName, string defaultName, Type generate)
+        {
+            var resourceMan = new AStringsManager(baseName, defaultName, generate.GetTypeInfo().Assembly);
+
+            var fields = generate.GetRuntimeFields();
+            foreach (var obj in fields)
+            {
+                if (obj.Name == "resourceMan")
+                {
+                    obj.SetValue(null, resourceMan);
+                }
+            }
+        }
+
+
+
+        public override string GetString(string name, CultureInfo culture)
+        {
+            string value = mResource.GetString(name);
+            return value != string.Empty ? value : mResourceDefault.GetString(name);
+        }
+    }
+
+
+
+    ///=====================================================================================
     ///
     /// <summary>
     /// Система языковой поддержки
@@ -28,7 +79,7 @@ namespace Pluton.SystemProgram.Devices
     {
         ///--------------------------------------------------------------------------------------
         private string mLange;
-        private List<CultureInfo> mInfo = new List<CultureInfo>();
+        private readonly List<CultureInfo> mInfo = new List<CultureInfo>();
         ///--------------------------------------------------------------------------------------
 
 
@@ -36,7 +87,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// constructor
@@ -45,7 +96,10 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public ACulture()
         {
-            mLange = Thread.CurrentThread.CurrentUICulture.Name;
+
+
+            CultureInfo ci = new CultureInfo(Windows.System.UserProfile.GlobalizationPreferences.Languages[0]);
+            mLange = ci.TwoLetterISOLanguageName;
 
 #if (NO_EXCEPTION)
 #else
@@ -56,6 +110,7 @@ namespace Pluton.SystemProgram.Devices
                 {
                     mInfo.Add(new CultureInfo(lang));
                 }
+        
 #if (NO_EXCEPTION)
 #else
             }
@@ -64,6 +119,7 @@ namespace Pluton.SystemProgram.Devices
                 
             }
 #endif
+            register();
         }
         ///--------------------------------------------------------------------------------------
 
@@ -73,7 +129,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// Загрузка настроек
@@ -82,19 +138,8 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void loadSettings(AStorage settings)
         {
-            /*
-            //Resources.strings.Culture = new CultureInfo("ru-RU");
-
-            CultureInfo lange = Thread.CurrentThread.CurrentUICulture;
-
-            //lange = DefaultThreadCurrentUICulture();
-            lange = CultureInfo.CurrentCulture;
-            //Resources.strings.Culture = lange;
-            */
-
-
             mLange = settings.readString("culture", mLange);
-            Resources.strings.Culture = new CultureInfo(mLange);
+            register();
         }
         ///--------------------------------------------------------------------------------------
 
@@ -104,7 +149,27 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// смена языка
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void register()
+        {
+            string nameFile = "resources." + mLange;
+            AStringsManager.register(nameFile, "resources.en", typeof(Resources.strings));
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+        ///=====================================================================================
         ///
         /// <summary>
         /// Сохранение настроек
@@ -116,14 +181,14 @@ namespace Pluton.SystemProgram.Devices
             settings.writeString("culture", mLange);
         }
         ///--------------------------------------------------------------------------------------
-       
 
 
 
 
 
 
-         ///=====================================================================================
+
+        ///=====================================================================================
         ///
         /// <summary>
         /// количество доступных языков
@@ -143,7 +208,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// Название языка
@@ -173,7 +238,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// Название языка
@@ -184,7 +249,7 @@ namespace Pluton.SystemProgram.Devices
         {
             if (index >= 0 && index < count)
             {
-                return mInfo[index].Name;
+                return mInfo[index].TwoLetterISOLanguageName;
             }
 
             return string.Empty;
@@ -196,7 +261,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// проверка, является ли язык текущим
@@ -214,7 +279,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// Установка текущего языка
@@ -224,6 +289,7 @@ namespace Pluton.SystemProgram.Devices
         public void setCurrent(string name)
         {
             mLange = name;
+            register();
         }
         ///--------------------------------------------------------------------------------------
 
@@ -231,7 +297,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// Возвратим текущий язык
@@ -248,7 +314,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// Поиск языка
@@ -257,9 +323,9 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public int find(string langFind)
         {
-            for(int i = 0; i < mInfo.Count; i++)
+            for (int i = 0; i < mInfo.Count; i++)
             {
-                if (mInfo[i].Name == langFind)
+                if (mInfo[i].TwoLetterISOLanguageName == langFind)
                 {
                     return i;
                 }
@@ -272,7 +338,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// Возвратим язык по умолчанию
@@ -281,7 +347,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public string defaultCulture()
         {
-            return mInfo[0].Name;
+            return mInfo[0].TwoLetterISOLanguageName;
         }
         ///--------------------------------------------------------------------------------------
 

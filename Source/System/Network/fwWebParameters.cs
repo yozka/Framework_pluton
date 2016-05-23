@@ -288,7 +288,7 @@ namespace Pluton.SystemProgram.Devices
             int size = (int)sm.Length;
             byte[] buffer = new byte[size];
             sm.Read(buffer, 0, size);
-            sm.Close();
+            sm.Flush();
             sm.Dispose();
 
             byte[] zip = GZipStream.CompressBuffer(buffer);

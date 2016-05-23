@@ -115,6 +115,14 @@
     <Compile Include="Source\Platform\WindowsPhone7\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8.1\fwAnalytics_microsoft.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8.1\fwCulture.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8.1\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8.1\fwJson.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8.1\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8.1\fwStorage.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8.1\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8.1\fwTypeExt.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwAnalytics_flurry.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwAnalytics_microsoft.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwCulture.cs" />
@@ -150,6 +158,7 @@
     <Compile Include="Source\System\fwSpriteBatch.cs" />
     <Compile Include="Source\System\fwSpriteContent.cs" />
     <Compile Include="Source\System\fwSpritePrimitives.cs" />
+    <Compile Include="Source\System\Network\fwWebPicture.cs" />
     <Compile Include="Source\System\Stream\fwBinaryReader.cs" />
     <Compile Include="Source\System\Stream\fwBinaryWriter.cs" />
     <Compile Include="Source\System\Stream\fwMemberData.cs" />

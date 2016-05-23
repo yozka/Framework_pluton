@@ -355,8 +355,10 @@ namespace Pluton.GUI
             float colorAlpha = 0.5f + 0.5f * anim;
 
             spriteBatch.begin();
-            spriteBatch.drawSprite(sprite.background_screen, new Rectangle(-10,-10, ASpriteBatch.viewPort.X + 20, ASpriteBatch.viewPort.Y + 20),  Color.White * (0.9f * anim), 0, Vector2.Zero, 1.0f);
-            spriteBatch.Draw(spriteBatch.getSprite(sprite.gui_window_panel_box), mGUI.rect, null, Color.White * colorAlpha, 0, Vector2.Zero, SpriteEffects.None, 0.0f);
+            
+            //sprite.background_screen
+            spriteBatch.drawSprite(ATheme.messageBox_backgroundID, new Rectangle(-10, -10, ASpriteBatch.viewPort.X + 20, ASpriteBatch.viewPort.Y + 20), Color.White * (0.9f * anim), 0, Vector2.Zero, 1.0f);
+            spriteBatch.Draw(spriteBatch.getSprite(ATheme.messageBox_spriteID), mGUI.rect, null, Color.White * colorAlpha, 0, Vector2.Zero, SpriteEffects.None, 0.0f);
             spriteBatch.end();
             mGUI.draw(spriteBatch);
         }

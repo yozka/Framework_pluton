@@ -262,9 +262,10 @@ namespace Pluton.GUI
             }
 
             //чекбокс по умолчанию
-            if (check)
+            if (check && ATheme.buttonIcon_check_spriteID != 0)
             {
-                spriteBatch.Draw(spriteBatch.getSprite(sprite.gui_circle), pos + new Vector2(-40 * fScale), null, colorSprite * alpha, 0, new Vector2(64 / 2), fScaleIcon * 0.8f, SpriteEffects.None, 0.1f);
+                //sprite.gui_circle
+                spriteBatch.Draw(spriteBatch.getSprite(ATheme.buttonIcon_check_spriteID), pos + new Vector2(-40 * fScale), null, colorSprite * alpha, 0, new Vector2(64 / 2), fScaleIcon * 0.8f, SpriteEffects.None, 0.1f);
             }
 
             //spriteBatch.primitives.drawBorder(rect, 2, Color.Blue);

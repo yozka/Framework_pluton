@@ -1,7 +1,7 @@
 ﻿#region Using framework
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Net.Http;
 using System.Text;
 #endregion
 
@@ -18,7 +18,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-     ///=====================================================================================
+    ///=====================================================================================
     ///
     /// <summary>
     /// Система работы с интернет сервером
@@ -28,7 +28,7 @@ namespace Pluton.SystemProgram.Devices
     public class ANetworkWeb
     {
         ///--------------------------------------------------------------------------------------
-        private static readonly int     cTimeOut    = 10000; //время которое ждем для следующей попытки выполнениня запроса
+        private static readonly int cTimeOut = 10000; //время которое ждем для следующей попытки выполнениня запроса
         ///--------------------------------------------------------------------------------------
 
 
@@ -36,26 +36,31 @@ namespace Pluton.SystemProgram.Devices
 
 
         ///--------------------------------------------------------------------------------------
-        private bool        mLoginAth   = false;    //процесс авторизации на сервере
-        private int         mDeviceID   = 0;        //индификатор девайса в базе
-        private string      mDeviceGuid;            //уникальный номер девайса
-        
+        private bool mLoginAth = false;    //процесс авторизации на сервере
+        private int mDeviceID = 0;        //индификатор девайса в базе
+        private readonly string mDeviceGuid;            //уникальный номер девайса
 
-        private WebClient       mWebClient  = null;     //управляющий поток сервера
-        private List<AWebQuery> mPool = new List<AWebQuery>(); //пулл выполняемых команд
 
-        private TimeSpan    mTimeWait   = TimeSpan.Zero;  //время которое ждем, после ошибки
-        private bool        mWait       = false;              //флаг того что будем ждать 
+        private readonly HttpClient mHttpClient = null;     //управляющий поток сервера
+        private readonly List<AWebQuery> mPool = new List<AWebQuery>(); //пулл выполняемых команд
+        private bool mBussy = false; //флаг занятости
+
+        private TimeSpan mTimeWait = TimeSpan.Zero;  //время которое ждем, после ошибки
+        private bool mWait = false;              //флаг того что будем ждать 
+
+
+        private TimeSpan mTimeoutWait = TimeSpan.Zero; //таймайт выполнения команды
+        private bool mTimeout = false;
         ///--------------------------------------------------------------------------------------
 
 
 
 
 
-     
 
 
-         ///=====================================================================================
+
+        ///=====================================================================================
         ///
         /// <summary>
         /// Constructor
@@ -65,8 +70,7 @@ namespace Pluton.SystemProgram.Devices
         public ANetworkWeb(string deviceGuid)
         {
             mDeviceGuid = deviceGuid;
-            mWebClient = new WebClient();
-            mWebClient.UploadStringCompleted += evCommandCompleted;
+            mHttpClient = new HttpClient();
         }
         ///--------------------------------------------------------------------------------------
 
@@ -75,7 +79,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// передача данных серверу
@@ -89,21 +93,21 @@ namespace Pluton.SystemProgram.Devices
             executeCommand();
         }
         ///--------------------------------------------------------------------------------------
-  
 
 
 
 
 
 
-         ///=====================================================================================
+
+        ///=====================================================================================
         ///
         /// <summary>
         /// Вход на сервер
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        private void deviceAuthorization()
+        private async void deviceAuthorization()
         {
             if (mLoginAth)
             {
@@ -112,11 +116,39 @@ namespace Pluton.SystemProgram.Devices
             mLoginAth = true;
             AWebCommand cmd = new AWebCommand("ath");
             cmd.parameters.addString("deviceGuid", mDeviceGuid);
-            string data = cmd.toString();
+            string dataCmd = cmd.toString();
 
-            mWebClient.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-            mWebClient.Encoding = Encoding.UTF8;
-            mWebClient.UploadStringAsync(AWebCommand.cURI, "POST", data, this);
+            var content = new StringContent(dataCmd, Encoding.UTF8, "application/x-www-form-urlencoded");
+            try
+            {
+                using (var data = await mHttpClient.PostAsync(AWebCommand.cURI, content))
+                {
+                    string result = data.Content.ReadAsStringAsync().Result;
+                    AWebParameters param = new AWebParameters(result);
+                    mDeviceID = param.keyInteger("deviceID", mDeviceID);
+                    mLoginAth = false;
+                    if (mDeviceID != 0)
+                    {
+                        nextExecute();
+                    }
+                    else
+                    {
+                        waitExecute();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                mLoginAth = false;
+                waitExecute();
+            }
+
+
+            /*
+        mWebClient.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+        mWebClient.Encoding = Encoding.UTF8;
+        mWebClient.UploadStringAsync(AWebCommand.cURI, "POST", data, this);
+        */
         }
         ///--------------------------------------------------------------------------------------
 
@@ -125,7 +157,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// начало выполнения сообщения
@@ -142,12 +174,17 @@ namespace Pluton.SystemProgram.Devices
                 return;
             }
 
-            if (mPool.Count > 0 && !mWebClient.IsBusy)
+
+            if (mPool.Count == 0 || mBussy)
             {
-                AWebQuery cmd = mPool[0];
-                mPool.Remove(cmd);
-                cmd.send(mWebClient, mDeviceID);
+                return;
             }
+
+            mBussy = true;
+            AWebQuery cmd = mPool[0];
+            mPool.Remove(cmd);
+            cmd.send(this);
+            startTimeout();
         }
         ///--------------------------------------------------------------------------------------
 
@@ -155,14 +192,15 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// завершение загрузки на сервер
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public void evCommandCompleted(object sender, UploadStringCompletedEventArgs e)
+        /*
+        private void evCommandCompleted(object sender, UploadStringCompletedEventArgs e)
         {
             AWebQuery cmd = e.UserState as AWebQuery;
             if (cmd == null && e.UserState is ANetworkWeb)
@@ -197,12 +235,12 @@ namespace Pluton.SystemProgram.Devices
             executeCommand();
         }
         ///--------------------------------------------------------------------------------------
+        */
 
 
 
 
-
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// ждем, чтобы снова выполнить попытку отправки данных
@@ -211,6 +249,8 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         protected void waitExecute()
         {
+            mTimeout = false;
+            mBussy = false;
             mWait = true;
             mTimeWait = TimeSpan.Zero;
         }
@@ -221,7 +261,45 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// следующее выполнение данных
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void nextExecute()
+        {
+            mTimeout = false;
+            mBussy = false;
+            mWait = true;
+            mTimeWait = TimeSpan.FromMilliseconds(cTimeOut - 500);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// режим ожидания выполнения команды
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        protected void startTimeout()
+        {
+            mTimeout = true;
+            mTimeoutWait = TimeSpan.Zero;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+        ///=====================================================================================
         ///
         /// <summary>
         /// ждать для повторной отпавки данных
@@ -238,6 +316,15 @@ namespace Pluton.SystemProgram.Devices
                     executeCommand();
                 }
             }
+
+            if (mTimeout)
+            {
+                mTimeoutWait += gameTime;
+                if (mTimeoutWait.TotalMilliseconds > cTimeOut)
+                {
+                    nextExecute();
+                }
+            }
         }
         ///--------------------------------------------------------------------------------------
 
@@ -245,6 +332,40 @@ namespace Pluton.SystemProgram.Devices
 
 
 
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим индификатор девайса
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public int deviceID
+        {
+            get
+            {
+                return mDeviceID;
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим ьранспорт передачи данных
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public HttpClient http
+        {
+            get
+            {
+                return mHttpClient;
+            }
+        }
 
 
 
