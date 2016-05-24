@@ -40,7 +40,7 @@ namespace Pluton.GUI
         private int         mCaptionHeight  = 0;
         private string      mText           = string.Empty;
         private Point       mOrigin         = Point.Zero;
-        private Vector2     mShiftText = Vector2.Zero;
+        private Vector2     mShiftText      = Vector2.Zero;
         ///--------------------------------------------------------------------------------------
 
 
@@ -106,6 +106,7 @@ namespace Pluton.GUI
                         mCaptionHeight  = ATheme.dockwidget_title_A_captionHeight;
                         mOrigin         = ATheme.dockwidget_title_A_origin;
                         mShiftText      = ATheme.dockwidget_title_A_shift;
+
                         break;
                     }
 
