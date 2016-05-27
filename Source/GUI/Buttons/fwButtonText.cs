@@ -43,7 +43,10 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
 
 
-        protected string mText; //текст кнопки
+        private string      mText       = string.Empty; //текст кнопки
+        private Vector2     mTextOrigin = Vector2.Zero; //централизация текста у кнопки
+        private Vector2     mTextScale  = Vector2.Zero; //размер текста чтобыы вс янадпись влезла
+        private SpriteFont  mFont       = null;         //шрифт
         ///--------------------------------------------------------------------------------------
 
 
@@ -65,6 +68,9 @@ namespace Pluton.GUI
             : base(parent, left, top, cWidth, cHeight)
         {
             mText = text;
+            mFont = ATheme.buttonText_font;
+
+            refresh();
             mSoundClick = AFrameworkSettings.sound_buttonText;
         }
         ///--------------------------------------------------------------------------------------
@@ -91,9 +97,40 @@ namespace Pluton.GUI
             set
             {
                 mText = value;
+                refresh();
             }
         }
         ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Пересчитать размер текста
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void refresh()
+        {
+            Vector2 sz = mFont.MeasureString(mText);
+            mTextOrigin = sz / 2;
+            
+
+            float fw = ATheme.buttonText_textWidth / sz.X;
+            float fh = ATheme.buttonText_textHeight / sz.Y;
+
+            float fs = Math.Min(fw, fh);
+            fs = MathHelper.Clamp(fs, 0.5f, 1.0f);
+
+            mTextScale = new Vector2(fs);
+        }
+        ///--------------------------------------------------------------------------------------
+
 
 
 
@@ -113,15 +150,15 @@ namespace Pluton.GUI
 
 
             Rectangle scrButton = new Rectangle(0, 0, cImgWidth, cImgHeight);
-
-            float scale = 1.0f;
+            float fAlpha = alpha;
+            float fScale = 1.0f;
             Color colorText = ATheme.buttonText_color;
             
             //кнопка нажата, выведем другой тип картинок
             if (m_pushDown)
             {
                 scrButton = new Rectangle(0, cImgHeight * 1, cImgWidth, cImgHeight);
-                scale = 1.02f;
+                fScale = 1.02f;
             }
 
             //кнопка заблокирована, то поменяем прозрачность
@@ -138,16 +175,13 @@ namespace Pluton.GUI
 
             //отрисуем кнопки
             Vector2 pos = rect.Center.toVector2();
-            spriteBatch.Draw(spriteBatch.getSprite(ATheme.buttonText_spriteID), pos, scrButton, Color.White, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), scale, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(spriteBatch.getSprite(ATheme.buttonText_spriteID), pos, scrButton, Color.White * fAlpha, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), fScale, SpriteEffects.None, 0.5f);
 
      
 
             //отрисуем название
-            SpriteFont font = AFonts.normal;
-            Vector2 sz = font.MeasureString(mText);
-            Vector2 sw = new Vector2(rect.Width, rect.Height);
-            sz = (sw - sz) / 2 + new Vector2(rect.Left, rect.Top) + ATheme.buttonText_shift;
-            spriteBatch.DrawString(font, mText, sz, colorText);
+            Vector2 ptPos = rect.Center.toVector2() + ATheme.buttonText_shift;
+            spriteBatch.DrawString(mFont, mText, ptPos, colorText * fAlpha, 0.0f, mTextOrigin, mTextScale * fScale, SpriteEffects.None, 0.0f);
         }
         ///--------------------------------------------------------------------------------------
 

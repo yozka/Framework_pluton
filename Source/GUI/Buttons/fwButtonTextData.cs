@@ -52,7 +52,7 @@ namespace Pluton.GUI
         public AButtonTextData(AFrame parent, string text, int left, int top, object data)
             : base(parent, text, left, top)
         {
-            mText = text;
+            this.text = text;
             mData = data;
         }
         ///--------------------------------------------------------------------------------------
