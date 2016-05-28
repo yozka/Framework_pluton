@@ -98,6 +98,7 @@
     <Compile Include="Source\Platform\Android\fwStorage.cs" />
     <Compile Include="Source\Platform\Android\fwVibration.cs" />
     <Compile Include="Source\Platform\Android\Marketplace\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\Android\Marketplace\fwMarketplace_empty.cs" />
     <Compile Include="Source\Platform\iOS\fwAnalytics_flurry.cs" />
     <Compile Include="Source\Platform\iOS\fwCulture.cs" />
     <Compile Include="Source\Platform\iOS\fwJson.cs" />
@@ -195,7 +196,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Target Name="Rebuild">
   </Target>
   <Target Name="Clean">
