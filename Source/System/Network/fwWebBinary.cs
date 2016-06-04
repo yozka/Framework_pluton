@@ -1,7 +1,7 @@
 ﻿#region Using framework
 using System;
 using System.Net.Http;
-using System.Text;
+using System.IO;
 #endregion
 
 
@@ -19,21 +19,22 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-    ///=====================================================================================
+     ///=====================================================================================
     ///
     /// <summary>
     /// Команды отправляемые на произвольный сервер
+    /// для загрузки бинарных файлов
     /// </summary>
     /// 
     ///--------------------------------------------------------------------------------------
-    public class AWebRequest
+    public class AWebBinary
             :
                 AQuery
     {
         ///--------------------------------------------------------------------------------------
-        private string mUrl = string.Empty;
-        private string mResult = null;
-        private Object mUserData = null;
+        private string mUrl         = string.Empty;
+        private Object mUserData    = null;
+        private Stream mStream      = null;
         ///--------------------------------------------------------------------------------------
 
 
@@ -41,14 +42,14 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// constructor
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public AWebRequest()
+        public AWebBinary()
         {
 
         }
@@ -66,7 +67,7 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public AWebRequest(string url)
+        public AWebBinary(string url)
         {
             mUrl = url;
         }
@@ -76,7 +77,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// пользовательские данные
@@ -103,7 +104,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// установка адреса для отправки
@@ -121,7 +122,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// начало выполнения команды
@@ -131,10 +132,6 @@ namespace Pluton.SystemProgram.Devices
         protected override void onSend()
         {
             sendHttp();
-            /*
-            web.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-            web.Encoding = Encoding.UTF8;
-            web.UploadStringAsync(new Uri(mUrl), "POST", string.Empty, this);*/
         }
         ///--------------------------------------------------------------------------------------
 
@@ -153,9 +150,20 @@ namespace Pluton.SystemProgram.Devices
         {
             try
             {
-                using (var data = await network.http.GetAsync(mUrl))
+                using (var data = await network.http.GetStreamAsync(mUrl))
                 {
-                    mResult = data.Content.ReadAsStringAsync().Result;
+                    mStream = new MemoryStream();
+                    byte[] buffer = new byte[1024];
+                    while (true)
+                    {
+                        var i = data.Read(buffer, 0, buffer.Length);
+                        if (i == 0)
+                        {
+                            break;
+                        }
+                        mStream.Write(buffer, 0, i);
+                    }
+                    mStream.Position = 0;
                     executeCompleted();
                 }
             }
@@ -175,8 +183,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// очистить всю команду
@@ -185,7 +192,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         protected override void onClear()
         {
-            mResult = null;
+            mStream = null;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -194,18 +201,18 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// возвартим результат работы команды
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public string resultText
+        public Stream result
         {
             get
             {
-                return mResult == null ? string.Empty : mResult;
+                return mStream;
             }
         }
         ///--------------------------------------------------------------------------------------

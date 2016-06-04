@@ -1,8 +1,8 @@
 ﻿#region Using framework
 using System.IO;
 using System;
-//using Microsoft.Xna.Framework;
-//using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
@@ -10,9 +10,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 
 
-namespace Pluton.SystemProgram.Devices
+namespace Pluton.GraphicsElement
 {
     ///--------------------------------------------------------------------------------------
+    using Pluton.SystemProgram;
     using Pluton.Helper;
     ///--------------------------------------------------------------------------------------
 
@@ -27,9 +28,9 @@ namespace Pluton.SystemProgram.Devices
     /// </summary>
     /// 
     ///--------------------------------------------------------------------------------------
-    public class AWebPicture
-         :
-                AWebQuery
+    public class AStoragePicture
+         
+             
     {
         ///--------------------------------------------------------------------------------------
 
@@ -37,36 +38,12 @@ namespace Pluton.SystemProgram.Devices
 
 
         ///--------------------------------------------------------------------------------------
-        private readonly string mAddress;
-        
-        private EStatus mStatus = EStatus.none; //текущий статус команды
-        private int mCountSend = 0;             //количество попыток отправки
-        private Texture2D mTexture = null;
-        private bool mCache = false; //картинка загрузилась из кеша
-
-        private int mGDHandle = 0;
+        private string      mFileName   = null;
+        private Texture2D   mTexture    = null;
+        private int         mGDHandle   = 0;
         ///--------------------------------------------------------------------------------------
 
 
-
-
-
-
-         ///=====================================================================================
-        ///
-        /// <summary>
-        /// описание текущего статуса команды
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public enum EStatus
-        {
-            none,
-            idle,
-            loading,
-            loadingCompleted
-        }
-        ///--------------------------------------------------------------------------------------
 
 
 
@@ -80,11 +57,12 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public AWebPicture(string address)
+        public AStoragePicture()
         {
-            mAddress = address;
+    
         }
         ///--------------------------------------------------------------------------------------
+
 
 
 
@@ -97,7 +75,7 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public static implicit operator Texture2D(AWebPicture p)
+        public static implicit operator Texture2D(AStoragePicture p)
         {
             return p != null ? p.mTexture : null;
         }
@@ -106,55 +84,25 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-         ///=====================================================================================
-        ///
-        /// <summary>
-        /// картинка загружена из кеша
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public void setCached()
-        {
-            mCache = true;
-        }
-        ///--------------------------------------------------------------------------------------
-
-
 
 
          ///=====================================================================================
         ///
         /// <summary>
-        /// картинка загружена из кеша
+        /// возвратим имя файла
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public bool isCached()
-        {
-            return mCache;
-        }
-        ///--------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-         ///=====================================================================================
-        ///
-        /// <summary>
-        /// получили адрес
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public string address
+        public string fileName
         {
             get
             {
-                return mAddress;
+                return mFileName == null ? string.Empty : mFileName;
+            }
+
+            set
+            {
+                mFileName = value;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -172,10 +120,12 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
+
+        /*
         public bool isLoading()
         {
             return mStatus == EStatus.idle || mStatus == EStatus.loading;
-        }
+        }*/
         ///--------------------------------------------------------------------------------------
 
 
@@ -190,10 +140,11 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
+        /*
         public bool isCompleted()
         {
             return mStatus == EStatus.loadingCompleted;
-        }
+        }*/
         ///--------------------------------------------------------------------------------------
 
 
@@ -204,37 +155,8 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// команду отправили в стек выполенения 
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public int sendQueue()
-        {
-            mStatus = EStatus.idle;
-            mCountSend++;
-            return mCountSend;
-        }
-        ///--------------------------------------------------------------------------------------
 
 
-
-
-
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// начало выполнения команды
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public void send()
-        {
-            mStatus = EStatus.loading;
-        }
-        ///--------------------------------------------------------------------------------------
 
 
 
@@ -248,6 +170,7 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
+        /*
         public void loadingCompleted(GraphicsDevice graphicsDevice, Stream stream)
         {
             mStatus = EStatus.loadingCompleted;
@@ -258,39 +181,10 @@ namespace Pluton.SystemProgram.Devices
             {
                 signal_completed(this);
             }
-        }
+        }*/
         ///--------------------------------------------------------------------------------------
 
 
-
-
-
-        ///--------------------------------------------------------------------------------------
-        public delegate void eventCmd(AWebPicture pic);
-        public event eventCmd signal_completed;
-        ///--------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// конец выполнения сообщения
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public EStatus status
-        {
-            get
-            {
-                return mStatus;
-            }
-        }
-        ///--------------------------------------------------------------------------------------
 
 
 
@@ -306,7 +200,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool loadStream(GraphicsDevice graphicsDevice, Stream stream)
         {
-            /*
+      
             try
             {
                 stream.Position = 0;                    
@@ -319,32 +213,13 @@ namespace Pluton.SystemProgram.Devices
                 mTexture = null;
                 return false;
             }
-            */
-
-
-            /*
-             UIThread.Invoke(() =>
-             {
-                try
-                {
-                    stream.Position = 0;
-                    mTexture = Texture2D.FromStream(graphicsDevice, stream);
-                    mGDHandle = ASpriteBatch.GDHandle();
-                }
-                catch (Exception)
-                {
-                    mTexture = null;
-                }
-             });
-            */
-
             return true;
         }
         ///--------------------------------------------------------------------------------------
 
- 
 
-        
+
+
          ///=====================================================================================
         ///
         /// <summary>
@@ -352,25 +227,20 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public bool isResetting()
+        public bool isReboot()
         {
             if (mTexture == null)
             {
                 return false;
             }
-
-            //var p = mTexture.GetSharedHandle();
-
-
             return ASpriteBatch.isHandle(mGDHandle) ? false : true;
-            
         }
         ///--------------------------------------------------------------------------------------
 
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// проверка, был резет графического девайса или нет

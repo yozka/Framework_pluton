@@ -399,7 +399,7 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        private static async void inapp()
+        private static void inapp()
         {
             /*
             string error = null;

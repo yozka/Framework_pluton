@@ -2,6 +2,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 #endregion
 
 
@@ -177,7 +178,7 @@ namespace Pluton.SystemProgram.Devices
             sound           = new ASoundDevice();
             input           = new AInputDevice(screenManager.Game);
             analytics       = new AAnalytics_group();
-            network         = new ANetworkWeb(getDeviceGuid());
+            network         = new ANetworkWeb();
  
             dateTime        = new ADateTime();
             license         = new ALicense(this);
@@ -446,8 +447,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool runBrowser(string url)
         {
-            //var prc = Process.Start(url);
-            return false;
+            return input.runBrowser(url);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -455,8 +455,25 @@ namespace Pluton.SystemProgram.Devices
 
 
 
+       
 
 
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// запуск браузера
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public  GraphicsDevice graphicsDevice
+        {
+            get
+            {
+                return m_screenManager.GraphicsDevice;
+            }
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 

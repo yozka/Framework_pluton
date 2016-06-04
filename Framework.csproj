@@ -45,6 +45,7 @@
     <Compile Include="Source\GraphicsElement\fwBackgroundBand.cs" />
     <Compile Include="Source\GraphicsElement\fwBackgroundSprite.cs" />
     <Compile Include="Source\GraphicsElement\fwInterface_camera.cs" />
+    <Compile Include="Source\GraphicsElement\fwStoragePicture.cs" />
     <Compile Include="Source\GraphicsElement\Lightning\fwLCircle.cs" />
     <Compile Include="Source\GraphicsElement\Lightning\fwLLightningBolt.cs" />
     <Compile Include="Source\GraphicsElement\Lightning\fwLLine.cs" />
@@ -116,6 +117,12 @@
     <Compile Include="Source\Platform\WindowsPhone7\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\Network\fwAuthorization.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\Network\fwNetworkWeb.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\Network\fwQuery.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\Network\fwWebBinary.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\Network\fwWebCommand.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\Network\fwWebRequest.cs" />
     <Compile Include="Source\Platform\WindowsPhone8.1\fwAnalytics_microsoft.cs" />
     <Compile Include="Source\Platform\WindowsPhone8.1\fwCulture.cs" />
     <Compile Include="Source\Platform\WindowsPhone8.1\fwInputDevice.cs" />
@@ -149,9 +156,10 @@
     <Compile Include="Source\Platform\WindowsGL\fwJson.cs" />
     <Compile Include="Source\System\License\fwLicense_free.cs" />
     <Compile Include="Source\System\Network\fwNetworkWeb.cs" />
-    <Compile Include="Source\System\Network\fwWebCommand.cs" />
-    <Compile Include="Source\System\Network\fwWebParameters.cs" />
-    <Compile Include="Source\System\Network\fwWebQuery.cs" />
+    <Compile Include="Source\System\Network\Potocol\fwAuthorization.cs" />
+    <Compile Include="Source\System\Network\Potocol\fwWebCommand.cs" />
+    <Compile Include="Source\System\Network\Potocol\fwWebParameters.cs" />
+    <Compile Include="Source\System\Network\fwQuery.cs" />
     <Compile Include="Source\System\Network\fwWebRequest.cs" />
     <Compile Include="Source\System\fwScreen.cs" />
     <Compile Include="Source\System\fwScreenFrame.cs" />
@@ -159,7 +167,7 @@
     <Compile Include="Source\System\fwSpriteBatch.cs" />
     <Compile Include="Source\System\fwSpriteContent.cs" />
     <Compile Include="Source\System\fwSpritePrimitives.cs" />
-    <Compile Include="Source\System\Network\fwWebPicture.cs" />
+    <Compile Include="Source\System\Network\fwWebBinary.cs" />
     <Compile Include="Source\System\Stream\fwBinaryReader.cs" />
     <Compile Include="Source\System\Stream\fwBinaryWriter.cs" />
     <Compile Include="Source\System\Stream\fwMemberData.cs" />
@@ -173,6 +181,8 @@
     <Compile Include="Source\Utils\fwVector.cs" />
     <Compile Include="Source\Utils\fwPointExt.cs" />
     <Compile Include="Source\Utils\fwStringExt.cs" />
+    <Compile Include="Source\Utils\MD5\lib_MD5.cs" />
+    <Compile Include="Source\Utils\MD5\md5_portable.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -196,6 +206,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Target Name="Rebuild">
   </Target>
   <Target Name="Clean">

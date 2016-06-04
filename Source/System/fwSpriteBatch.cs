@@ -1026,9 +1026,28 @@ namespace Pluton.SystemProgram
         /// -------------------------------------------------------------------------------------
         public void beginClipping(Rectangle region)
         {
+            
+            int iX = region.X;
+            int iY = region.Y;
+            int iWidth = region.Width;
+            int iHeight = region.Height;
+
+            if (iX < 0)
+            {
+                iWidth += iX;
+                iX = 0;
+            }
+
+            if (iY < 0)
+            {
+                iHeight += iY;
+                iY = 0;
+            }
+            
+  
             end();
             mClipping = true;
-            GraphicsDevice.ScissorRectangle = region;
+            GraphicsDevice.ScissorRectangle = new Rectangle(iX, iY, iWidth, iHeight);
             beginState();
         }
         ///--------------------------------------------------------------------------------------

@@ -1,8 +1,9 @@
 ﻿#region Using framework
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Net;
 using System.Text;
+using System.IO;
 #endregion
 
 
@@ -39,7 +40,7 @@ namespace Pluton.SystemProgram.Devices
         private readonly List<string>   mErrors     = new List<string>(); //пул последних ошибок рабты с сервером
         
         
-        private readonly HttpClient     mHttpClient = null;     //управляющий поток сервера
+        private readonly WebClient      mWebClient  = null;     //управляющий поток сервера
         private readonly List<AQuery>   mPool       = new List<AQuery>(); //пулл выполняемых команд
         private bool                    mBussy      = false;    //идет выполнение запроса
 
@@ -70,7 +71,9 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public ANetworkWeb()
         {
-            mHttpClient = new HttpClient();
+            mWebClient = new WebClient();
+            mWebClient.UploadStringCompleted += evCommandCompleted;
+            mWebClient.OpenReadCompleted += evBinaryCompleted;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -138,6 +141,12 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         private void executeCommand()
         {
+            if (mWebClient.IsBusy)
+            {
+                waitExecute();
+                return;
+            }
+            
             mWait = false; //ждать для отправки ненужно
             
             //авторизация на сервере если есть
@@ -165,54 +174,6 @@ namespace Pluton.SystemProgram.Devices
         }
         ///--------------------------------------------------------------------------------------
 
-
-
-
-
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// завершение загрузки на сервер
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        /*
-        private void evCommandCompleted(object sender, UploadStringCompletedEventArgs e)
-        {
-            AWebQuery cmd = e.UserState as AWebQuery;
-            if (cmd == null && e.UserState is ANetworkWeb)
-            {
-                mLoginAth = false;
-                if (e.Error != null)
-                {
-                    waitExecute();
-                    return;
-                }
-                AWebParameters param = new AWebParameters(e.Result);
-                mDeviceID = param.keyInteger("deviceID", mDeviceID);
-                if (mDeviceID == 0)
-                {
-                    waitExecute();
-                    return;
-                }
-                executeCommand();
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                if (cmd.sendQueue() < 10)
-                {
-                    mPool.Insert(0, cmd);
-                }
-                waitExecute();
-                return;
-            }
-            cmd.execute(e.Result);
-            executeCommand();
-        }
-        ///--------------------------------------------------------------------------------------
-        */
 
 
 
@@ -297,7 +258,7 @@ namespace Pluton.SystemProgram.Devices
             if (mTimeout)
             {
                 mTimeoutWait += gameTime;
-                if (mTimeoutWait.TotalMilliseconds > cTimeOut)
+                if (mTimeoutWait.TotalMilliseconds > 1000 * 60)
                 {
                     nextExecute();
                 }
@@ -320,11 +281,11 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public HttpClient http
+        public WebClient http
         {
             get
             {
-                return mHttpClient;
+                return mWebClient;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -401,6 +362,90 @@ namespace Pluton.SystemProgram.Devices
 
 
 
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// завершение загрузки на сервер
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void evCommandCompleted(object sender, UploadStringCompletedEventArgs e)
+        {
+            AQuery cmd = e.UserState as AQuery;
+            if (cmd == null)
+            {
+                return;
+            }
+
+            if (e.Error == null)
+            {
+                cmd.onCompleted(e.Result);
+            }
+            else
+            {
+                cmd.onError(e.Error.Message);
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// завершение загрузки на сервер
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void evBinaryCompleted(object sender, OpenReadCompletedEventArgs e)
+        {
+            AQuery cmd = e.UserState as AQuery;
+            if (cmd == null)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                cmd.onError(e.Error.Message);
+                return;
+            }
+
+            
+            //загрузилось все норм
+            //запишем все в буфер
+            try
+            {
+                byte[] buffer = new byte[1024];
+                Stream ss = new MemoryStream();
+                while (true)
+                {
+                    int i = e.Result.Read(buffer, 0, buffer.Length);
+                    if (i == 0)
+                    {
+                        break;
+                    }
+                    ss.Write(buffer, 0, i);
+                }
+                //
+                ss.Position = 0;
+                cmd.onCompleted(ss);
+ 
+            }
+            catch (Exception er)
+            {
+                cmd.onError(er.Message);
+                return;
+            }
+
+
+            
+
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 

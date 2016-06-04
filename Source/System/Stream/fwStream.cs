@@ -628,6 +628,10 @@ namespace Pluton.SystemProgram
         ///--------------------------------------------------------------------------------------
         public static Rectangle readRectangle(IStream stream, string name, Rectangle rect)
         {
+            if (stream == null)
+            {
+                return rect;
+            }
             Point a = stream.readPoint(name + "A", new Point(rect.Left, rect.Top));
             Point b = stream.readPoint(name + "B", new Point(rect.Width, rect.Height));
             return new Rectangle(a.X, a.Y, b.X, b.Y);
@@ -647,6 +651,11 @@ namespace Pluton.SystemProgram
         ///--------------------------------------------------------------------------------------
         public static void writeRectangle(IStream stream, string name, Rectangle rect)
         {
+            if (stream == null)
+            {
+                return;
+            }
+
             stream.writePoint(name + "A", new Point(rect.Left, rect.Top));
             stream.writePoint(name + "B", new Point(rect.Width, rect.Height));
         }
@@ -665,11 +674,14 @@ namespace Pluton.SystemProgram
         ///--------------------------------------------------------------------------------------
         public static IStream findChild(IStream stream, string typeName)
         {
-            foreach (var s in stream.getChilds())
+            if (stream != null)
             {
-                if (s.getTypeName() == typeName)
+                foreach (var s in stream.getChilds())
                 {
-                    return s;
+                    if (s.getTypeName() == typeName)
+                    {
+                        return s;
+                    }
                 }
             }
             return null;
@@ -689,6 +701,10 @@ namespace Pluton.SystemProgram
         ///--------------------------------------------------------------------------------------
         public static IStream createChild(IStream stream, string typeName)
         {
+            if (stream == null)
+            {
+                return null;
+            }
             IStream child = stream.creationChild();
             child.setTypeName(typeName);
             return child;
@@ -709,6 +725,10 @@ namespace Pluton.SystemProgram
         ///--------------------------------------------------------------------------------------
         public static TimeSpan readTimeSpan(IStream stream, string name, TimeSpan time)
         {
+            if (stream == null)
+            {
+                return time;
+            }
             return TimeSpan.FromSeconds(stream.readUInteger(name, (uint)time.TotalSeconds));
         }
         ///--------------------------------------------------------------------------------------
@@ -726,7 +746,10 @@ namespace Pluton.SystemProgram
         ///--------------------------------------------------------------------------------------
         public static void writeTimeSpan(IStream stream, string name, TimeSpan time)
         {
-            stream.writeUInteger(name, (uint)time.TotalSeconds);
+            if (stream != null)
+            {
+                stream.writeUInteger(name, (uint)time.TotalSeconds);
+            }
         }
         ///--------------------------------------------------------------------------------------
 

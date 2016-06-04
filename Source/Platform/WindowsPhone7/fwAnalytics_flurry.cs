@@ -152,8 +152,11 @@ namespace Pluton.SystemProgram.Devices
         public void logError(string message, Exception e)
         {
 #if ANALYTICS  
+            
             string sError = message + " -> M:" + e.Message + "; S:" + e.StackTrace;
             FlurryWP8SDK.Api.LogError(sError, e);
+            
+            /*
             MessageBox.Show("Dear user, There was error in the programm. Fix it in the next version. Thanks!", "Error", MessageBoxButton.OK);
 
             try
@@ -168,6 +171,7 @@ namespace Pluton.SystemProgram.Devices
             catch (Exception)
             {
             }
+             * */
             //mDeviceGame.Exit();
             
 #endif
@@ -231,8 +235,8 @@ namespace Pluton.SystemProgram.Devices
         public void eventParam(string eventName, string paramName)
         {
 #if ANALYTICS
-            List<Parameter> param = new List<Parameter>();
-            param.Add(new Parameter(paramName, String.Empty));
+            List<FlurryWP8SDK.Models.Parameter> param = new List<FlurryWP8SDK.Models.Parameter>();
+            param.Add(new FlurryWP8SDK.Models.Parameter(paramName, String.Empty));
             FlurryWP8SDK.Api.LogEvent(eventName, param);
 #endif
         }

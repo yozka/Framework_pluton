@@ -5,7 +5,7 @@ using Windows.Storage;
 
 using Windows.System.Profile;
 using System.Runtime.InteropServices.WindowsRuntime;
-
+using Windows.Foundation;
 #endregion
 
 
@@ -365,18 +365,28 @@ namespace Pluton.SystemProgram.Devices
         {
             try
             {
-                var file = mStorageFolder.CreateFileAsync(name, CreationCollisionOption.ReplaceExisting).GetResults();
-                var sm = file.OpenStreamForWriteAsync().Result;
+                var fileSync = mStorageFolder.CreateFileAsync(name, CreationCollisionOption.ReplaceExisting);
+                while (fileSync.Status == AsyncStatus.Started)
+                {
+                    System.Threading.Tasks.Task.Delay(20).Wait();
+                }
+                var file = fileSync.GetResults();
+                var writer = file.OpenStreamForWriteAsync();
+                writer.Wait(TimeSpan.FromSeconds(10));
+                var sm = writer.Result;
+                sm.Position = 0;
                 stream.Position = 0;
                 stream.CopyTo(sm);
                 sm.Flush();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                string s = e.Message;
             }
             return false;
+  
+
 
             /*
             IsolatedStorageFileStream sm = null;
@@ -423,10 +433,20 @@ namespace Pluton.SystemProgram.Devices
         {
             try
             {
-                var file = mStorageFolder.GetFileAsync(name).GetResults();
+                var fileSync = mStorageFolder.GetFileAsync(name);
+                while (fileSync.Status == AsyncStatus.Started)
+                {
+                    System.Threading.Tasks.Task.Delay(20).Wait();
+                }
+                var file = fileSync.GetResults();
+                
+                //                
                 if (file != null)
                 {
-                    var sm = file.OpenStreamForReadAsync().Result;
+                    var reader = file.OpenStreamForReadAsync();
+                    reader.Wait(TimeSpan.FromSeconds(10));
+                    var sm = reader.Result;
+
                     stream.Position = 0;
                     sm.CopyTo(stream);
                     sm.Dispose();

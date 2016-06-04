@@ -325,6 +325,7 @@ namespace Pluton.GUI
         protected override void onShow()
         {
             resize();
+            buttonsEnabled(true);
         }
         ///--------------------------------------------------------------------------------------
 

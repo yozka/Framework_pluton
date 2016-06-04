@@ -51,17 +51,17 @@ namespace Pluton.SystemProgram
 
 
 
-        private ADisplayInfo                mDisplayInfo = null;   //текущие значение графики
-        private ASpriteBatch                mSpriteBatch = null;   //Контекст для отрисовки спрайтов
-        private readonly ASpriteContent     mSpriteContent = null; //содержимое спрайтов
+        private ADisplayInfo                mDisplayInfo    = null; //текущие значение графики
+        private ASpriteBatch                mSpriteBatch    = null; //Контекст для отрисовки спрайтов
+        private readonly ASpriteContent     mSpriteContent  = null; //содержимое спрайтов
 
 
 
         /*
          * внутренние ресурсы менеджера
          */
-        private bool                        mInitialized = false;
-        private int                         mHContent = 1; //индификатор контента
+        private bool                        mInitialized    = false;
+        private int                         mHContent       = 1; //индификатор контента
 
         private bool mUpdateReboot = false; //флаг того что были изменены экраны
         private readonly List<AScreen>           mScreens = new List<AScreen>();

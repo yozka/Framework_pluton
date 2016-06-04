@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Devices.Sensors;
 using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Phone.Tasks;
 #endregion
 
 
@@ -23,7 +24,7 @@ namespace Pluton.SystemProgram.Devices
     /// </summary>
     /// 
     ///--------------------------------------------------------------------------------------
-    public class AInputDevice : IDisposable
+    public class AInputDevice
     {
 
         //нажатие на тачпанель
@@ -110,24 +111,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        
-         ///=====================================================================================
-        ///
-        /// <summary>
-        /// Освобождение ресурсов
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public void Dispose()
-        {
-            /*
-            m_accelerometer.Stop();
-            m_accelerometer.Dispose();
-             * */
-        }
-        ///--------------------------------------------------------------------------------------
-       
-
+     
 
 
 
@@ -732,6 +716,32 @@ namespace Pluton.SystemProgram.Devices
             }
         }
          * */
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// запуск браузера
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public bool runBrowser(string url)
+        {
+            try
+            {
+                WebBrowserTask webBrowserTask = new WebBrowserTask();
+                webBrowserTask.Uri = new Uri(url);
+                webBrowserTask.Show();
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 

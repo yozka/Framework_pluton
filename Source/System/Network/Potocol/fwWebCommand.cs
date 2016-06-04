@@ -8,7 +8,7 @@ using System.Text;
 
 
 
-namespace Pluton.SystemProgram.Devices
+namespace Pluton.SystemProgram.Devices.WEB
 {
     ///--------------------------------------------------------------------------------------
     ///--------------------------------------------------------------------------------------
@@ -22,18 +22,30 @@ namespace Pluton.SystemProgram.Devices
     ///=====================================================================================
     ///
     /// <summary>
-    /// Команды отправляемые на произвольный сервер
+    /// Команды отправляемые на сервер
     /// </summary>
     /// 
     ///--------------------------------------------------------------------------------------
-    public class AWebRequest
+    public class AWebCommand
             :
                 AQuery
     {
         ///--------------------------------------------------------------------------------------
-        private string mUrl = string.Empty;
-        private string mResult = null;
-        private Object mUserData = null;
+        private const int cVersionAPI = 1; //версия протокола
+        ///--------------------------------------------------------------------------------------
+ 
+
+
+        ///--------------------------------------------------------------------------------------
+        public readonly AWebParameters parameters = new AWebParameters();
+        public AWebParameters result = null; //результат выполнения команды
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+        ///--------------------------------------------------------------------------------------
+        private string mData = null;
         ///--------------------------------------------------------------------------------------
 
 
@@ -48,9 +60,8 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public AWebRequest()
+        public AWebCommand()
         {
-
         }
         ///--------------------------------------------------------------------------------------
 
@@ -66,9 +77,9 @@ namespace Pluton.SystemProgram.Devices
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public AWebRequest(string url)
+        public AWebCommand(string cmd)
         {
-            mUrl = url;
+            parameters.addString("cmd", cmd);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -76,24 +87,20 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
+
+
+
+
+         ///=====================================================================================
         ///
         /// <summary>
-        /// пользовательские данные
+        /// преобразование команды в текст для отправки на сервер
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public Object userData
+        public string toString()
         {
-            get
-            {
-                return mUserData;
-            }
-
-            set
-            {
-                mUserData = value;
-            }
+            return parameters.toString();
         }
         ///--------------------------------------------------------------------------------------
 
@@ -103,25 +110,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// установка адреса для отправки
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public void setUrl(string url)
-        {
-            mUrl = url;
-        }
-        ///--------------------------------------------------------------------------------------
-
-
-
-
-
-
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// начало выполнения команды
@@ -130,11 +119,23 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         protected override void onSend()
         {
-            sendHttp();
-            /*
-            web.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-            web.Encoding = Encoding.UTF8;
-            web.UploadStringAsync(new Uri(mUrl), "POST", string.Empty, this);*/
+            var login = network.authorization as AAuthorization;
+            if (login == null)
+            {
+                executeError("Not authorization");
+                return;
+            }
+
+            int deviceID = login.deviceID;
+            if (deviceID == 0)
+            {
+                executeError("handle DeviceID invalid");
+                return;
+            }
+
+            parameters.addInteger("deviceID", deviceID);
+            parameters.addInteger("ver", cVersionAPI);
+            sendHttp(login.uri);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -142,20 +143,22 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// выполнение команды
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected async void sendHttp()
+        protected async void sendHttp(Uri uri)
         {
             try
             {
-                using (var data = await network.http.GetAsync(mUrl))
+                var content = new StringContent(parameters.toString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                using (var data = await network.http.PostAsync(uri, content))
                 {
-                    mResult = data.Content.ReadAsStringAsync().Result;
+                    mData = data.Content.ReadAsStringAsync().Result;
+                    result = new AWebParameters(mData);
                     executeCompleted();
                 }
             }
@@ -174,8 +177,6 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-
-
         ///=====================================================================================
         ///
         /// <summary>
@@ -185,7 +186,9 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         protected override void onClear()
         {
-            mResult = null;
+            parameters.clear();
+            result = null;
+            mData = null;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -197,7 +200,7 @@ namespace Pluton.SystemProgram.Devices
         ///=====================================================================================
         ///
         /// <summary>
-        /// возвартим результат работы команды
+        /// возвратить текст сообщения
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
@@ -205,10 +208,13 @@ namespace Pluton.SystemProgram.Devices
         {
             get
             {
-                return mResult == null ? string.Empty : mResult;
+                return mData;
             }
         }
         ///--------------------------------------------------------------------------------------
+
+
+
 
 
 
