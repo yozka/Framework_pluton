@@ -9,6 +9,7 @@ using Microsoft.Devices.Sensors;
 
 using System.Threading.Tasks;
 
+
 #endregion
 
 
@@ -755,7 +756,6 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool runBrowser(string url)
         {
-            
             return false;
         }
         ///--------------------------------------------------------------------------------------

@@ -44,7 +44,8 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public AStorage()
         {
-            mStorageFile = IsolatedStorageFile.GetUserStoreForAssembly();
+            //mStorageFile = IsolatedStorageFile.GetUserStoreForAssembly();
+            mStorageFile = IsolatedStorageFile.GetUserStoreForApplication();
         }
         ///--------------------------------------------------------------------------------------
 
