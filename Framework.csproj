@@ -139,6 +139,14 @@
     <Compile Include="Source\Platform\WindowsPhone8\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsUWP\fwAnalytics_microsoft.cs" />
+    <Compile Include="Source\Platform\WindowsUWP\fwCulture.cs" />
+    <Compile Include="Source\Platform\WindowsUWP\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\WindowsUWP\fwJson.cs" />
+    <Compile Include="Source\Platform\WindowsUWP\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\WindowsUWP\fwStorage.cs" />
+    <Compile Include="Source\Platform\WindowsUWP\fwTypeExt.cs" />
+    <Compile Include="Source\Platform\WindowsUWP\fwVibration.cs" />
     <Compile Include="Source\System\Devices\fwAdvertisements.cs" />
     <Compile Include="Source\System\Devices\fwAnalytics.cs" />
     <Compile Include="Source\System\Devices\fwDevices.cs" />
