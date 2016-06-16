@@ -208,7 +208,7 @@ namespace Pluton.GraphicsElement
                 mGDHandle = ASpriteBatch.GDHandle();
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 mTexture = null;
                 return false;
