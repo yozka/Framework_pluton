@@ -42,6 +42,8 @@ namespace Pluton.GUI
         private const int cImgHeight    = ATheme.buttonText_imgHeight;
         ///--------------------------------------------------------------------------------------
 
+        private readonly uint mSpriteID = ATheme.buttonText_spriteID;
+
 
         private string      mText       = string.Empty; //текст кнопки
         private Vector2     mTextOrigin = Vector2.Zero; //централизация текста у кнопки
@@ -54,10 +56,7 @@ namespace Pluton.GUI
 
 
 
-
-
-
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// Конструктор
@@ -65,8 +64,27 @@ namespace Pluton.GUI
         /// 
         ///--------------------------------------------------------------------------------------
         public AButtonText(AFrame parent, string text, int left, int top)
+            : this(parent, text, left, top, ATheme.buttonText_spriteID)
+        {
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public AButtonText(AFrame parent, string text, int left, int top, uint spriteID)
             : base(parent, left, top, cWidth, cHeight)
         {
+            mSpriteID = spriteID;
+
             mText = text;
             mFont = ATheme.buttonText_font;
 
@@ -175,7 +193,7 @@ namespace Pluton.GUI
 
             //отрисуем кнопки
             Vector2 pos = rect.Center.toVector2();
-            spriteBatch.Draw(spriteBatch.getSprite(ATheme.buttonText_spriteID), pos, scrButton, Color.White * fAlpha, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), fScale, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(spriteBatch.getSprite(mSpriteID), pos, scrButton, Color.White * fAlpha, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), fScale, SpriteEffects.None, 0.5f);
 
      
 
