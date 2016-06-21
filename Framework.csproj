@@ -176,6 +176,8 @@
     <Compile Include="Source\System\fwSpriteContent.cs" />
     <Compile Include="Source\System\fwSpritePrimitives.cs" />
     <Compile Include="Source\System\Network\fwWebBinary.cs" />
+    <Compile Include="Source\System\Network\Sockets\fwInterface_Address.cs" />
+    <Compile Include="Source\System\Network\Sockets\fwInterface_UdpClient.cs" />
     <Compile Include="Source\System\Stream\fwBinaryReader.cs" />
     <Compile Include="Source\System\Stream\fwBinaryWriter.cs" />
     <Compile Include="Source\System\Stream\fwMemberData.cs" />
@@ -214,7 +216,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Target Name="Rebuild">
   </Target>
   <Target Name="Clean">
