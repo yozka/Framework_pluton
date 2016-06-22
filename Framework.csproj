@@ -110,6 +110,7 @@
     <Compile Include="Source\Platform\iOS\fwVibration.cs" />
     <Compile Include="Source\Platform\iOS\fwInputDevice.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwUdpClient.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwJson.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwAnalytics_flurry.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwCulture.cs" />
@@ -176,8 +177,7 @@
     <Compile Include="Source\System\fwSpriteContent.cs" />
     <Compile Include="Source\System\fwSpritePrimitives.cs" />
     <Compile Include="Source\System\Network\fwWebBinary.cs" />
-    <Compile Include="Source\System\Network\Sockets\fwInterface_Address.cs" />
-    <Compile Include="Source\System\Network\Sockets\fwInterface_UdpClient.cs" />
+    <Compile Include="Source\System\Network\fwInterface_UdpClient.cs" />
     <Compile Include="Source\System\Stream\fwBinaryReader.cs" />
     <Compile Include="Source\System\Stream\fwBinaryWriter.cs" />
     <Compile Include="Source\System\Stream\fwMemberData.cs" />
