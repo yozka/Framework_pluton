@@ -186,6 +186,7 @@
     <Compile Include="Source\System\Stream\fwTypeContent.cs" />
     <Compile Include="Source\Utils\fwCollections.cs" />
     <Compile Include="Source\Utils\fwHelper.cs" />
+    <Compile Include="Source\Utils\fwMutex.cs" />
     <Compile Include="Source\Utils\fwPathWave.cs" />
     <Compile Include="Source\Utils\fwSingleton.cs" />
     <Compile Include="Source\Utils\fwVector.cs" />

@@ -226,8 +226,12 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void disconnect()
         {
-            mUdp.Close();
-            mUdp = null;
+            if (mUdp != null)
+            {
+                mUdp.Close();
+                mUdp = null;
+            }
+
             mAddress = null;
             mSending = false;
             mReceiving = false;
@@ -310,6 +314,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public event eventUdpReceive signal_receive;
         ///--------------------------------------------------------------------------------------
+
 
 
 
