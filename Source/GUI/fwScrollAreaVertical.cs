@@ -457,7 +457,7 @@ namespace Pluton.GUI
 
                 if (mAutoCenter)
                 {
-                    iiLeft = (frameWidth - item.width) / 2;
+                    iiLeft = (frameWidth - item.width) / 2 + rectItem.Left;
                 }
 
                 item.left = iiLeft;
