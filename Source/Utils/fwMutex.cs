@@ -66,7 +66,7 @@ namespace Pluton.Utils
         {
             if (mThread == Thread.CurrentThread)
             {
-                int b = 0;
+                int bMutex = 0;
 
             }
 
