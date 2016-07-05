@@ -27,7 +27,7 @@ namespace Pluton.Utils
         ///--------------------------------------------------------------------------------------
         private bool    mLock   = false;
         private Thread  mThread = null;
-        private int     mCount  = 0;
+        //private int     mCount  = 0;
         ///--------------------------------------------------------------------------------------
 
 
