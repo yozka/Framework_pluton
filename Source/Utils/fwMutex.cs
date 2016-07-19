@@ -72,7 +72,7 @@ namespace Pluton.Utils
 
             while (mLock)
             {
-                Thread.Sleep(10);
+                Thread.Sleep(5);
             }
             mLock = true;
             mThread = Thread.CurrentThread;
