@@ -40,6 +40,8 @@ namespace Pluton.SystemProgram.Devices
         private bool        mSending    = false;
         private bool        mReceiving  = false;
         private string      mError      = null;
+
+        private byte[]      mBuffer     = null; //буфер для отправки данных
         ///--------------------------------------------------------------------------------------
 
 
@@ -250,14 +252,23 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool send(byte[] buffer, int length)
         {
-            if (mUdp == null && !mSending)
+            if (mUdp == null || mSending || buffer == null)
             {
                 return false;
             }
             try
             {
                 mSending = true;
-                mUdp.BeginSend(buffer, length, slot_send, null);
+
+                if (mBuffer == null || mBuffer.Length < length)
+                {
+                    mBuffer = new byte[length];
+                }
+                
+                
+                Array.Copy(buffer, mBuffer, length);
+
+                mUdp.BeginSend(mBuffer, length, slot_send, null);
             }
             catch (Exception ex)
             {
