@@ -264,10 +264,9 @@ namespace Pluton.SystemProgram
 #endif
 
             TimeSpan gameTime = snapshotGameTime.ElapsedGameTime;
-                
 
 
-            if (!Game.IsActive)
+            if (!Game.IsActive && !AFrameworkSettings.isBackgroundActive)
             {
                 //если игра не активная, то нах ничего не делаем, чтобы незлоупортреблять ресурсами
                 Game.SuppressDraw();
