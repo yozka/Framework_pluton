@@ -117,6 +117,7 @@
     <Compile Include="Source\Platform\WindowsPhone7\fwInputDevice.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwStorage.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwUdpClient.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwVibration.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\Network\fwAuthorization.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\Network\fwNetworkWeb.cs" />
