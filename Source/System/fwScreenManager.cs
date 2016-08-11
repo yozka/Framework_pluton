@@ -374,7 +374,7 @@ namespace Pluton.SystemProgram
             }
 
 
-            if (mFocusScreen != null)
+            if (mFocusScreen != null && Game.IsActive)
             {
                 mFocusScreen.onHandleInput(devices.input);
             }
