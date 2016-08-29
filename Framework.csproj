@@ -110,12 +110,14 @@
     <Compile Include="Source\Platform\iOS\fwVibration.cs" />
     <Compile Include="Source\Platform\iOS\fwInputDevice.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\WindowsGL\fwUdpClient.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwJson.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwAnalytics_flurry.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwCulture.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwInputDevice.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwStorage.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\fwUdpClient.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwVibration.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\Network\fwAuthorization.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\Network\fwNetworkWeb.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Source\System\fwSpriteContent.cs" />
     <Compile Include="Source\System\fwSpritePrimitives.cs" />
     <Compile Include="Source\System\Network\fwWebBinary.cs" />
+    <Compile Include="Source\System\Network\fwInterface_UdpClient.cs" />
     <Compile Include="Source\System\Stream\fwBinaryReader.cs" />
     <Compile Include="Source\System\Stream\fwBinaryWriter.cs" />
     <Compile Include="Source\System\Stream\fwMemberData.cs" />
@@ -184,6 +187,7 @@
     <Compile Include="Source\System\Stream\fwTypeContent.cs" />
     <Compile Include="Source\Utils\fwCollections.cs" />
     <Compile Include="Source\Utils\fwHelper.cs" />
+    <Compile Include="Source\Utils\fwMutex.cs" />
     <Compile Include="Source\Utils\fwPathWave.cs" />
     <Compile Include="Source\Utils\fwSingleton.cs" />
     <Compile Include="Source\Utils\fwVector.cs" />
@@ -214,7 +218,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Target Name="Rebuild">
   </Target>
   <Target Name="Clean">

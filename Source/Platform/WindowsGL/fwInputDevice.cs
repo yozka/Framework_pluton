@@ -31,17 +31,19 @@ namespace Pluton.SystemProgram.Devices
     public class AInputDevice
     {
         //хардварные кнопки
-        private KeyboardState   m_buttons;              //текущие нажатые кнопки
-        private KeyboardState   m_buttonsLast;          //предыдущие нажатые кнопки
+        private KeyboardState   mButtons;              //текущие нажатые кнопки
+        private KeyboardState   mButtonsLast;          //предыдущие нажатые кнопки
 
 
 
         //нажатие на тачпанель
-        private const int   c_touchMaxCount = 3;    //количесвто одновременных нажатий на экран
-        private Vector2[]   m_touch = null;         //координаты нажатых прикосновений к экрану
-        private int         m_touchCount = 0;       //Количесвто одновременных нажатий на экран
-        private Vector2     mLastTouch = Vector2.Zero;
-       
+        private const int   c_touchMaxCount     = 3;            //количесвто одновременных нажатий на экран
+        private Vector2[]   mTouch              = null;         //координаты нажатых прикосновений к экрану
+        private int         mTouchCount         = 0;            //Количесвто одновременных нажатий на экран
+        private Vector2     mLastTouch          = Vector2.Zero;
+
+        private bool[]      mMouseLeftButton    = null;         //нажатие на левую кнопку мыши
+        private bool[]      mMouseRightButton   = null;         //нажатиме на правую кнопку мыши
         ///--------------------------------------------------------------------------------------
 
 
@@ -66,9 +68,11 @@ namespace Pluton.SystemProgram.Devices
             
             /* нажатие на кнопки
              */
-            m_touch = new Vector2[c_touchMaxCount];
-            m_touchCount = 0;
+            mTouch = new Vector2[c_touchMaxCount];
+            mTouchCount = 0;
 
+            mMouseLeftButton    = new bool[c_touchMaxCount];
+            mMouseRightButton   = new bool[c_touchMaxCount];
 
             /*
           
@@ -95,8 +99,8 @@ namespace Pluton.SystemProgram.Devices
         public void update()
         {
             //кнопки
-            m_buttonsLast = m_buttons;
-            m_buttons = Keyboard.GetState();
+            mButtonsLast = mButtons;
+            mButtons = Keyboard.GetState();
 
 #if RENDER_DEBUG
             if (isNewButtonPress(Keys.D))
@@ -106,14 +110,18 @@ namespace Pluton.SystemProgram.Devices
 #endif
 
 
-            m_touchCount = 0;
+            mTouchCount = 0;
 
             MouseState ms = Mouse.GetState();
-            if (ms.LeftButton == ButtonState.Pressed)
+            if (ms.LeftButton == ButtonState.Pressed ||
+                ms.RightButton == ButtonState.Pressed)
             {
                 mLastTouch = ASpriteBatch.fromViewPort(new Vector2(ms.X, ms.Y));
-                m_touch[m_touchCount] = mLastTouch;
-                m_touchCount++;
+                mTouch              [mTouchCount] = mLastTouch;
+                mMouseLeftButton    [mTouchCount] = (ms.LeftButton == ButtonState.Pressed);
+                mMouseRightButton   [mTouchCount] = (ms.RightButton == ButtonState.Pressed);
+
+                mTouchCount++;
             }
  
      
@@ -125,9 +133,9 @@ namespace Pluton.SystemProgram.Devices
                 {
                     // Get item.Position
                     mLastTouch = ASpriteBatch.fromViewPort(item.Position);
-                    m_touch[m_touchCount] = mLastTouch;
-                    m_touchCount++;
-                    if (m_touchCount >= c_touchMaxCount)
+                    mTouch[mTouchCount] = mLastTouch;
+                    mTouchCount++;
+                    if (mTouchCount >= c_touchMaxCount)
                     {
                         //вышли за пределы количество нажатий
                         break;
@@ -240,10 +248,27 @@ namespace Pluton.SystemProgram.Devices
         /// 
         public bool isNewButtonPress(Keys button)
         {
-            return (    m_buttons.IsKeyDown(button) &&
-                        m_buttonsLast.IsKeyUp(button));
+            return (    mButtons.IsKeyDown(button) &&
+                        mButtonsLast.IsKeyUp(button));
         }
         ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Отслеживание нажатие новой кнопки.
+        /// </summary>
+        /// 
+        public bool isButtonPress(Keys button)
+        {
+            return mButtons.IsKeyDown(button);
+        }
+        ///--------------------------------------------------------------------------------------
+
 
 
 
@@ -321,9 +346,9 @@ namespace Pluton.SystemProgram.Devices
         {
             int xw = x + width;
             int yh = y + height;
-            for (int i = 0; i < m_touchCount; i++)
+            for (int i = 0; i < mTouchCount; i++)
             {
-                Vector2 pos = m_touch[i];
+                Vector2 pos = mTouch[i];
                 int pointX = (int)pos.X;
                 int pointY = (int)pos.Y;
                 if (pointX >= x && pointX < xw &&
@@ -372,10 +397,10 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void release(int index)
         {
-            if (index >= 0 && index < m_touchCount)
+            if (index >= 0 && index < mTouchCount)
             {
-                m_touch[index].X = -1;
-                m_touch[index].Y = -1;
+                mTouch[index].X = -1;
+                mTouch[index].Y = -1;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -392,12 +417,12 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void release()
         {
-            for (int i = 0; i < m_touchCount; i++)
+            for (int i = 0; i < mTouchCount; i++)
             {
-                m_touch[i].X = -1;
-                m_touch[i].Y = -1;
+                mTouch[i].X = -1;
+                mTouch[i].Y = -1;
             }
-            m_touchCount = 0;
+            mTouchCount = 0;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -415,15 +440,56 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public Point touch(int index)
         {
-            if (index >= 0 && index < m_touchCount)
+            if (index >= 0 && index < mTouchCount)
             {
-                return m_touch[index].toPoint();
+                return mTouch[index].toPoint();
             }
             return Point.Zero;
         }
         ///--------------------------------------------------------------------------------------
 
 
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим нажатали кнопка мыши левая
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public bool touchMouseLeft(int index)
+        {
+            if (index >= 0 && index < mTouchCount)
+            {
+                return mMouseLeftButton[index];
+            }
+            return false;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим нажатали кнопка мыши правая
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public bool touchMouseRight(int index)
+        {
+            if (index >= 0 && index < mTouchCount)
+            {
+                return mMouseRightButton[index];
+            }
+            return false;
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 
@@ -438,12 +504,12 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public int touchIndex()
         {
-            if (m_touchCount >= 0)
+            if (mTouchCount >= 0)
             {
-                for (int i = 0; i < m_touchCount; i++)
+                for (int i = 0; i < mTouchCount; i++)
                 {
-                    if (m_touch[i].X >= 0 &&
-                        m_touch[i].Y >= 0)
+                    if (mTouch[i].X >= 0 &&
+                        mTouch[i].Y >= 0)
                     {
                         return i;
                     }
@@ -468,7 +534,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool isKeyLeft()
         {
-            return m_buttons.IsKeyDown(Keys.A);
+            return mButtons.IsKeyDown(Keys.A);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -485,7 +551,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool isKeyRight()
         {
-            return m_buttons.IsKeyDown(Keys.D);
+            return mButtons.IsKeyDown(Keys.D);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -504,7 +570,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool isKeyUp()
         {
-            return m_buttons.IsKeyDown(Keys.W);
+            return mButtons.IsKeyDown(Keys.W);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -523,7 +589,7 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public bool isKeyDown()
         {
-            return m_buttons.IsKeyDown(Keys.S);
+            return mButtons.IsKeyDown(Keys.S);
         }
         ///--------------------------------------------------------------------------------------
 

@@ -38,9 +38,15 @@ namespace Pluton.GUI
         private uint        mSpriteID       = 0;
         private int         mCaptionWidth   = 0;
         private int         mCaptionHeight  = 0;
-        private string      mText           = string.Empty;
         private Point       mOrigin         = Point.Zero;
         private Vector2     mShiftText      = Vector2.Zero;
+        
+        private bool        mFrontLocation  = true; //расположение заголовка, спереди он или сзади
+        private SpriteFont  mFont           = null; //шрифт
+
+        private string      mText           = string.Empty;
+        private Vector2     mTextOrigin     = Vector2.Zero; //центр текста
+        private Vector2     mTextScale      = Vector2.Zero; //размерность текста
         ///--------------------------------------------------------------------------------------
 
 
@@ -106,7 +112,7 @@ namespace Pluton.GUI
                         mCaptionHeight  = ATheme.dockwidget_title_A_captionHeight;
                         mOrigin         = ATheme.dockwidget_title_A_origin;
                         mShiftText      = ATheme.dockwidget_title_A_shift;
-
+                        mFrontLocation  = ATheme.dockwidget_title_A_frontLocation; //по умолчанию true
                         break;
                     }
 
@@ -119,6 +125,7 @@ namespace Pluton.GUI
                         mCaptionHeight  = ATheme.dockwidget_title_B_captionHeight;
                         mOrigin         = ATheme.dockwidget_title_B_origin;
                         mShiftText      = ATheme.dockwidget_title_B_shift;
+                        mFrontLocation  = ATheme.dockwidget_title_B_frontLocation; //по умолчанию true
                         break;
                     }
 
@@ -131,12 +138,41 @@ namespace Pluton.GUI
                         mCaptionHeight  = ATheme.dockwidget_title_C_captionHeight;
                         mOrigin         = ATheme.dockwidget_title_C_origin;
                         mShiftText      = ATheme.dockwidget_title_C_shift;
+                        mFrontLocation  = ATheme.dockwidget_title_C_frontLocation; //по умолчанию true
                         break;
                     }
 
-        
-
             }
+
+            mFont = ATheme.dockwidget_title_font;
+            refresh();
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Пересчитать размер текста
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void refresh()
+        {
+            Vector2 ms = mFont.MeasureString(mText);
+            mTextOrigin = ms / 2;
+
+
+            float sw = mCaptionWidth / ms.X;
+            float sh = mCaptionHeight / ms.Y;
+
+            float stScale = Math.Min(sw, sh);
+            stScale = MathHelper.Clamp(stScale, 0.5f, 1.0f);
+
+            mTextScale = new Vector2(stScale);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -162,6 +198,32 @@ namespace Pluton.GUI
             set
             {
                 mText = value;
+                refresh();
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// тип ренедра, впереди или сздани основго виджета
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public bool frontLocation
+        {
+            get
+            {
+                return mFrontLocation;
+            }
+            set
+            {
+                mFrontLocation = value;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -195,7 +257,7 @@ namespace Pluton.GUI
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// Отрисовка виджета
@@ -216,23 +278,25 @@ namespace Pluton.GUI
 
 
 
-
-
             Vector2 pos = rect.Center.toVector2();
             spriteBatch.Draw(spriteBatch.getSprite(mSpriteID), pos, null, Color.White * alpha, 0, center, 1, SpriteEffects.None, 1.0f);
 
 
 
-            Vector2 ms = AFonts.normal.MeasureString(mText);
-            float sw = mCaptionWidth / ms.X;
-            float sh = mCaptionHeight / ms.Y;
-            float stScale = MathHelper.Clamp(Math.Min(sw, sh), 0.5f, 1.2f);
-
-
-
             pos += mShiftText;
-            spriteBatch.DrawString(AFonts.normal, mText, pos + new Vector2(-3, +3), ATheme.dockwidget_colorCaptionTextShadow * alpha, 0, ms / 2, stScale, SpriteEffects.None, 0.5f);
-            spriteBatch.DrawString(AFonts.normal, mText, pos, ATheme.dockwidget_colorCaptionText * alpha, 0, ms / 2, stScale, SpriteEffects.None, 0.0f);
+            spriteBatch.DrawString(mFont, mText,
+                                    pos + ATheme.dockwidget_title_shadowShift, //= new Vector2(-3, +3); defautl
+                                    ATheme.dockwidget_title_colorTextShadow * alpha, 
+                                    0, 
+                                    mTextOrigin, mTextScale, SpriteEffects.None, 0.5f);
+
+            spriteBatch.DrawString(mFont, mText,
+                                    pos, 
+                                    ATheme.dockwidget_title_colorText * alpha, 
+                                    0,
+                                    mTextOrigin, mTextScale, SpriteEffects.None, 0.1f);
+
+
 
 
 

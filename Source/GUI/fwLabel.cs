@@ -63,6 +63,7 @@ namespace Pluton.GUI
             left,
             top,
             right,
+            bottom,
             center,
             centerAuto,
             auto            //автоматический расширить
@@ -377,6 +378,12 @@ namespace Pluton.GUI
                     {
                         //выравнивание поцентру
                         pos.Y += (rect.Height - mTextHeight) / 2;
+                        break;
+                    }
+                case enAlign.bottom:
+                    {
+                        //выравнивание по нижниу краю
+                        pos.Y += (rect.Height - mTextHeight);
                         break;
                     }
             }

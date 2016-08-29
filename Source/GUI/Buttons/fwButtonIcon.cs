@@ -31,15 +31,15 @@ namespace Pluton.GUI
                         AControlButton
     {
         ///--------------------------------------------------------------------------------------
-        public const int cWidth = 130;
-        public const int cHeight = 130;
+        public const int cWidth         = ATheme.buttonIcon_width;      //def 130;
+        public const int cHeight        = ATheme.buttonIcon_height;     //def 130;
         ///--------------------------------------------------------------------------------------
 
 
         ///--------------------------------------------------------------------------------------
-        private const int cImgWidth     = 128;
-        private const int cImgHeight    = 128;
-        private const int cImgIcon      = 64; //размер иконки
+        private const int cImgWidth     = ATheme.buttonIcon_imgWidth;   //def 128;
+        private const int cImgHeight    = ATheme.buttonIcon_imgHeight;  //def 128;
+        private const int cImgIcon      = ATheme.buttonIcon_imgIcon;    //def 64; //размер иконки
         ///--------------------------------------------------------------------------------------
 
 
@@ -258,7 +258,9 @@ namespace Pluton.GUI
 
             if (spriteIcon != 0)
             {
-                spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + new Vector2(0, -3), null, colorSprite * alpha, 0, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None, 0.2f);
+                //buttonIcon_shift = new Vector2(0, -3);
+      
+                spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + ATheme.buttonIcon_shift, null, colorSprite * alpha, 0, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None, 0.2f);
             }
 
             //чекбокс по умолчанию

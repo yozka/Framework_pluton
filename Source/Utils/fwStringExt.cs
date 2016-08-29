@@ -1,5 +1,6 @@
 ﻿#region Using framework
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 #endregion
 ///--------------------------------------------------------------------------------------
@@ -70,6 +71,26 @@ namespace Pluton
         }
 
 
+
+
+
+        //объеденить массив строк в одну строку
+        public static string join(this List<string> value, string prefix)
+        {
+            string res = string.Empty;
+            bool nextSpace = false;
+            foreach (string s in value)
+            {
+                if (nextSpace)
+                {
+                    res += prefix;
+                }
+
+                res += s;
+                nextSpace = true;
+            }
+            return res;
+        }
 
     }
 

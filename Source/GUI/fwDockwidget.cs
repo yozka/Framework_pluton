@@ -97,6 +97,23 @@ namespace Pluton.GUI
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public ADockwidget(EStylePanel style)
+            :
+            this(null, style, null, ATitle.EStyleTytle.tytle_A)
+        {
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
 
          ///=====================================================================================
         ///
@@ -236,15 +253,24 @@ namespace Pluton.GUI
         protected override void onDrawBefore(ASpriteBatch spriteBatch)
         {
             float alpha = this.alpha;
-            base.onDrawBefore(spriteBatch);
 
-            if (mTitle != null)
+            if (mTitle != null && !mTitle.frontLocation)
             {
                 spriteBatch.begin();
                 mTitle.render(spriteBatch);
                 spriteBatch.end();
             }
 
+            
+            base.onDrawBefore(spriteBatch);
+
+
+            if (mTitle != null && mTitle.frontLocation)
+            {
+                spriteBatch.begin();
+                mTitle.render(spriteBatch);
+                spriteBatch.end();
+            }
 
             //отрисовка табулятора
             if (mTabs != null)
@@ -624,13 +650,13 @@ namespace Pluton.GUI
         public ADockwidgetSysButton(AFrame parent, uint spriteIcon)
             : base(parent, spriteIcon, 0, 0)
         {
-            scale = 0.5f;
+            scale = ATheme.dockwidget_sysScale; //def 0.5f;
         }
         ///--------------------------------------------------------------------------------------
         public ADockwidgetSysButton(AFrame parent, uint spriteIcon, uint spriteButton)
             : base(parent, spriteIcon, spriteButton, 0, 0)
         {
-            scale = 0.5f;
+            scale = ATheme.dockwidget_sysScale; //def 0.5f;
         }
         ///--------------------------------------------------------------------------------------
     }

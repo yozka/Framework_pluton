@@ -293,8 +293,8 @@ namespace Pluton.GUI
                     mToch = pt;
                     return true;
                 }
-                Point ptDiff = pointExt.sub(mToch, pt);
-
+                Point ptDiff = pointExt.sub(pt, mToch);
+                
                 //нету сдвигов
                 bool isScrolling = pointExt.toVector2(ptDiff).Length() > 2 ? true : false;
                 if (!mScroll && !isScrolling)
@@ -379,6 +379,8 @@ namespace Pluton.GUI
 
             int iHeightClient = height; //ширина контрола
             int iHeightContent = iCountItem * iHeightSpace - mVerticalSpacing + cMargin + cMargin;
+            
+       
             if (mBegin < 0)
             {
                 mBegin = 0;
@@ -399,7 +401,7 @@ namespace Pluton.GUI
             {
                 mEnd = mBegin + iHeightClient;
             }
-
+      
 
             //обновление положения item
             //отрисова item
@@ -410,8 +412,10 @@ namespace Pluton.GUI
 
             int iBegin = (int)(mBegin / iHeightSpace);
             int iEnd = (int)(mEnd / iHeightSpace);
-            Rectangle itemRect = new Rectangle(0, (int)(0 - mBegin) % iHeightSpace + cMargin, width, iHeightItem);
+            Rectangle itemRect = new Rectangle(left, top + ((int)(mBegin) % iHeightSpace) + cMargin, width, iHeightItem);
+            //Rectangle itemRect = new Rectangle(left, top + (int)mBegin + cMargin, width, iHeightItem);
             for (int i = iBegin; i <= iEnd; i++)
+            //for (int i = 0; i < iCountItem; i++)
             {
                 if (i >= 0 && i < iCountItem)
                 {
@@ -461,11 +465,33 @@ namespace Pluton.GUI
             mBegin = 0;
             mEnd = onItemCount() * (onItemHeight() + mVerticalSpacing) - mVerticalSpacing;
 
+            int iCountItem = onItemCount();
+            int iHeightItem = onItemHeight();
+            int iHeightSpace = iHeightItem + mVerticalSpacing;
+
             int iHeightClient = height; //ширина контрола
+            int iHeightContent = iCountItem * iHeightSpace - mVerticalSpacing + cMargin + cMargin;
+
+            mEnd = iHeightContent;
+
+            /*
+            if (mEnd > iHeightContent)
+            {
+                mEnd = iHeightContent;
+                mBegin = mEnd - iHeightClient;
+                if (mBegin < 0)
+                {
+                    mBegin = 0;
+                }
+            }
+            */
+
             if (mEnd > iHeightClient)
             {
                 mEnd = iHeightClient;
             }
+             
+             
             scrolling(Point.Zero);
         }
         ///--------------------------------------------------------------------------------------
