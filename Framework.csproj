@@ -37,6 +37,7 @@
     <Compile Include="Source\GraphicsElement\fwAnimationLoopOnce.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationLoopSin.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationLoopSin2.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationLoopTween.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationOnce.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationOnceSinFade.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationOnceTween.cs" />
