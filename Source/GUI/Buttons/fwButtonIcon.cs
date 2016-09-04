@@ -222,14 +222,14 @@ namespace Pluton.GUI
                 srcRect = new Rectangle(cImgWidth, 0, cImgWidth, cImgHeight);
                 fScale = 1.03f;
                 fScaleIcon = 1.2f;
-                colorSprite = new Color(254, 236, 175);
+                colorSprite = ATheme.buttonIcon_pushColor;// new Color(254, 236, 175);
             }
 
             //кнопка заблокирована, то поменяем прозрачность
             if (!m_enabled)
             {
                 srcRect = new Rectangle(cImgWidth * 2, 0, cImgWidth, cImgHeight);
-                colorSprite = Color.Gray;
+                colorSprite = ATheme.buttonIcon_disabledColor;// Color.Gray;
             }
 
 

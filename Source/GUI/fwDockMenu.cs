@@ -98,11 +98,11 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public ADockMenu(AWidget parent)
             :
-            base(parent, 0, 0, 100, 80)
+            base(parent, 0, 0, ATheme.dockmenu_buttonWidth /*100*/, ATheme.dockmenu_buttonHeight /*80*/)
         {
 
-            mButCaption = new AButtonIcon(this, ATheme.dockmenu_spriteID, 0, 0, 0, 0);
-            mButCaption.size = new Point(100, 80);
+            mButCaption = new AButtonIcon(this, ATheme.dockmenu_spriteID, 0, ATheme.dockmenu_buttonID, 0, 0); //dockmenu_buttonID = 0
+            mButCaption.size = new Point(ATheme.dockmenu_buttonWidth, ATheme.dockmenu_buttonHeight); //dockmenu_buttonHeight = 80
             mButCaption.signal_click += onClickMenu;
             addWidget(mButCaption);
 
@@ -640,8 +640,8 @@ namespace Pluton.GUI
             mSpriteIconCheckID = spriteIconCheck;
             mSpriteButtonID = sprite.gui_button_icon_left;
 
-            
-            mFontText = AFonts.small;
+
+            mFontText = ATheme.dockmenu_font;//AFonts.small;
             resizeItem();
         }
         ///--------------------------------------------------------------------------------------
@@ -719,7 +719,7 @@ namespace Pluton.GUI
 
             if (mSpriteIconID != 0)
             {
-                sz.X = (int)mSizeText.X + cWidth - 10;
+                sz.X = (int)mSizeText.X + cWidth - 0;
             }
             else
             {
@@ -885,11 +885,13 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
         {
+            float fAlpha = alpha;
             float fScale = 1.0f;
             float fScaleIcon = 1.0f;
 
             Rectangle srcRect = new Rectangle(0, 0, cImgWidth, cImgHeight);
             Color colorSprite = Color.White;
+            Color colorText = ATheme.dockmenu_text;
 
             //кнопка нажата, выведем другой тип картинок
             if (m_pushDown)
@@ -897,7 +899,8 @@ namespace Pluton.GUI
                 srcRect = new Rectangle(cImgWidth, 0, cImgWidth, cImgHeight);
                 fScale = 1.03f;
                 fScaleIcon = 1.2f;
-                colorSprite = new Color(254, 236, 175);
+                colorSprite = ATheme.dockmenu_push;
+                colorText   = ATheme.dockmenu_push;
             }
 
             //кнопка заблокирована, то поменяем прозрачность
@@ -925,20 +928,20 @@ namespace Pluton.GUI
                 spriteBatch.Draw(spriteBatch.getSprite(mSpriteButtonID), pos, srcRect, Color.White, 0, new Vector2(cImgWidth / 2, cImgHeight / 2 - 3), fScale, SpriteEffects.None, 0.1f);
 
                 //растяжка элемента
-                float fStretch = rect.Width - cWidth + 2;
+                float fStretch = rect.Width - cWidth + 1;
                 if (fStretch > 0)
                 {
 
                     Vector2 posStretch = new Vector2(rect.Left, pos.Y);
-                    Rectangle scrStretch = new Rectangle(srcRect.Left, srcRect.Top, 1, srcRect.Height);
-                    spriteBatch.Draw(spriteBatch.getSprite(mSpriteButtonID), posStretch, scrStretch, Color.White, 0, new Vector2(0, cImgHeight / 2 - 3), new Vector2(fScale * fStretch, fScale), SpriteEffects.None, 0.11f);
+                    Rectangle scrStretch = new Rectangle(srcRect.Left, srcRect.Top, 10, srcRect.Height);
+                    spriteBatch.Draw(spriteBatch.getSprite(mSpriteButtonID), posStretch, scrStretch, Color.White, 0, new Vector2(0, cImgHeight / 2 - 3), new Vector2(fScale * fStretch / 10, fScale), SpriteEffects.None, 0.11f);
                 }
 
                 if (mText != null && mText != string.Empty)
                 {
                     Vector2 posText = new Vector2(rect.Left + ((mSizeText.Y + mSizeText.X) / 2.0f), pos.Y);
                     spriteBatch.DrawString(mFontText, mText, posText + new Vector2(2, 2) * fScale, ATheme.dockmenu_shadow, 0.0f, mSizeText / 2, fScale, SpriteEffects.None, 0.01f);
-                    spriteBatch.DrawString(mFontText, mText, posText, ATheme.dockmenu_text, 0.0f, mSizeText / 2, fScale, SpriteEffects.None, 0.0f);
+                    spriteBatch.DrawString(mFontText, mText, posText, colorText, 0.0f, mSizeText / 2, fScale, SpriteEffects.None, 0.0f);
                 }
             }
 
