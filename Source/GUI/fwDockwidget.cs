@@ -544,7 +544,7 @@ namespace Pluton.GUI
         {
             if (mButCancel == null)
             {
-                mButCancel = new ADockwidgetButton(this, sprite.gui_icon_cancel, sprite.gui_button_icon_red);
+                mButCancel = new ADockwidgetButton(this, sprite.gui_icon_cancel, ATheme.dockwidget_cancelSpriteID); //sprite.gui_button_icon_red
                 mButCancel.setNameWidget("buttonCancel");
                 addWidget(mButCancel);
             }

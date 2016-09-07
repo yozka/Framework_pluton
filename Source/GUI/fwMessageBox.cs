@@ -126,7 +126,7 @@ namespace Pluton.GUI
    
 
             //создание загаловка
-            mText = new ALabel(mGUI, caption, font, ATheme.colorTextDescription, ALabel.enAlign.center, ALabel.enAlign.center);
+            mText = new ALabel(mGUI, caption, font, ATheme.messageBox_color, ALabel.enAlign.center, ALabel.enAlign.center);
             mText.scaleTextAuto = true;
             mGUI.addWidget(mText);
             //
