@@ -80,6 +80,7 @@
     <Compile Include="Source\GUI\fwDockMenu.cs" />
     <Compile Include="Source\GUI\fwDockwidget.cs" />
     <Compile Include="Source\GUI\fwFrame.cs" />
+    <Compile Include="Source\GUI\fwImage.cs" />
     <Compile Include="Source\GUI\fwLabel.cs" />
     <Compile Include="Source\GUI\fwMessageBox.cs" />
     <Compile Include="Source\GUI\fwPaginator.cs" />

@@ -212,14 +212,14 @@ namespace Pluton.GUI
 
             
             //отрисовка плашек
-            //левая плашка
-            spriteBatch.Draw(spriteBatch.getSprite(sprite.gui_scroll_horizontal_margin), new Rectangle(rect.Left - 8, rect.Top, 16, rect.Height), Color.White);
+            //левая плашка //sprite.gui_scroll_horizontal_margin
+            spriteBatch.Draw(spriteBatch.getSprite(ATheme.scrollHorizontal_marginID), new Rectangle(rect.Left - 8, rect.Top, 16, rect.Height), Color.White);
             //
 
 
-            //правая плашка
+            //правая плашка //sprite.gui_scroll_horizontal_margin
             int iRightIcon = rect.Right - 8;
-            spriteBatch.Draw(spriteBatch.getSprite(sprite.gui_scroll_horizontal_margin), new Rectangle(iRightIcon, rect.Top, 16, rect.Height), Color.White);
+            spriteBatch.Draw(spriteBatch.getSprite(ATheme.scrollHorizontal_marginID), new Rectangle(iRightIcon, rect.Top, 16, rect.Height), Color.White);
             //
        
             //spriteBatch.primitives.drawBorder(rect, 2, Color.Red);
