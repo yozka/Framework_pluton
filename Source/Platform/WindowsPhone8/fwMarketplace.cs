@@ -281,14 +281,20 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         private async void asyncRefreshInfo()
         {
-            mUpdateInfo = true;
-            mInfo = await CurrentApp.LoadListingInformationAsync();
-            if (mInfo != null)
+            try
             {
-                mProducts = mInfo.ProductListings;
-                mUpdateInfo = false;
+                mUpdateInfo = true;
+                mInfo = await CurrentApp.LoadListingInformationAsync();
+                if (mInfo != null)
+                {
+                    mProducts = mInfo.ProductListings;
+                    mUpdateInfo = false;
+                }
             }
-
+            catch (Exception e)
+            {
+                gAnalytics.trackException(e);
+            }
 
 
         }
