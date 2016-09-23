@@ -8,6 +8,9 @@ using Microsoft.Devices.Sensors;
 using Microsoft.Phone.Controls;
 #endregion
 
+#if DEBUG
+using System.Diagnostics;
+#endif
 
 namespace Pluton.SystemProgram.Devices
 {
@@ -162,6 +165,12 @@ namespace Pluton.SystemProgram.Devices
                         //вышли за пределы количество нажатий
                         break;
                     }
+
+#if DEBUG
+                    
+                    Debug.WriteLine(item.Position.ToString());
+#endif
+                    
                 }
             }
 
