@@ -812,7 +812,7 @@ namespace Pluton.SystemProgram
             if (spriteID < 65535)
             {
                 //обычная отрисовка
-                Draw(getSprite(spriteID), pos, color);
+                Draw(getSprite(spriteID), pos, null, color, rotation, origin, SpriteEffects.None, layerDepth);
             }
             else
             {
