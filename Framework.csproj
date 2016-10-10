@@ -37,6 +37,7 @@
     <Compile Include="Source\GraphicsElement\fwAnimationLoopOnce.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationLoopSin.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationLoopSin2.cs" />
+    <Compile Include="Source\GraphicsElement\fwAnimationLoopTween.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationOnce.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationOnceSinFade.cs" />
     <Compile Include="Source\GraphicsElement\fwAnimationOnceTween.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Source\GUI\fwDockMenu.cs" />
     <Compile Include="Source\GUI\fwDockwidget.cs" />
     <Compile Include="Source\GUI\fwFrame.cs" />
+    <Compile Include="Source\GUI\fwImage.cs" />
     <Compile Include="Source\GUI\fwLabel.cs" />
     <Compile Include="Source\GUI\fwMessageBox.cs" />
     <Compile Include="Source\GUI\fwPaginator.cs" />
@@ -141,6 +143,8 @@
     <Compile Include="Source\Platform\WindowsPhone8\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\Network\fwNetworkWeb.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\Network\fwQuery.cs" />
     <Compile Include="Source\Platform\WindowsUWP\fwAnalytics_microsoft.cs" />
     <Compile Include="Source\Platform\WindowsUWP\fwCulture.cs" />
     <Compile Include="Source\Platform\WindowsUWP\fwInputDevice.cs" />

@@ -127,9 +127,8 @@ namespace Pluton.GUI
             spriteBatch.Draw(spriteBatch.getSprite(ATheme.displayTime_spriteID), pos, null, Color.White * alpha, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 1.0f);
 
             pos += ATheme.displayTime_shift;
-            spriteBatch.DrawString(AFonts.normal, mText, pos, Color.White * alpha, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.0f);
+            spriteBatch.DrawString(AFonts.normal, mText, pos, ATheme.displayTime_color * alpha, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.0f);
 
-            //spriteBatch.primitives.drawBorder(rect, 2, Color.Blue);
         }
         ///--------------------------------------------------------------------------------------
 

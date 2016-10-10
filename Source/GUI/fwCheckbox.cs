@@ -90,7 +90,7 @@ namespace Pluton.GUI
             uint spriteID = m_checkbox ? ATheme.checkbox_chekedSpriteID : ATheme.checkbox_emptySpriteID;
 
             Color colorText = ATheme.checkbox_color;
-            Color colorSprite = ATheme.checkbox_color;
+            Color colorSprite = Color.White;
 
             //кнопка нажата, выведем другой тип картинок
             if (m_pushDown)

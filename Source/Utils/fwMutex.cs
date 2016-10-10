@@ -64,11 +64,14 @@ namespace Pluton.Utils
         ///--------------------------------------------------------------------------------------
         public void mutexLock()
         {
+            /*
             if (mThread == Thread.CurrentThread)
             {
                 int bMutex = 0;
 
             }
+            */
+
 
             while (mLock)
             {
