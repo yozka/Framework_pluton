@@ -146,6 +146,15 @@ namespace Pluton.SystemProgram
         static public bool displayHD = false; //большое размер дисплея (восновном ipad и лапатафоны)
 
 
+        /// <summary>
+        /// ориентация дисплея
+        /// </summary>
+        static public bool landscape = false; //ориентация экрана
+
+
+
+
+
 
 
         /// <summary>
@@ -386,6 +395,8 @@ namespace Pluton.SystemProgram
             //m_isScalled = true;
 
             m_spriteScale = new Vector2(1);
+
+            landscape = vx > vy ? true : false;
         }
         ///--------------------------------------------------------------------------------------
 
