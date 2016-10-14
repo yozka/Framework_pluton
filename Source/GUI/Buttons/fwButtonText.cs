@@ -176,7 +176,7 @@ namespace Pluton.GUI
             if (m_pushDown)
             {
                 scrButton = new Rectangle(0, cImgHeight * 1, cImgWidth, cImgHeight);
-                fScale = 1.02f;
+                fScale = ATheme.buttonText_pushdownScale;//1.02f;
             }
 
             //кнопка заблокирована, то поменяем прозрачность
@@ -193,7 +193,7 @@ namespace Pluton.GUI
 
             //отрисуем кнопки
             Vector2 pos = rect.Center.toVector2();
-            spriteBatch.Draw(spriteBatch.getSprite(mSpriteID), pos, scrButton, Color.White * fAlpha, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), fScale, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(spriteBatch.getSprite(mSpriteID), pos + ATheme.buttonText_imgShift, scrButton, Color.White * fAlpha, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), fScale, SpriteEffects.None, 0.5f);
 
      
 

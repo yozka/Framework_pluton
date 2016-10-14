@@ -101,6 +101,10 @@ namespace Pluton.GUI
                 iCount++;
             }
 
+            if (iCount == 0)
+            {
+                return;
+            }
 
             //пробежимся по всем системным кнопкам, и выставим им позицию по умолчанию
             int iWidth = frame.contentWidth;
