@@ -199,7 +199,14 @@ namespace Pluton.GUI
 
             //отрисуем название
             Vector2 ptPos = rect.Center.toVector2() + ATheme.buttonText_shift;
+            //отрисовка тени на словом
+            if (ATheme.buttonText_isShadow)
+            {
+                spriteBatch.DrawString(mFont, mText, ptPos + ATheme.buttonText_shiftShadow, ATheme.buttonText_colorShadow * fAlpha, 0.0f, mTextOrigin, mTextScale * fScale * ATheme.buttonText_scaleShadow, SpriteEffects.None, 0.1f);
+            }
+            
             spriteBatch.DrawString(mFont, mText, ptPos, colorText * fAlpha, 0.0f, mTextOrigin, mTextScale * fScale, SpriteEffects.None, 0.0f);
+            
         }
         ///--------------------------------------------------------------------------------------
 
