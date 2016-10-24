@@ -32,8 +32,8 @@ namespace Pluton.GUI
     {
 
         ///--------------------------------------------------------------------------------------
-        private bool m_inputEnableds = true;
-        private List<AWidget> m_childs = new List<AWidget>(); //все подцепленные виджеты
+        private readonly List<AWidget> mChilds = new List<AWidget>(); //все подцепленные виджеты
+        private bool mInputEnableds = true;
         ///--------------------------------------------------------------------------------------
 
 
@@ -148,7 +148,7 @@ namespace Pluton.GUI
         {
             get
             {
-                return m_childs;
+                return mChilds;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -165,11 +165,11 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public AWidget child(int index)
         {
-            if (index < 0 || index >= m_childs.Count)
+            if (index < 0 || index >= mChilds.Count)
             {
                 return null;
             }
-            return m_childs[index];
+            return mChilds[index];
         }
         ///--------------------------------------------------------------------------------------
 
@@ -187,7 +187,7 @@ namespace Pluton.GUI
         {
             get
             {
-                return m_childs.Count;
+                return mChilds.Count;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ namespace Pluton.GUI
             {
                 throw new ArgumentException("!!!!Нельзя добавлять виджет другого родителя", "original");
             }
-            m_childs.Add(widget);
+            mChilds.Add(widget);
             onAddWidget(widget);
             widget.addToFrame(this);
             return widget;
@@ -253,7 +253,7 @@ namespace Pluton.GUI
                 throw new ArgumentException("Нельзя удалить виджет из списка, родитель принадджеит к дургому списку", "original");
             }
             onRemoveWidget(widget);
-            m_childs.Remove(widget);
+            mChilds.Remove(widget);
             widget.removeToFrame(this);
             widget.setParent(null);
         }
@@ -291,9 +291,9 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public void removeWidget()
         {
-            while (m_childs.Count > 0)
+            while (mChilds.Count > 0)
             {
-                AWidget widget = m_childs[0];
+                AWidget widget = mChilds[0];
                 removeWidget(widget);
                 widget.setParent(null);
             }
@@ -315,12 +315,12 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public override bool onHandleInput(AInputDevice input)
         {
-            if (m_inputEnableds)
+            if (mInputEnableds)
             {
                 //обробатываем потомков
-                for (int index = m_childs.Count - 1; index >= 0; index--)
+                for (int index = mChilds.Count - 1; index >= 0; index--)
                 {
-                    var widget = m_childs[index];
+                    var widget = mChilds[index];
                     if (widget != null && widget.visible && widget.onHandleInput(input))
                     {
                         return true;
@@ -332,7 +332,7 @@ namespace Pluton.GUI
 
             if (input.touchIndex() < 0)
             {
-                m_inputEnableds = true;
+                mInputEnableds = true;
             }
             return false;
         }
@@ -355,7 +355,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public override void onUpdate(TimeSpan gameTime)
         {
-            foreach (AWidget widget in m_childs)
+            foreach (AWidget widget in mChilds)
             {
                 if (widget.visible)
                 {
@@ -383,7 +383,7 @@ namespace Pluton.GUI
         {
             onDrawBefore(spriteBatch);
             spriteBatch.begin();
-            foreach (AWidget widget in m_childs)
+            foreach (AWidget widget in mChilds)
             {
                 if (widget.visible && !widget.customDraw)
                 {
@@ -501,7 +501,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public AFrame activeFrame()
         {
-            m_inputEnableds = false;
+            mInputEnableds = false;
             return this;
         }
         ///--------------------------------------------------------------------------------------
@@ -520,7 +520,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         protected override AWidget onFindChilds(string name)
         {
-            foreach (AWidget child in m_childs)
+            foreach (AWidget child in mChilds)
             {
                 AWidget find = child.findWidgetName(name);
                 if (find != null)
@@ -531,6 +531,29 @@ namespace Pluton.GUI
             return null;
         }
         ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим размер общих виджетов
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public Rectangle boundBox()
+        {
+            Rectangle rect = Rectangle.Empty;
+            foreach (AWidget widget in mChilds)
+            {
+                rect = rect.add(widget.rect);
+            }
+            return rect;
+        }
+        ///--------------------------------------------------------------------------------------
+
 
 
     }

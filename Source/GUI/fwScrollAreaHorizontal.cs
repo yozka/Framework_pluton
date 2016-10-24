@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 #endregion
 
 
-
+///старый
 
 namespace Pluton.GUI
 {
