@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 #endregion
 
 
-//старый
+
 
 #if RENDER_DEBUG
 using System.Diagnostics;
@@ -45,8 +45,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
 
         ///--------------------------------------------------------------------------------------
-        private AScrollBar  mScrollBarHorizontal    = new AScrollBar();
-        private AScrollBar  mScrollBarVertical      = new AScrollBar();
+        private AScrollBar  mScrollBar              = new AScrollBar();
 
         private AWidget     mContentWidget          = null; //сам виджет для отрисовки и показа
         private Rectangle   mViewPort               = Rectangle.Empty; //квадрат ограничивающий просмотр
@@ -109,24 +108,33 @@ namespace Pluton.GUI
 
 
 
-
-
          ///=====================================================================================
         ///
         /// <summary>
-        /// Пересчитаем всю позицию данных
+        /// возвратим высоту элемента
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public void updateViewPort()
+        public AScrollBar scrollBar
         {
-            //подсчитаем изменения для скроллинга
-            mScrollBarHorizontal.setMargin(this);
-            mScrollBarVertical.setMargin
+            set
+            {
+                mScrollBar = value;
+                if (mScrollBar == null)
+                {
+                    mScrollBar = new AScrollBar();
+                }
+                updateViewPort();
+            }
+            get
+            {
+                return mScrollBar;
+            }
 
-            mViewPort = screenContentRect;
         }
         ///--------------------------------------------------------------------------------------
+
+
 
 
 
@@ -136,16 +144,24 @@ namespace Pluton.GUI
         ///=====================================================================================
         ///
         /// <summary>
-        /// возвратим высоту элемента
+        /// Пересчитаем всю позицию данных
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        /*
-        protected virtual int onItemHeight()
+        public void updateViewPort()
         {
-            return 0;
-        }*/
+            //подсчитаем изменения для скроллинга
+            mScrollBar.setMargin(this);
+ 
+            mViewPort = screenContentRect;
+ 
+            mScrollBar.setPositionWidget(this);
+        }
         ///--------------------------------------------------------------------------------------
+
+
+
+
 
 
 
@@ -191,9 +207,9 @@ namespace Pluton.GUI
 
             if (mContentWidget != null)
             {
-                spriteBatch.beginClipping(mViewPort);
+                //spriteBatch.beginClipping(mViewPort);
                 mContentWidget.render(spriteBatch);
-                spriteBatch.endClipping();
+                //spriteBatch.endClipping();
             }
 
 

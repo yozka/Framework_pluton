@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 #endregion
 
 
-//старый
+
 
 #if RENDER_DEBUG
 using System.Diagnostics;
@@ -64,44 +64,37 @@ namespace Pluton.GUI
 
 
 
+        
 
 
-
-
-
-
-
-
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
-        /// возвратим высоту элемента
+        /// установим отступ и главного виджета
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        /*
-        protected virtual int onItemHeight()
+        public virtual void setMargin(AScrollArea area)
         {
-            return 0;
-        }*/
+
+        }
         ///--------------------------------------------------------------------------------------
 
 
 
 
 
-
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
-        /// Отрисовка одного элемента
+        /// изменение позиции виджета скроллинга
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        /*
-        protected virtual void onRenderItem(ASpriteBatch spriteBatch, Rectangle rect, int index)
+        public virtual void setPositionWidget(AScrollArea area)
         {
-        }*/
+
+        }
         ///--------------------------------------------------------------------------------------
 
 
@@ -122,7 +115,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        public virtual void onRender(ASpriteBatch spriteBatch, Rectangle rect)
         {
 
 

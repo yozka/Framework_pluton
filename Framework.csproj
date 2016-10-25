@@ -90,6 +90,7 @@
     <Compile Include="Source\GUI\fwScrollAreaVertical.cs" />
     <Compile Include="Source\GUI\fwScrollBar.cs" />
     <Compile Include="Source\GUI\fwScrollBarHorizontal.cs" />
+    <Compile Include="Source\GUI\fwScrollBarVertical.cs" />
     <Compile Include="Source\GUI\fwScrollHorizontal.cs" />
     <Compile Include="Source\GUI\fwScrollVertical.cs" />
     <Compile Include="Source\GUI\fwTabs.cs" />
