@@ -76,7 +76,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public override void setMargin(AScrollArea area)
+        public override void onMargin(AScrollArea area)
         {
 
         }
@@ -93,7 +93,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public override void setPositionWidget(AScrollArea area)
+        public override void onPositionWidget(AScrollArea area)
         {
 
         }
@@ -117,7 +117,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        public override void onRender(AScrollArea area, ASpriteBatch spriteBatch)
         {
 
 

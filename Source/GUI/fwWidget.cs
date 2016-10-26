@@ -698,6 +698,37 @@ namespace Pluton.GUI
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// расположение виджета слева и верху
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public Point leftTop
+        {
+            get
+            {
+                return new Point(m_left, m_top);
+            }
+            set
+            {
+                bool changeLeft =   m_left == value.X ? true : false;
+                bool changeTop =    m_top  == value.Y ? true : false;
+                m_left = value.X;
+                m_top = value.Y;
+                if (changeLeft || changeTop)
+                {
+                    resize(changeLeft, changeTop, false, false);
+                }
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
         ///=====================================================================================
         ///
         /// <summary>
