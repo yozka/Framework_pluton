@@ -120,7 +120,11 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public override void onMargin(AScrollArea area)
         {
-            area.setMargin(0, 0, 0, 0);
+            area.setMargin(
+                            ATheme.scrollBarVertical_marginLeft,
+                            ATheme.scrollBarVertical_marginRight,
+                            ATheme.scrollBarVertical_marginTop,
+                            ATheme.scrollBarVertical_marginBottom);
         }
         ///--------------------------------------------------------------------------------------
 

@@ -160,6 +160,11 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public void setParent(AWidget parent)
         {
+            if (mParent == parent)
+            {
+                return;
+            }
+
             if (mParent != null && parent != null)
             {
                 throw new ArgumentException("У виджета уже есть родитель", "original");
