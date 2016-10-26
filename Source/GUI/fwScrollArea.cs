@@ -1,0 +1,525 @@
+﻿#region Using framework
+using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+#endregion
+
+
+
+
+#if RENDER_DEBUG
+using System.Diagnostics;
+#endif
+
+
+namespace Pluton.GUI
+{
+    ///------------------------------------------------------------------------------------------
+    using Pluton;
+    using Pluton.SystemProgram;
+    using Pluton.SystemProgram.Devices;
+    using Pluton.GraphicsElement;
+    ///------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+    ///=========================================================================================
+    ///
+    /// <summary>
+    /// контрл вертикального скроллинга
+    /// 
+    /// </summary>
+    /// 
+    ///------------------------------------------------------------------------------------------
+    public class AScrollArea
+                :
+                    AWidget
+    {
+
+        ///--------------------------------------------------------------------------------------
+
+        ///--------------------------------------------------------------------------------------
+        private AScrollBar  mScrollBar              = new AScrollBar();
+
+        private AWidget     mContentWidget          = null; //сам виджет для отрисовки и показа
+        private Rectangle   mViewPort               = Rectangle.Empty; //квадрат ограничивающий просмотр
+
+
+        private bool        mScrollSkip             = false; //пропускать динамическое скроллинг
+
+        private bool        mGrable                 = false; //идет режим захвата и движения скроллинга
+        private Vector2     mFirstTouch             = Vector2.Zero; //первая стартовая кнопка нажатия
+        private Vector2     mFirstWidget            = Vector2.Zero; //положение виджета старотовое
+        
+        private bool        mDynamics               = false; //динамическое двжиение скролинга
+        private Vector2     mDynamicsTouch          = Vector2.Zero; //начальная точка соприкосновение
+        private TimeSpan    mDynamicsTime           = TimeSpan.Zero;//время отчета для динамического листинга
+
+        private bool        mHome                   = false;
+        private Vector2     mHomePositionBegin      = Vector2.Zero;
+        private Vector2     mHomePosition           = Vector2.Zero;
+        private AAnimationOnceTween mHomeAnimation  = new AAnimationOnceTween(500, tweener.exponential.easeOut);
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public AScrollArea(AWidget parent, int left, int top, int width, int height)
+            :
+            base(parent, left, top, width, height)
+        {
+
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// установка виджета для скроллинга
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public AWidget contentWidget
+        {
+            set
+            {
+                if (mContentWidget != null)
+                {
+                    mContentWidget.setParent(null);
+                }
+                mContentWidget = value;
+                mContentWidget.setParent(this);
+                updateViewPort();
+                scrollToHome();
+            }
+
+            get
+            {
+                return mContentWidget;
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим высоту элемента
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public AScrollBar scrollBar
+        {
+            set
+            {
+                mScrollBar = value;
+                if (mScrollBar == null)
+                {
+                    mScrollBar = new AScrollBar();
+                }
+                updateViewPort();
+                scrollToHome();
+            }
+            get
+            {
+                return mScrollBar;
+            }
+
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Пересчитаем всю позицию данных
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void updateViewPort()
+        {
+            //подсчитаем изменения для скроллинга
+            mScrollBar.onMargin(this);
+            mViewPort = screenContentRect;
+            mScrollBar.onPositionWidget(this);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ///=====================================================================================
+        ///
+        /// <summary>
+        /// Отрисовка контрола с учетом располжения родителя
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        {
+            if (mContentWidget != null)
+            {
+                spriteBatch.beginClipping(mViewPort);
+                mContentWidget.render(spriteBatch);
+                spriteBatch.endClipping();
+            }
+
+            mScrollBar.onRender(this, spriteBatch);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// обработка нажатий, если обработка удачная то возвращаем true
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public override bool onHandleInput(AInputDevice input)
+        {
+            if (mContentWidget == null)
+            {
+                mGrable = false;
+                return false;
+            }
+
+
+            if (mScrollSkip && input.touchIndex() < 0)
+            {
+                mScrollSkip = false;
+            }
+
+
+            bool bEventInput = false;
+            bool bScrollInput = mScrollSkip;
+            bool bResetGrable = false;
+
+            if (mGrable)
+            {
+                //скроллинг захватиил управление
+                bScrollInput = true;
+                bEventInput = scrollInput(input);
+            }
+            else
+            {
+                //проверяем захват в движении
+                if (!mScrollSkip)
+                {
+                    bEventInput = scrollDynamic(input, ref bResetGrable);
+                }
+            }
+
+
+
+            //передаем управление виджету
+            if (!bEventInput)
+            {
+                bEventInput = mContentWidget.onHandleInput(input);
+                if (bEventInput)
+                {
+                    mScrollSkip = true;
+                }
+            }
+            //
+
+            //далее идет пост скроллинг
+            //если управелние свободное
+            if (!bEventInput && !bScrollInput)
+            {
+                //обрабатываем скроллинг
+                bEventInput = scrollInput(input);
+
+            }
+
+            if (bResetGrable)
+            {
+                mGrable = false;
+            }
+
+
+            return bEventInput;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+        
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// обработка скроллинга в динамике
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private bool scrollDynamic(AInputDevice input, ref bool resetGrable)
+        {
+            int index = input.containsRectangle(screenContentRect);
+            if (index >= 0)
+            {
+                Vector2 pt = input.touch(index).toVector2();
+
+                if (!mDynamics)
+                {
+                    mDynamics = true;
+                    mDynamicsTouch = pt;
+                    mDynamicsTime = TimeSpan.FromMilliseconds(100);
+                }
+
+
+                Vector2 diff = pt - mDynamicsTouch;
+                if (diff.Length() > 10)
+                {
+                    mDynamics = false;
+                    scrollInput(input);
+                    return true;
+                }
+
+
+                if (mDynamicsTime.TotalMilliseconds > 0)
+                {
+                    //пока обрабатываем движения
+                    resetGrable = true; //но неделаем захвата
+                    return true;
+                }
+
+
+            }
+            mDynamics = false;
+            return false;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// обработка скроллинга
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private bool scrollInput(AInputDevice input)
+        {
+            int index = input.containsRectangle(screenContentRect);
+            if (index >= 0)
+            {
+                //нажали в пределах виджета
+                Vector2 pos = input.touch(index).toVector2();
+                if (!mGrable)
+                {
+                    mGrable = true;
+                    mFirstTouch = pos;
+                    mFirstWidget = mContentWidget.leftTop.toVector2();
+                }
+                scrollTouch(pos);
+                return true;
+            }
+            else
+            {
+                //отпустили нажатие
+                //либо проверяем нажатие за пределы
+                index = input.touchIndex();
+                if (index >= 0 && mGrable)
+                {
+                    scrollTouch(input.touch(index).toVector2());
+                    return true;
+                }
+
+                scrollStop();
+            }
+            return false;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// скролирование относительной позиции
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void scrollTouch(Vector2 posTouch)
+        {
+            Vector2 diff = posTouch - mFirstTouch;
+            Point pt = mScrollBar.onScrollTouch(mFirstWidget, diff).toPoint();
+            mContentWidget.leftTop = pt;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// остановка скролинга
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void scrollStop()
+        {
+            mDynamics = false;
+            if (mGrable)
+            {
+                mGrable = false;
+                scrollToHome();
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// начало движение виджета домой
+        /// посе его остановки
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void scrollToHome()
+        {
+            if (mContentWidget == null)
+            {
+                return;
+            }
+            Vector2 pt = mScrollBar.onCorrectPosition(this);
+
+            mHomePositionBegin = mContentWidget.leftTop.toVector2();
+            mHomePosition = pt - mHomePositionBegin;
+            if (!mHomePosition.isZero())
+            {
+                mHome = true;
+                mHomeAnimation.startOnce();
+            }
+
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Обновление логики у контрола
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public override void onUpdate(TimeSpan gameTime)
+        {
+            if (mContentWidget != null)
+            {
+                mContentWidget.onUpdate(gameTime);
+            }
+
+            mScrollBar.onUpdate(this, gameTime);
+
+            //таймер динамичного скролинга
+            if (mDynamics)
+            {
+                mDynamicsTime -= gameTime;
+            }
+
+            //переход в домашнию позицию
+            if (mHome)
+            {
+                mHomeAnimation.update(gameTime);
+                Vector2 pt = mHomePositionBegin + mHomePosition * mHomeAnimation;
+                mContentWidget.leftTop = pt.toPoint();
+                if (mHomeAnimation.isStop())
+                {
+                    mHome = false;
+                }
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+}
