@@ -63,8 +63,15 @@ namespace Pluton.GUI
 
         private bool        mHome                   = false;
         private Vector2     mHomePositionBegin      = Vector2.Zero;
-        private Vector2     mHomePosition           = Vector2.Zero;
-        private AAnimationOnceTween mHomeAnimation  = new AAnimationOnceTween(500, tweener.exponential.easeOut);
+        private Vector2     mHomePositionDirect           = Vector2.Zero;
+        private AAnimationOnceTween mHomeAnimation  = new AAnimationOnceTween(1000, tweener.bounce.easeOut);
+        
+        private Vector2[]   mBoostPosition          = new Vector2[5];  //точки для подсчета ускорения   
+        private bool        mBoost                  = false;
+        private Vector2     mBoostPositionBegin     = Vector2.Zero;
+        private Vector2     mBoostPositionDirect    = Vector2.Zero;
+        private AAnimationOnceTween mBoostAnimation = new AAnimationOnceTween(500, tweener.exponential.easeOut);
+     
         ///--------------------------------------------------------------------------------------
 
 
@@ -403,8 +410,34 @@ namespace Pluton.GUI
         private void scrollTouch(Vector2 posTouch)
         {
             Vector2 diff = posTouch - mFirstTouch;
-            Point pt = mScrollBar.onScrollTouch(mFirstWidget, diff).toPoint();
-            mContentWidget.leftTop = pt;
+            Vector2 pt = mScrollBar.onScrollTouch(mFirstWidget, diff);
+            mContentWidget.leftTop = pt.toPoint();
+
+
+            //добавим точки
+            appendBoost(pt);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// создание точек для ускорения
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void appendBoost(Vector2 ptBoost)
+        {
+            int len = mBoostPosition.Length;
+            for (int i = len - 1; i > 0; i--)
+            {
+                mBoostPosition[i] = mBoostPosition[i - 1];
+            }
+            mBoostPosition[0] = ptBoost;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -425,11 +458,45 @@ namespace Pluton.GUI
             if (mGrable)
             {
                 mGrable = false;
-                scrollToHome();
+                scrollToBoost();
+                //scrollToHome();
             }
         }
         ///--------------------------------------------------------------------------------------
 
+
+
+
+        
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// ускорение, когда остановили движение
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void scrollToBoost()
+        {
+            Vector2 va = mBoostPosition[0];
+            Vector2 vb = mBoostPosition[mBoostPosition.Length - 1];
+            Vector2 direct = va - vb;
+            float len = direct.Length();
+            if (va.isZero() || vb.isZero() || len < 5)
+            {
+                scrollToHome();
+                return;
+            }
+
+            mBoostPositionBegin = mContentWidget.leftTop.toVector2();
+            mBoostPositionDirect = direct * 2.0f;
+            mBoost = true;
+
+            float contentLen = contentSize.toVector2().Length();
+            float time = (contentLen - mBoostPositionDirect.Length()) * 2.0f;
+
+            mBoostAnimation.startOnce(MathHelper.Clamp(time, 300, 3000));
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 
@@ -452,8 +519,8 @@ namespace Pluton.GUI
             Vector2 pt = mScrollBar.onCorrectPosition(this);
 
             mHomePositionBegin = mContentWidget.leftTop.toVector2();
-            mHomePosition = pt - mHomePositionBegin;
-            if (!mHomePosition.isZero())
+            mHomePositionDirect = pt - mHomePositionBegin;
+            if (!mHomePositionDirect.isZero())
             {
                 mHome = true;
                 mHomeAnimation.startOnce();
@@ -489,11 +556,27 @@ namespace Pluton.GUI
                 mDynamicsTime -= gameTime;
             }
 
+
+            //ускорение
+            if (mBoost)
+            {
+                mBoostAnimation.update(gameTime);
+                Vector2 pt = mBoostPositionBegin + mBoostPositionDirect * mBoostAnimation;
+                mContentWidget.leftTop = pt.toPoint();
+                if (mBoostAnimation.isStop())
+                {
+                    mBoost = false;
+                    scrollToHome();
+                }
+            }
+            //
+
+
             //переход в домашнию позицию
             if (mHome)
             {
                 mHomeAnimation.update(gameTime);
-                Vector2 pt = mHomePositionBegin + mHomePosition * mHomeAnimation;
+                Vector2 pt = mHomePositionBegin + mHomePositionDirect * mHomeAnimation;
                 mContentWidget.leftTop = pt.toPoint();
                 if (mHomeAnimation.isStop())
                 {

@@ -121,9 +121,12 @@ namespace Pluton.GUI
             mTabsIcon.Add(icon);
             mTabsFrame.Add(frame);
             mTabsLeft.Add(0);
-            frame.setParent(mParent);
-            frame.width = mParent.contentWidth;
-            frame.height = mParent.contentHeight;
+            if (frame != null)
+            {
+                frame.setParent(mParent);
+                frame.width = mParent.contentWidth;
+                frame.height = mParent.contentHeight;
+            }
         }
         ///--------------------------------------------------------------------------------------
 
@@ -295,7 +298,11 @@ namespace Pluton.GUI
             //рисуем текущий фрейм
             if (mIndex >= 0 && mIndex < mTabsFrame.Count)
             {
-                mTabsFrame[mIndex].draw(spriteBatch);
+                var frame = mTabsFrame[mIndex];
+                if (frame != null)
+                {
+                    frame.draw(spriteBatch);
+                }
             }
             //
         }
@@ -348,7 +355,11 @@ namespace Pluton.GUI
             mPushDown = false;
             if (mIndex >= 0 && mIndex < mTabsFrame.Count)
             {
-                mTabsFrame[mIndex].onHandleInput(input);
+                var frame = mTabsFrame[mIndex];
+                if (frame != null)
+                {
+                    frame.onHandleInput(input);
+                }
             }
             return false;
         }
@@ -371,7 +382,10 @@ namespace Pluton.GUI
             Rectangle rect = new Rectangle(0, maringTop, mParent.contentWidth, mParent.contentHeight - maringTop);
             foreach(var frame in mTabsFrame)
             {
-                frame.rect = rect;
+                if (frame != null)
+                {
+                    frame.rect = rect;
+                }
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -392,7 +406,11 @@ namespace Pluton.GUI
         {
             if (mIndex >= 0 && mIndex < mTabsFrame.Count)
             {
-                mTabsFrame[mIndex].onUpdate(gameTime);
+                var frame = mTabsFrame[mIndex];
+                if (frame != null)
+                {
+                    frame.onUpdate(gameTime);
+                }
             }
         }
         ///--------------------------------------------------------------------------------------
