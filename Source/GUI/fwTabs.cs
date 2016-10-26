@@ -266,7 +266,7 @@ namespace Pluton.GUI
             Vector2 ptZero = mParent.screenLeftTop + mParent.contentLeftTop + ATheme.tabs_shift; //начальная точка
             Vector2 ptTabs = ptZero + new Vector2((mParent.contentWidth - iCount * cTabWidth) / 2, 0);
 
-            float padding = ptTabs.X - ptZero.X;
+            float padding = ptTabs.X - ptZero.X + 1;
 
             //отрисовка табов
             mScreenTop = (int)ptTabs.Y;

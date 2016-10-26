@@ -61,7 +61,12 @@ namespace Pluton.GUI
     {
 
         ///--------------------------------------------------------------------------------------
-        private EScrollAlign mAlignH = EScrollAlign.none; //выравнивание по горизонтали
+        private EScrollAlign mAlignH    = EScrollAlign.none; //выравнивание по горизонтали
+        private bool mRenderTop         = false;
+        private bool mRenderBottom      = false;
+
+        private readonly AAnimationShow mAnimTop       = new AAnimationShow(300);
+        private readonly AAnimationShow mAnimBottom    = new AAnimationShow(300);
         ///--------------------------------------------------------------------------------------
 
 
@@ -187,10 +192,48 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public override void onRender(AScrollArea area, ASpriteBatch spriteBatch)
         {
+            const int cImgHeight = ATheme.scrollBarVertical_imgHeight;
+
+            
+            float alpha     = area.alpha;
+            int scrLeft     = area.screenLeft;
+            int scrTop      = area.screenTop;
+            int scrWidth    = area.screenWidth;
+            int scrHeight   = area.screenHeight;
 
 
-            //spriteBatch.Draw(spriteBatch.getSprite(sprite.gui_scroll_horizontal_margin), new Rectangle(iRightIcon, rect.Top, 16, rect.Height), Color.White);
-            //
+            if (mRenderTop)
+            {
+                mAnimTop.update(spriteBatch.gameTime);
+                float anim = mAnimTop;
+                if (mAnimTop.isHide())
+                {
+                    mRenderTop = false;
+                }
+                
+                spriteBatch.Draw(spriteBatch.getSprite(ATheme.scrollBarVertical_marginID),
+                                    new Rectangle(scrLeft, scrTop, scrWidth, cImgHeight),
+                                    ATheme.scrollBarVertical_imgTop,
+                                    Color.White * alpha * anim, 0.0f, Vector2.Zero, SpriteEffects.None, 0.5f);
+
+
+            }
+
+
+            if (mRenderBottom)
+            {
+                mAnimBottom.update(spriteBatch.gameTime);
+                float anim = mAnimBottom;
+                if (mAnimBottom.isHide())
+                {
+                    mRenderBottom = false;
+                }
+
+                spriteBatch.Draw(spriteBatch.getSprite(ATheme.scrollBarVertical_marginID),
+                                    new Rectangle(scrLeft, scrTop + scrHeight - cImgHeight, scrWidth, cImgHeight),
+                                    ATheme.scrollBarVertical_imgBottom,
+                                    Color.White * alpha * anim, 0.0f, Vector2.Zero, SpriteEffects.None, 0.5f);
+            }
 
 
             //spriteBatch.primitives.drawBorder(rect, 2, Color.Red);
@@ -233,16 +276,26 @@ namespace Pluton.GUI
         public override Vector2 onCorrectPosition(AScrollArea area)
         {
             var widget = area.contentWidget;
-            float top = widget.top;
+            int top = widget.top;
             if (widget.bottom < area.contentHeight)
             {
                 top = area.contentHeight - widget.height;
             }
 
-            if (top > 0)
+            if (top >= 0)
             {
                 top = 0;
+                showRenderTop(false);
             }
+            else
+            {
+                showRenderTop(true);
+            }
+
+
+            int tt = top + widget.height;
+            showRenderBottom(tt <= area.contentHeight ? false : true);
+
 
             return new Vector2(widget.left, top);
         }
@@ -261,9 +314,13 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public override Vector2 onScrollTouch(Vector2 ptWidget, Vector2 ptTouch)
+        public override Vector2 onScrollTouch(AScrollArea area, Vector2 ptWidget, Vector2 ptTouch)
         {
-            return ptWidget + new Vector2(0, ptTouch.Y);
+            Vector2 pt = ptWidget + new Vector2(0, ptTouch.Y);
+
+            showRenderTop(pt.Y < 0.0f ? true : false);
+            showRenderBottom((pt.Y + area.contentWidget.height) <= area.contentHeight ? false : true);
+            return pt;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -314,19 +371,57 @@ namespace Pluton.GUI
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
-        /// пересборка
+        /// покажем или скроем верхнию деку
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        /*
-        protected void refresh()
+        private void showRenderTop(bool enabled)
         {
-           
-        }*/
+            if (!enabled)
+            {
+                if (mRenderTop)
+                {
+                    mAnimTop.hide();
+                }
+                return;
+            }
+
+            mRenderTop = true;
+            mAnimTop.show();
+        }
         ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// покажем или скроем нижнию деку
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void showRenderBottom(bool enabled)
+        {
+            if (!enabled)
+            {
+                if (mRenderBottom)
+                {
+                    mAnimBottom.hide();
+                }
+                return;
+            }
+
+            mRenderBottom = true;
+            mAnimBottom.show();
+        }
+        ///--------------------------------------------------------------------------------------
+
+
 
 
 

@@ -442,7 +442,7 @@ namespace Pluton.GUI
         private void scrollTouch(Vector2 posTouch)
         {
             Vector2 diff = posTouch - mFirstTouch;
-            Vector2 pt = mScrollBar.onScrollTouch(mFirstWidget, diff);
+            Vector2 pt = mScrollBar.onScrollTouch(this, mFirstWidget, diff);
             mContentWidget.leftTop = pt.toPoint();
 
 
@@ -490,6 +490,8 @@ namespace Pluton.GUI
             if (mGrable)
             {
                 mGrable = false;
+                mHome = false;
+                mBoost = false;
                 scrollToBoost();
                 //scrollToHome();
             }
@@ -526,7 +528,7 @@ namespace Pluton.GUI
             float contentLen = contentSize.toVector2().Length();
             float time = (contentLen - mBoostPositionDirect.Length()) * 2.0f;
 
-            mBoostAnimation.startOnce(MathHelper.Clamp(time, 300, 3000));
+            mBoostAnimation.startOnce(MathHelper.Clamp(time, 500, 3000));
         }
         ///--------------------------------------------------------------------------------------
 
@@ -552,12 +554,8 @@ namespace Pluton.GUI
 
             mHomePositionBegin = mContentWidget.leftTop.toVector2();
             mHomePositionDirect = pt - mHomePositionBegin;
-            if (!mHomePositionDirect.isZero())
-            {
-                mHome = true;
-                mHomeAnimation.startOnce();
-            }
-
+            mHome = true;
+            mHomeAnimation.startOnce();
         }
         ///--------------------------------------------------------------------------------------
 

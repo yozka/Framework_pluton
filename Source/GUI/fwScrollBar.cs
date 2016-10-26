@@ -137,7 +137,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public virtual Vector2 onScrollTouch(Vector2 ptWidget, Vector2 ptTouch)
+        public virtual Vector2 onScrollTouch(AScrollArea area, Vector2 ptWidget, Vector2 ptTouch)
         {
             return ptWidget;   
         }
