@@ -48,6 +48,7 @@ namespace Pluton.GUI
         private uint mSpriteButtonID       = 0; //спрайт самой кнопки
 
         private float mScale = 1.0f; //базовый размер кнопки
+        private float mRotationIcon = 0.0f; //поворот иконки
         ///--------------------------------------------------------------------------------------
 
 
@@ -180,6 +181,30 @@ namespace Pluton.GUI
 
 
 
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// поворот иконки
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public float rotationIcon
+        {
+            get
+            {
+                return mRotationIcon;
+            }
+            set
+            {
+                mRotationIcon = value;
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
          ///=====================================================================================
         ///
         /// <summary>
@@ -260,7 +285,7 @@ namespace Pluton.GUI
             {
                 //buttonIcon_shift = new Vector2(0, -3);
       
-                spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + ATheme.buttonIcon_shift, null, colorSprite * alpha, 0, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None, 0.2f);
+                spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + ATheme.buttonIcon_shift, null, colorSprite * alpha, mRotationIcon, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None, 0.2f);
             }
 
             //чекбокс по умолчанию

@@ -111,13 +111,6 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public void addTab(uint icon, AFrame frame)
         {
-            if (mIndex < 0)
-            {
-                //установим текущую страницу
-                //поумолчанию будет первая
-                mIndex = 0;
-            }
-
             mTabsIcon.Add(icon);
             mTabsFrame.Add(frame);
             mTabsLeft.Add(0);
@@ -126,6 +119,13 @@ namespace Pluton.GUI
                 frame.setParent(mParent);
                 frame.width = mParent.contentWidth;
                 frame.height = mParent.contentHeight;
+            }
+
+            if (mIndex < 0)
+            {
+                //установим текущую страницу
+                //поумолчанию будет первая
+                setIndex(0);
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -217,6 +217,28 @@ namespace Pluton.GUI
             if (mIndex >= 0 && mIndex < mTabsFrame.Count)
             {
                 return mTabsFrame[mIndex];
+            }
+            return null;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Возвратим виджет по его индексу
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public AFrame tab(int index)
+        {
+            if (index >= 0 && index < mTabsFrame.Count)
+            {
+                return mTabsFrame[index];
             }
             return null;
         }
