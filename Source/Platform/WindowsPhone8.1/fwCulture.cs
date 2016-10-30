@@ -126,6 +126,22 @@ namespace Pluton.SystemProgram.Devices
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим системную культуру языка
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public static string cultureSystem()
+        {
+            CultureInfo ci = new CultureInfo(Windows.System.UserProfile.GlobalizationPreferences.Languages[0]);
+            return ci.TwoLetterISOLanguageName;
+        }
+        ///--------------------------------------------------------------------------------------
+        
+
+
 
 
 

@@ -100,6 +100,8 @@ namespace Pluton.SystemProgram.Devices.WEB
             {
                 AWebCommand cmd = new AWebCommand("ath");
                 cmd.parameters.addString("deviceGuid", mDeviceGuid);
+                cmd.parameters.addString("culture", ACulture.cultureSystem());
+                cmd.parameters.addString("platform", AInputDevice.platform);
                 string dataCmd = cmd.toString();
 
 
