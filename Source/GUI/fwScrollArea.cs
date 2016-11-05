@@ -511,8 +511,29 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         private void scrollToBoost()
         {
+            int count = mBoostPosition.Length;
+
+
             Vector2 va = mBoostPosition[0];
-            Vector2 vb = mBoostPosition[mBoostPosition.Length - 1];
+            if (va.isZero())
+            {
+                scrollToHome();
+                return;
+            }
+
+            int id = count - 1;
+            Vector2 vb = mBoostPosition[id];
+            while (vb.isZero())
+            {
+                id--;
+                if (id < 0)
+                {
+                    scrollToHome();
+                    return;
+                }
+                vb = mBoostPosition[id];
+            }
+
             Vector2 direct = va - vb;
             float len = direct.Length();
             if (va.isZero() || vb.isZero() || len < 5)
@@ -529,6 +550,11 @@ namespace Pluton.GUI
             float time = (contentLen - mBoostPositionDirect.Length()) * 2.0f;
 
             mBoostAnimation.startOnce(MathHelper.Clamp(time, 500, 3000));
+
+            for (int i = 0; i < count; i++)
+            {
+                mBoostPosition[i] = Vector2.Zero;
+            }
         }
         ///--------------------------------------------------------------------------------------
 
@@ -536,7 +562,7 @@ namespace Pluton.GUI
 
 
 
-         ///=====================================================================================
+        ///=====================================================================================
         ///
         /// <summary>
         /// начало движение виджета домой

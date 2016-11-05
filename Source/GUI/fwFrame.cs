@@ -34,6 +34,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         private readonly List<AWidget> mChilds = new List<AWidget>(); //все подцепленные виджеты
         private bool mInputEnableds = true;
+        private bool mChange = true; //даннве изменились
         ///--------------------------------------------------------------------------------------
 
 
@@ -227,6 +228,7 @@ namespace Pluton.GUI
             {
                 throw new ArgumentException("!!!!Нельзя добавлять виджет другого родителя", "original");
             }
+            mChange = true;
             mChilds.Add(widget);
             onAddWidget(widget);
             widget.addToFrame(this);
@@ -269,6 +271,7 @@ namespace Pluton.GUI
             {
                 throw new ArgumentException("Нельзя удалить виджет из списка, родитель принадджеит к дургому списку", "original");
             }
+            mChange = true;
             onRemoveWidget(widget);
             mChilds.Remove(widget);
             widget.removeToFrame(this);
@@ -363,7 +366,7 @@ namespace Pluton.GUI
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// Обновление логики у контрола
@@ -372,11 +375,16 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public override void onUpdate(TimeSpan gameTime)
         {
+            mChange = false;
             foreach (AWidget widget in mChilds)
             {
                 if (widget.visible)
                 {
                     widget.onUpdate(gameTime);
+                }
+                if (mChange)
+                {
+                    break;
                 }
             }
         }
@@ -400,11 +408,16 @@ namespace Pluton.GUI
         {
             onDrawBefore(spriteBatch);
             spriteBatch.begin();
+            mChange = false;
             foreach (AWidget widget in mChilds)
             {
                 if (widget.visible && !widget.customDraw)
                 {
                     widget.render(spriteBatch);
+                }
+                if (mChange)
+                {
+                    break;
                 }
             }
 

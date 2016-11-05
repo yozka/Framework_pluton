@@ -503,7 +503,7 @@ namespace Pluton.GUI
         {
             get
             {
-                return mParent == null ? 0 : mParent.parentLeft + mParent.m_left + mParent.m_marginLeft;
+                return mParent == null ? 0 : (mParent.parentLeft + mParent.m_left + mParent.m_marginLeft);
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -525,7 +525,7 @@ namespace Pluton.GUI
         {
             get
             {
-                return mParent == null ? 0 : mParent.parentTop + mParent.m_top + mParent.m_marginTop;
+                return mParent == null ? 0 : (mParent.parentTop + mParent.m_top + mParent.m_marginTop);
             }
         }
         ///--------------------------------------------------------------------------------------
