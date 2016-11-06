@@ -129,8 +129,12 @@ namespace Pluton.GUI
             }
             set
             {
+                bool bSave = mButCaption.visible;
                 mButCaption.visible = value;
-                resizeItems();
+                if (mButCaption.visible != bSave)
+                {
+                    resizeItems();
+                }
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -548,7 +552,18 @@ namespace Pluton.GUI
 
 
 
-
+        
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Отрисовка контрола
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        {
+            base.onRender(spriteBatch, rect);
+        }
 
 
 

@@ -425,7 +425,7 @@ namespace Pluton.GUI
 
             //отрисуем тестовую обводку
 #if RENDER_DEBUG
-            if (AInputDevice.testRenderDebug)
+            if (AInputDevice.testRenderDebug && visible)
             {
                 var rect = new Rectangle(
                 screenLeft,
