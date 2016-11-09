@@ -30,6 +30,34 @@ namespace Pluton.SystemProgram
 
 
 
+     ///=====================================================================================
+    ///
+    /// <summary>
+    /// Приблуда, дает доступ к общим данным
+    /// </summary>
+    /// 
+    /// -------------------------------------------------------------------------------------
+    public class AApp
+    {
+        public AScreenManager screenManager = null;
+
+        //
+        private static AApp mInstance = null;
+
+        public static AApp instance
+        {
+            get
+            {
+                if (mInstance == null)
+                {
+                    mInstance = new AApp();
+                }
+                return mInstance;
+            }
+        }
+    }
+    ///--------------------------------------------------------------------------------------
+
 
 
 
@@ -47,6 +75,7 @@ namespace Pluton.SystemProgram
     /// -------------------------------------------------------------------------------------
     public class AScreenManager : DrawableGameComponent
     {
+
 
         
         /// <summary>
@@ -93,6 +122,8 @@ namespace Pluton.SystemProgram
         {
             devices = new ADevices(this);
             mSpriteContent = new ASpriteContent(Game.Content.ServiceProvider);
+
+            AApp.instance.screenManager = this;
         }
         ///--------------------------------------------------------------------------------------
 

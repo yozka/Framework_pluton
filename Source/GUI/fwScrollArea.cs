@@ -304,10 +304,15 @@ namespace Pluton.GUI
             //передаем управление виджету
             if (!bEventInput)
             {
-                bEventInput = mContentWidget.onHandleInput(input);
-                if (bEventInput)
+                //смотрим чтобы нажатие на кнопку не перешли границы
+                //просомтра
+                if (input.touchIndex() < 0 || input.containsRectangle(screenContentRect) >= 0)
                 {
-                    mScrollSkip = true;
+                    bEventInput = mContentWidget.onHandleInput(input);
+                    if (bEventInput)
+                    {
+                        mScrollSkip = true;
+                    }
                 }
             }
             //

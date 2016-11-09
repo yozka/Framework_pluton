@@ -153,11 +153,40 @@ namespace Pluton.GUI
         protected override bool onVisible(bool value)
         {
             visibleCaption = value;
+            if (!value && value != m_visible)
+            {
+                hideItems();
+            }
+
             return value;
         }
         ///--------------------------------------------------------------------------------------
 
         
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// немедленно все закрыть
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void hideItems()
+        {
+            for (int i = 0; i < countChilds; i++)
+            {
+                var action = child(i) as AActionMenu;
+                if (action != null)
+                {
+                    action.hideTo(-action.width, action.top);
+                }
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
 
 
 
@@ -868,6 +897,22 @@ namespace Pluton.GUI
         public override void onUpdate(TimeSpan gameTime)
         {
             base.onUpdate(gameTime);
+        }         
+        ///--------------------------------------------------------------------------------------
+            
+
+
+
+            
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// анимация
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private void animation(TimeSpan gameTime)
+        {
             if (!mAnimActive)
             {
                 return;
@@ -915,6 +960,8 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
         {
+            animation(spriteBatch.gameTime);
+
             float fAlpha = alpha;
             float fScale = 1.0f;
             float fScaleIcon = 1.0f;
