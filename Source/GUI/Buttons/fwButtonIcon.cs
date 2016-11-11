@@ -47,8 +47,9 @@ namespace Pluton.GUI
         private uint mSpriteIconCheckID    = 0; //спрайт переключенной кнопки
         private uint mSpriteButtonID       = 0; //спрайт самой кнопки
 
-        private float mScale = 1.0f; //базовый размер кнопки
-        private float mRotationIcon = 0.0f; //поворот иконки
+        private float mScale            = 1.0f; //базовый размер кнопки
+        private float mRotationIcon     = 0.0f; //поворот иконки
+        private float mScaleIcon        = 1.0f; //размер иконки
         ///--------------------------------------------------------------------------------------
 
 
@@ -185,6 +186,29 @@ namespace Pluton.GUI
          ///=====================================================================================
         ///
         /// <summary>
+        /// Размер иконки
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public float scaleIcon
+        {
+            get
+            {
+                return mScaleIcon;
+            }
+            set
+            {
+                mScaleIcon = value;
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
         /// поворот иконки
         /// </summary>
         /// 
@@ -215,6 +239,22 @@ namespace Pluton.GUI
         public void setSpriteIconID(uint spriteID)
         {
             mSpriteIconID = spriteID;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// устанавливаем иконку
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void setSpriteIconCheckID(uint spriteID)
+        {
+            mSpriteIconCheckID = spriteID;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -271,7 +311,7 @@ namespace Pluton.GUI
 
 
             fScale = fScale * mScale;
-            fScaleIcon = fScaleIcon * mScale;
+            fScaleIcon = fScaleIcon * mScale * mScaleIcon;
 
 
             //отрисуем кнопки
