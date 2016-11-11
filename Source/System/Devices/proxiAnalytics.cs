@@ -26,11 +26,7 @@ namespace Pluton.SystemProgram.Devices
     ///--------------------------------------------------------------------------------------
     public class gAnalytics
     {
-        ///--------------------------------------------------------------------------------------
-        private static IAnalytics mParent = null;
-        ///--------------------------------------------------------------------------------------
-
-
+        
 
 
 
@@ -53,28 +49,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-
-
-
-
-
-         ///=====================================================================================
-        ///
-        /// <summary>
-        /// привязка
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public static void setInstance(IAnalytics parent)
-        {
-            mParent = parent;
-        }
-        ///--------------------------------------------------------------------------------------
-
-
-
-
-        
+                        
 
 
 
@@ -87,9 +62,10 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public static void trackEvent(string eventName, IDictionary<string, string> properties)
         {
-            if (mParent != null)
+            var app = AApp.instance;
+            if (app != null)
             {
-                mParent.trackEvent(eventName, properties);
+                app.screenManager.devices.analytics.trackEvent(eventName, properties);
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -109,9 +85,10 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public static void trackException(Exception ex)
         {
-            if (mParent != null)
+            var app = AApp.instance;
+            if (app != null)
             {
-                mParent.trackException(ex);
+                app.screenManager.devices.analytics.trackException(ex);
             }
         }
         ///--------------------------------------------------------------------------------------

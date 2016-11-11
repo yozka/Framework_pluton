@@ -26,10 +26,7 @@ namespace Pluton.SystemProgram.Devices
     ///--------------------------------------------------------------------------------------
     public class gSound
     {
-        ///--------------------------------------------------------------------------------------
-        private static ASoundDevice mParent = null;
-        ///--------------------------------------------------------------------------------------
-
+    
 
 
 
@@ -54,33 +51,7 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-
-
-
-
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// привязка
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public static void setInstance(ASoundDevice parent)
-        {
-            if (mParent != null)
-            {
-                //throw new Exception("Звук уже проброшен");
-            }
-            mParent = parent;
-        }
-        ///--------------------------------------------------------------------------------------
-
-
-
-
-
-
-
+        
 
 
 
@@ -93,9 +64,10 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public static void play(string name)
         {
-            if (mParent != null)
+            var app = AApp.instance;
+            if (app != null)
             {
-                mParent.play(name);
+                app.screenManager.devices.sound.play(name);
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -116,9 +88,10 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public static void playOne(string name)
         {
-            if (mParent != null)
+            var app = AApp.instance;
+            if (app != null)
             {
-                mParent.playOne(name);
+                app.screenManager.devices.sound.playOne(name);
             }
         }
         ///--------------------------------------------------------------------------------------
