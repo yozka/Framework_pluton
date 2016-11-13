@@ -55,11 +55,6 @@ namespace Pluton.SystemProgram.Devices
         public AVibrationDevice()
         {
             mVibrator = Application.Context.GetSystemService(Context.VibratorService) as Vibrator;
-
-
-
-
-            gVibration.setInstance(this);
         }
         ///--------------------------------------------------------------------------------------
 

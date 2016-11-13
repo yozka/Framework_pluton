@@ -224,6 +224,11 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public AWidget addWidget(AWidget widget)
         {
+            if (widget.parent == null)
+            {
+                widget.setParent(this);
+            }
+            
             if (widget.parent != this)
             {
                 throw new ArgumentException("!!!!Нельзя добавлять виджет другого родителя", "original");

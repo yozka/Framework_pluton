@@ -1,5 +1,6 @@
 ﻿#region Using framework
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
@@ -39,12 +40,11 @@ namespace Pluton.GUI
 
 
 
-        private readonly AFrame         mGUI        = null;
-        private readonly ALabel         mText       = null;
-        private readonly AControlButton mButYES     = null;
-        private readonly AControlButton mButNO      = null;
+        private readonly AFrame                 mGUI        = null;
+        private readonly ALabel                 mText       = null;
+        private readonly List<AControlButton>   mButtons    = new List<AControlButton>();
 
-        private EType   mResult  = EType.NONE;
+        private EType   mResult = EType.NONE;
 
         ///--------------------------------------------------------------------------------------
 
@@ -60,9 +60,10 @@ namespace Pluton.GUI
         [Flags]
         public enum EType
         {
-            NONE = 0,
-            YES = 0x01,
-            NO = 0x02
+            NONE    = 0x00,
+            YES     = 0x01,
+            NO      = 0x02,
+            CUSTOM  = 0x04
         }
         ///--------------------------------------------------------------------------------------
 
@@ -145,16 +146,18 @@ namespace Pluton.GUI
             //создание кнопок
             if (bYES)
             {
-                mButYES = new AButtonIcon(mGUI, sprite.gui_icon_ok, 0, 0);
-                mButYES.signal_click += slot_buttonYES;
-                mGUI.addWidget(mButYES);
+                var but = new AButtonIcon(mGUI, sprite.gui_icon_ok, 0, 0);
+                but.signal_click += slot_buttonYES;
+                mGUI.addWidget(but);
+                mButtons.Add(but);
             }
 
             if (bNO)
             {
-                mButNO = new AButtonIcon(mGUI, sprite.gui_icon_cancel, 0, 0);
-                mButNO.signal_click += slot_buttonNO;
-                mGUI.addWidget(mButNO);
+                var but = new AButtonIcon(mGUI, sprite.gui_icon_cancel, 0, 0);
+                but.signal_click += slot_buttonNO;
+                mGUI.addWidget(but);
+                mButtons.Add(but);
             }
 
             setCentralWidget(mGUI);
@@ -185,33 +188,74 @@ namespace Pluton.GUI
             mText.height = y;
             mText.left = margin;
             mText.top = margin;
+            mText.resize();
+
+            if (mButtons.Count == 0)
+            {
+                return;
+            }
 
             y += 20;
 
 
-            int x = (mGUI.contentWidth - AButtonIcon.cWidth) / 2;
-            int next = mGUI.contentWidth / 2;
 
-            if (mButYES != null && mButNO != null)
+
+
+            //выесним размеры всех контролов
+            int iWidth = 0; //размеры всех контролов
+            foreach (var but in mButtons)
             {
-                x -= next / 2;
+                iWidth += but.width;
+            }
+            //
+
+            int iSpace = (mGUI.contentWidth - iWidth) / 2;
+            iSpace = MathHelper.Clamp(iSpace, 0, (int)(mGUI.contentWidth * 0.3f));
+
+            //
+            int x = 0;
+            int iNext = 0;
+            if (mButtons.Count == 1)
+            {
+                iNext = 0;
+                x = (mGUI.contentWidth - iWidth) / 2;
+            }
+            else
+            {
+                int countS = mButtons.Count - 1;
+                iNext = iSpace / countS;
+                x = (mGUI.contentWidth - (iWidth + iNext * countS)) / 2;
+            }
+            //
+
+            foreach (var but in mButtons)
+            {
+
+                but.setPosition(x, y);
+                x += but.width + iNext;
             }
 
-            if (mButYES != null)
-            {
-                mButYES.pos = new Point(x, y);
-                x += next;
-            }
-
-            if (mButNO != null)
-            {
-                mButNO.pos = new Point(x, y);
-                x += next;
-            }
         }
         ///--------------------------------------------------------------------------------------
 
 
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// добавим кнопку дополнительную
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void append(AControlButton button)
+        {
+            mGUI.addWidget(button);
+            mButtons.Add(button);
+            resize();
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 
@@ -336,6 +380,23 @@ namespace Pluton.GUI
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// начало закрытие экрана
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        protected override void onTransitionHide()
+        {
+            buttonsEnabled(false);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
 
          ///=====================================================================================
         ///
@@ -447,14 +508,9 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         private void buttonsEnabled(bool enabled)
         {
-            if (mButYES != null)
+            foreach (var but in mButtons)
             {
-                mButYES.enabled = enabled;
-            }
-
-            if (mButNO != null)
-            {
-                mButNO.enabled = enabled;
+                but.enabled = enabled;
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -488,7 +544,7 @@ namespace Pluton.GUI
         /// 
         ///--------------------------------------------------------------------------------------
         public event eventClick signal_yes;
-        public void slot_buttonYES()
+        private void slot_buttonYES()
         {
             buttonsEnabled(false);
             mResult = EType.YES;
@@ -509,7 +565,7 @@ namespace Pluton.GUI
         /// 
         ///--------------------------------------------------------------------------------------
         public event eventClick signal_no;
-        public void slot_buttonNO()
+        private void slot_buttonNO()
         {
             buttonsEnabled(false);
             mResult = EType.NO;
