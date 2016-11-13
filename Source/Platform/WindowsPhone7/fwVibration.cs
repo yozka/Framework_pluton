@@ -50,7 +50,7 @@ namespace Pluton.SystemProgram.Devices
         {
             mRig = VibrateController.Default;
 
-            gVibration.setInstance(this);
+          
         }
         ///--------------------------------------------------------------------------------------
 

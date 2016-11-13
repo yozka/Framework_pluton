@@ -210,7 +210,7 @@ namespace Pluton.GUI
             //
 
             int iSpace = (mGUI.contentWidth - iWidth) / 2;
-            iSpace = MathHelper.Clamp(iSpace, 0, (int)(mGUI.contentWidth * 0.3f));
+            iSpace = (int)MathHelper.Clamp(iSpace, 0, mGUI.contentWidth * 0.3f);
 
             //
             int x = 0;
