@@ -516,6 +516,9 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         private void scrollToBoost()
         {
+            //return;
+            
+            
             int count = mBoostPosition.Length;
 
 
