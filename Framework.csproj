@@ -143,8 +143,12 @@
     <Compile Include="Source\Platform\WindowsPhone8\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\Network\fwAuthorization.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\Network\fwNetworkWeb.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\Network\fwQuery.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\Network\fwWebBinary.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\Network\fwWebCommand.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\Network\fwWebRequest.cs" />
     <Compile Include="Source\Platform\WindowsUWP\fwAnalytics_microsoft.cs" />
     <Compile Include="Source\Platform\WindowsUWP\fwCulture.cs" />
     <Compile Include="Source\Platform\WindowsUWP\fwInputDevice.cs" />

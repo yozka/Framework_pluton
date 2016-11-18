@@ -360,7 +360,7 @@ namespace Pluton.GUI
                 {
                     mDynamics = true;
                     mDynamicsTouch = pt;
-                    mDynamicsTime = TimeSpan.FromMilliseconds(300);
+                    mDynamicsTime = TimeSpan.FromMilliseconds(100);
                 }
 
 

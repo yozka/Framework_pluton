@@ -176,7 +176,16 @@ namespace Pluton.SystemProgram
         ///--------------------------------------------------------------------------------------
         private string typeToString(IMemberData obj)
         {
-            return obj.GetType().ToString();
+            Type tp = obj.GetType();
+            string nm = tp.FullName;
+            nm = nm.Replace(tp.Assembly.FullName, "");
+            nm = nm.Replace(tp.Namespace, "");
+            nm = nm.Replace("]", "");
+            nm = nm.Replace("[", "");
+            nm = nm.Replace(",", "");
+            nm = nm.Replace(".", "");
+            nm = nm.Replace("`", "");
+            return nm;
         }
         ///--------------------------------------------------------------------------------------
 
