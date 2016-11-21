@@ -503,7 +503,10 @@ namespace Pluton.GUI
         {
             get
             {
-                return mParent == null ? 0 : (mParent.parentLeft + mParent.m_left + mParent.m_marginLeft);
+                //return mParent == null ? 0 : (mParent.parentLeft + mParent.m_left + mParent.m_marginLeft);
+                int p1 = mParent == null ? 0 : mParent.parentLeft;
+                int p2 = mParent == null ? 0 : mParent.m_left + mParent.m_marginLeft;
+                return p1 + p2;
             }
         }
         ///--------------------------------------------------------------------------------------

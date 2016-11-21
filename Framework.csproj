@@ -71,6 +71,7 @@
     <Compile Include="Source\GUI\Align\fwAlignVerticalCenter.cs" />
     <Compile Include="Source\GUI\Animator\fwFrameMoveAnimator.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonIcon.cs" />
+    <Compile Include="Source\GUI\Buttons\fwButtonIconText.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonText.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonTextData.cs" />
     <Compile Include="Source\GUI\fwCheckbox.cs" />

@@ -202,7 +202,7 @@ namespace Pluton.GUI
             }
 
 
-            spriteBatch.Draw(ASpritePrimitives.textureWhite, rect, Color.WhiteSmoke * alpha);
+            //spriteBatch.Draw(ASpritePrimitives.textureWhite, rect, Color.WhiteSmoke * alpha);
         }
         ///--------------------------------------------------------------------------------------
 

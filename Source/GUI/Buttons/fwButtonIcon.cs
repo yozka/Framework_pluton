@@ -295,6 +295,8 @@ namespace Pluton.GUI
             float fScale = 1.0f;
             float fScaleIcon = 1.0f;
 
+            float fDepth = 0.5f;
+
             Rectangle srcRect = new Rectangle(0, 0, cImgWidth, cImgHeight);
             Color colorSprite = Color.White;
 
@@ -335,21 +337,21 @@ namespace Pluton.GUI
             Vector2 pos = rect.Center.toVector2();
             if (mSpriteButtonID != 0)
             {
-                spriteBatch.Draw(spriteBatch.getSprite(mSpriteButtonID), pos, srcRect, Color.White * alpha, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), fScale, SpriteEffects.None, 0.3f);
+                spriteBatch.Draw(spriteBatch.getSprite(mSpriteButtonID), pos, srcRect, Color.White * alpha, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), fScale, SpriteEffects.None, fDepth + 0.0003f);
             }
 
             if (spriteIcon != 0)
             {
                 //buttonIcon_shift = new Vector2(0, -3);
       
-                spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + ATheme.buttonIcon_shift, null, colorSprite * alpha, mRotationIcon, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None, 0.2f);
+                spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + ATheme.buttonIcon_shift, null, colorSprite * alpha, mRotationIcon, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None,fDepth + 0.0002f);
             }
 
             //чекбокс по умолчанию
             if (check && ATheme.buttonIcon_check_spriteID != 0)
             {
                 //sprite.gui_circle
-                spriteBatch.Draw(spriteBatch.getSprite(ATheme.buttonIcon_check_spriteID), pos + new Vector2(-40 * fScale), null, colorSprite * alpha, 0, new Vector2(64 / 2), fScaleIcon * 0.8f, SpriteEffects.None, 0.1f);
+                spriteBatch.Draw(spriteBatch.getSprite(ATheme.buttonIcon_check_spriteID), pos + new Vector2(-40 * fScale), null, colorSprite * alpha, 0, new Vector2(64 / 2), fScaleIcon * 0.8f, SpriteEffects.None, fDepth + 0.0001f);
             }
 
             //spriteBatch.primitives.drawBorder(rect, 2, Color.Blue);
