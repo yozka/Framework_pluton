@@ -52,10 +52,10 @@ namespace Pluton.SystemProgram.Devices
             try
             {
 #endif
-                mInfo.Add(new CultureInfo("en-US"));
-         
-                mInfo.Add(new CultureInfo("ru-RU"));
-                mInfo.Add(new CultureInfo("es-ES"));
+                foreach (var lang in AFrameworkSettings.culture)
+                {
+                    mInfo.Add(new CultureInfo(lang));
+                }
 #if (NO_EXCEPTION)
 #else
             }

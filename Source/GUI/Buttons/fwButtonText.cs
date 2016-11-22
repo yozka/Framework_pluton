@@ -85,9 +85,9 @@ namespace Pluton.GUI
         {
             mSpriteID = spriteID;
 
-            mText = text;
             mFont = ATheme.buttonText_font;
 
+            this.text = text;
             refresh();
             mSoundClick = AFrameworkSettings.sound_buttonText;
         }
@@ -114,7 +114,7 @@ namespace Pluton.GUI
             }
             set
             {
-                mText = value;
+                mText = value.toParser();
                 refresh();
             }
         }
