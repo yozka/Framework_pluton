@@ -40,7 +40,9 @@ namespace Pluton.SystemProgram.Devices
         private KeyboardState   mButtons;              //текущие нажатые кнопки
         private KeyboardState   mButtonsLast;          //предыдущие нажатые кнопки
 
-
+        //колесика прокрутки
+        private int         mMouseWheel         = 0;            //колесико прокрутки
+        private Vector2     mMouseTouch         = Vector2.Zero; //позиция мышки
 
         //нажатие на тачпанель
         private const int   c_touchMaxCount     = 3;            //количесвто одновременных нажатий на экран
@@ -119,10 +121,12 @@ namespace Pluton.SystemProgram.Devices
             mTouchCount = 0;
 
             MouseState ms = Mouse.GetState();
+            mMouseTouch = ASpriteBatch.fromViewPort(new Vector2(ms.X, ms.Y));
+
             if (ms.LeftButton == ButtonState.Pressed ||
                 ms.RightButton == ButtonState.Pressed)
             {
-                mLastTouch = ASpriteBatch.fromViewPort(new Vector2(ms.X, ms.Y));
+                mLastTouch                        = mMouseTouch;
                 mTouch              [mTouchCount] = mLastTouch;
                 mMouseLeftButton    [mTouchCount] = (ms.LeftButton == ButtonState.Pressed);
                 mMouseRightButton   [mTouchCount] = (ms.RightButton == ButtonState.Pressed);
@@ -150,6 +154,8 @@ namespace Pluton.SystemProgram.Devices
             }
 
 
+            //колесико мышки
+            mMouseWheel = ms.ScrollWheelValue;
         }
         ///--------------------------------------------------------------------------------------
 
@@ -834,6 +840,37 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
 
 
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим колесико прокртуки
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public int wheelValue()
+        {
+            return mMouseWheel;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// возвратим мышку
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public Vector2 touchMouse()
+        {
+            return mMouseTouch;
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 

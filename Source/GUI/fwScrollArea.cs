@@ -71,7 +71,8 @@ namespace Pluton.GUI
         private Vector2     mBoostPositionBegin     = Vector2.Zero;
         private Vector2     mBoostPositionDirect    = Vector2.Zero;
         private AAnimationOnceTween mBoostAnimation = new AAnimationOnceTween(500, tweener.exponential.easeOut);
-     
+
+        private int         mScrollWheel            = 0;
         ///--------------------------------------------------------------------------------------
 
 
@@ -306,7 +307,7 @@ namespace Pluton.GUI
             {
                 //смотрим чтобы нажатие на кнопку не перешли границы
                 //просомтра
-                if (input.touchIndex() < 0 || input.containsRectangle(screenContentRect) >= 0)
+                if (input.touchIndex() < 0 || input.containsRectangle(mViewPort) >= 0)
                 {
                     bEventInput = mContentWidget.onHandleInput(input);
                     if (bEventInput)
@@ -332,11 +333,61 @@ namespace Pluton.GUI
             }
 
 
+            //обработка колесика мышки
+            if (!bEventInput)
+            {
+                bEventInput = wheel(input);
+            }
+
             return bEventInput;
         }
         ///--------------------------------------------------------------------------------------
 
 
+
+
+
+           
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// обработка скроллинга колесиком мышки
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private bool wheel(AInputDevice input)
+        {
+            int wheel = input.wheelValue();
+            int diff = wheel - mScrollWheel;
+            mScrollWheel = wheel;
+
+            if (diff == 0)
+            {
+                return false;
+            }
+
+
+            Vector2 pos = input.touchMouse();
+            if (!mViewPort.Contains(pos))
+            {
+                return false;
+            }
+
+
+            Vector2 diffVector = new Vector2(0, diff * 0.2f);
+
+            Vector2 posWidget = mContentWidget.leftTop.toVector2();
+            Vector2 pt = mScrollBar.onScrollTouch(this, posWidget, diffVector);
+            mContentWidget.leftTop = pt.toPoint();
+
+            mDynamics = false;
+            mBoost = false;
+            mHome = false;
+
+            scrollToHome();
+            return true;
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 
@@ -401,7 +452,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         private bool scrollInput(AInputDevice input)
         {
-            int index = input.containsRectangle(screenContentRect);
+            int index = input.containsRectangle(mViewPort);
             if (index >= 0)
             {
                 //нажали в пределах виджета
@@ -588,6 +639,11 @@ namespace Pluton.GUI
 
             mHomePositionBegin = mContentWidget.leftTop.toVector2();
             mHomePositionDirect = pt - mHomePositionBegin;
+            if (pt.isZero())
+            {
+                mHome = false;
+                return;
+            }
             mHome = true;
             mHomeAnimation.startOnce();
         }
