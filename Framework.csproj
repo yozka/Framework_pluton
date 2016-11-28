@@ -72,6 +72,7 @@
     <Compile Include="Source\GUI\Animator\fwFrameMoveAnimator.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonIcon.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonIconText.cs" />
+    <Compile Include="Source\GUI\Buttons\fwButtonImage.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonText.cs" />
     <Compile Include="Source\GUI\Buttons\fwButtonTextData.cs" />
     <Compile Include="Source\GUI\fwCheckbox.cs" />
@@ -112,6 +113,13 @@
     <Compile Include="Source\Platform\iOS\fwStorage.cs" />
     <Compile Include="Source\Platform\iOS\fwVibration.cs" />
     <Compile Include="Source\Platform\iOS\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\Linux\fwCulture.cs" />
+    <Compile Include="Source\Platform\Linux\fwInputDevice.cs" />
+    <Compile Include="Source\Platform\Linux\fwJson.cs" />
+    <Compile Include="Source\Platform\Linux\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\Linux\fwStorage.cs" />
+    <Compile Include="Source\Platform\Linux\fwUdpClient.cs" />
+    <Compile Include="Source\Platform\Linux\fwVibration.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwUdpClient.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwJson.cs" />
