@@ -117,9 +117,16 @@
     <Compile Include="Source\Platform\Linux\fwInputDevice.cs" />
     <Compile Include="Source\Platform\Linux\fwJson.cs" />
     <Compile Include="Source\Platform\Linux\fwMarketplace.cs" />
+    <Compile Include="Source\Platform\Linux\fwMusic.cs" />
     <Compile Include="Source\Platform\Linux\fwStorage.cs" />
     <Compile Include="Source\Platform\Linux\fwUdpClient.cs" />
     <Compile Include="Source\Platform\Linux\fwVibration.cs" />
+    <Compile Include="Source\Platform\Linux\Network\fwAuthorization.cs" />
+    <Compile Include="Source\Platform\Linux\Network\fwNetworkWeb.cs" />
+    <Compile Include="Source\Platform\Linux\Network\fwQuery.cs" />
+    <Compile Include="Source\Platform\Linux\Network\fwWebBinary.cs" />
+    <Compile Include="Source\Platform\Linux\Network\fwWebCommand.cs" />
+    <Compile Include="Source\Platform\Linux\Network\fwWebRequest.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwUdpClient.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwJson.cs" />
