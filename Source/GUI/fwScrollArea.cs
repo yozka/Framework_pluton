@@ -63,7 +63,7 @@ namespace Pluton.GUI
 
         private bool        mHome                   = false;
         private Vector2     mHomePositionBegin      = Vector2.Zero;
-        private Vector2     mHomePositionDirect           = Vector2.Zero;
+        private Vector2     mHomePositionDirect     = Vector2.Zero;
         private AAnimationOnceTween mHomeAnimation  = new AAnimationOnceTween(1000, tweener.bounce.easeOut);
         
         private Vector2[]   mBoostPosition          = new Vector2[5];  //точки для подсчета ускорения   
@@ -548,8 +548,8 @@ namespace Pluton.GUI
                 mGrable = false;
                 mHome = false;
                 mBoost = false;
-                scrollToBoost();
-                //scrollToHome();
+                //scrollToBoost();
+                scrollToHome();
             }
         }
         ///--------------------------------------------------------------------------------------

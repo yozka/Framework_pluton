@@ -50,6 +50,8 @@ namespace Pluton.GUI
         private float mScale            = 1.0f; //базовый размер кнопки
         private float mRotationIcon     = 0.0f; //поворот иконки
         private float mScaleIcon        = 1.0f; //размер иконки
+
+        private Vector2 mIconShift      = ATheme.buttonIcon_shift; //смещение иконки
         ///--------------------------------------------------------------------------------------
 
 
@@ -245,6 +247,44 @@ namespace Pluton.GUI
 
 
 
+ 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// смещение иконки
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public Vector2 iconShift
+        {
+            get
+            {
+                return mIconShift;
+            }
+            set
+            {
+                mIconShift = value;
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// устанавливаем кнопку
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void setSpriteButtonID(uint spriteID)
+        {
+            mSpriteButtonID = spriteID;
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
 
          ///=====================================================================================
         ///
@@ -343,8 +383,8 @@ namespace Pluton.GUI
             if (spriteIcon != 0)
             {
                 //buttonIcon_shift = new Vector2(0, -3);
-      
-                spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + ATheme.buttonIcon_shift, null, colorSprite * alpha, mRotationIcon, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None,fDepth + 0.0002f);
+
+                spriteBatch.Draw(spriteBatch.getSprite(spriteIcon), pos + mIconShift * fScale, null, colorSprite * alpha, mRotationIcon, new Vector2(cImgIcon / 2), fScaleIcon, SpriteEffects.None, fDepth + 0.0002f);
             }
 
             //чекбокс по умолчанию

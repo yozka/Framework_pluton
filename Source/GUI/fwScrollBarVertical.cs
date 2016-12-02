@@ -192,6 +192,12 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public override void onRender(AScrollArea area, ASpriteBatch spriteBatch)
         {
+            if (ATheme.scrollBarVertical_marginID == 0)
+            {
+                return;
+            }
+
+
             const int cImgHeight = ATheme.scrollBarVertical_imgHeight;
 
             
