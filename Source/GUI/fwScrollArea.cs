@@ -548,8 +548,9 @@ namespace Pluton.GUI
                 mGrable = false;
                 mHome = false;
                 mBoost = false;
-                //scrollToBoost();
-                scrollToHome();
+                
+                scrollToBoost();
+                //scrollToHome();
             }
         }
         ///--------------------------------------------------------------------------------------
@@ -639,7 +640,7 @@ namespace Pluton.GUI
 
             mHomePositionBegin = mContentWidget.leftTop.toVector2();
             mHomePositionDirect = pt - mHomePositionBegin;
-            if (pt.isZero())
+            if (mHomePositionDirect.isZero())
             {
                 mHome = false;
                 return;
@@ -675,18 +676,26 @@ namespace Pluton.GUI
             {
                 mDynamicsTime -= gameTime;
             }
-
+            
+       
 
             //ускорение
             if (mBoost)
             {
-                mBoostAnimation.update(gameTime);
-                Vector2 pt = mBoostPositionBegin + mBoostPositionDirect * mBoostAnimation;
-                mContentWidget.leftTop = pt.toPoint();
-                if (mBoostAnimation.isStop())
+                if (mGrable)
                 {
                     mBoost = false;
-                    scrollToHome();
+                }
+                else
+                {
+                    mBoostAnimation.update(gameTime);
+                    Vector2 pt = mBoostPositionBegin + mBoostPositionDirect * mBoostAnimation;
+                    mContentWidget.leftTop = pt.toPoint();
+                    if (mBoostAnimation.isStop())
+                    {
+                        mBoost = false;
+                        scrollToHome();
+                    }
                 }
             }
             //
@@ -695,12 +704,20 @@ namespace Pluton.GUI
             //переход в домашнию позицию
             if (mHome)
             {
-                mHomeAnimation.update(gameTime);
-                Vector2 pt = mHomePositionBegin + mHomePositionDirect * mHomeAnimation;
-                mContentWidget.leftTop = pt.toPoint();
-                if (mHomeAnimation.isStop())
+                if (mGrable)
                 {
                     mHome = false;
+                }
+                else
+                {
+
+                    mHomeAnimation.update(gameTime);
+                    Vector2 pt = mHomePositionBegin + mHomePositionDirect * mHomeAnimation;
+                    mContentWidget.leftTop = pt.toPoint();
+                    if (mHomeAnimation.isStop())
+                    {
+                        mHome = false;
+                    }
                 }
             }
         }
