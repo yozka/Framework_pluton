@@ -43,6 +43,8 @@ namespace Pluton.GUI
     {
 
         ///--------------------------------------------------------------------------------------
+        private const int   cDynamicTimeWait        = 100; //время ожидания реакции на движение скролинга
+                                                           //после этого времени, идет управление внутренними контралами
 
         ///--------------------------------------------------------------------------------------
         private AScrollBar  mScrollBar              = new AScrollBar();
@@ -411,7 +413,7 @@ namespace Pluton.GUI
                 {
                     mDynamics = true;
                     mDynamicsTouch = pt;
-                    mDynamicsTime = TimeSpan.FromMilliseconds(100);
+                    mDynamicsTime = TimeSpan.FromMilliseconds(cDynamicTimeWait);
                 }
 
 
