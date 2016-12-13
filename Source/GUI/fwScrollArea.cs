@@ -370,7 +370,7 @@ namespace Pluton.GUI
 
 
             Vector2 pos = input.touchMouse();
-            if (!mViewPort.Contains(pos))
+            if (!mViewPort.Contains(pos.toPoint()))
             {
                 return false;
             }

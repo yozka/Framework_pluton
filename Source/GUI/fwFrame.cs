@@ -35,6 +35,11 @@ namespace Pluton.GUI
         private readonly List<AWidget> mChilds = new List<AWidget>(); //все подцепленные виджеты
         private bool mInputEnableds = true;
         private bool mChange = true; //даннве изменились
+
+        private bool mClippedInvisible          = false; //режим обрезки невидемых виджетов
+        private bool mClippedComp               = false; //флаг перерасчета
+        private Rectangle mClippedScreenRect    = Rectangle.Empty;        
+        private readonly List<AWidget> mClipped = new List<AWidget>(); //список видимых виджетов
         ///--------------------------------------------------------------------------------------
 
 
@@ -215,6 +220,32 @@ namespace Pluton.GUI
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// установка режима видемости
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public bool clippedInvisible
+        {
+            get
+            {
+                return mClippedInvisible;
+            }
+            set
+            {
+                mClippedInvisible = value;
+                mClippedComp = false;
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
         ///=====================================================================================
         ///
         /// <summary>
@@ -233,6 +264,7 @@ namespace Pluton.GUI
             {
                 throw new ArgumentException("!!!!Нельзя добавлять виджет другого родителя", "original");
             }
+            mClippedComp = false;
             mChange = true;
             mChilds.Add(widget);
             onAddWidget(widget);
@@ -281,6 +313,9 @@ namespace Pluton.GUI
             mChilds.Remove(widget);
             widget.removeToFrame(this);
             widget.setParent(null);
+
+            mClippedComp = false;
+            mClipped.Remove(widget);
         }
         ///--------------------------------------------------------------------------------------
 
@@ -340,12 +375,16 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public override bool onHandleInput(AInputDevice input)
         {
+            //обрабатываем всех или только обрезанных
+            var childs = (mClippedInvisible && mClippedComp) ? mClipped : mChilds;
+            //
+            
             if (mInputEnableds)
             {
                 //обробатываем потомков
-                for (int index = mChilds.Count - 1; index >= 0; index--)
+                for (int index = childs.Count - 1; index >= 0; index--)
                 {
-                    var widget = mChilds[index];
+                    var widget = childs[index];
                     if (widget != null && widget.visible && widget.onHandleInput(input))
                     {
                         return true;
@@ -380,8 +419,31 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public override void onUpdate(TimeSpan gameTime)
         {
+            if (mClippedInvisible)
+            {
+                Rectangle rect = screenRect;
+                if (!mClippedComp || rect != mClippedScreenRect)
+                {
+                    //нужно пересчитать буфер, добавть только тех, которые находятся в зоне видемости
+                    mClippedComp = true;
+                    mClippedScreenRect = rect;
+                    mClipped.Clear();
+
+                    rect = new Rectangle(0, 0, ASpriteBatch.viewPort.X, ASpriteBatch.viewPort.Y);
+                    foreach (AWidget widget in mChilds)
+                    {
+                        if (widget.visible && rect.Intersects(widget.screenRect))
+                        {
+                            mClipped.Add(widget);
+                        }
+                    }
+                }
+            }
+            ///
+
+            var childs = (mClippedInvisible && mClippedComp) ? mClipped : mChilds;
             mChange = false;
-            foreach (AWidget widget in mChilds)
+            foreach (AWidget widget in childs)
             {
                 if (widget.visible)
                 {
@@ -411,10 +473,15 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public void draw(ASpriteBatch spriteBatch)
         {
+            //обрабатываем всех или только обрезанных
+            var childs = (mClippedInvisible && mClippedComp) ? mClipped : mChilds;
+            //
+          
+            
             onDrawBefore(spriteBatch);
             spriteBatch.begin();
             mChange = false;
-            foreach (AWidget widget in mChilds)
+            foreach (AWidget widget in childs)
             {
                 if (widget.visible && !widget.customDraw)
                 {

@@ -1054,7 +1054,16 @@ namespace Pluton.SystemProgram
                 iHeight += iY;
                 iY = 0;
             }
-            
+
+            if (iX + iWidth > viewPort.X)
+            {
+                iWidth = viewPort.X - iX;
+            }
+
+            if (iY + iHeight > viewPort.Y)
+            {
+                iHeight = viewPort.Y - iY;
+            }
   
             end();
             mClipping = true;

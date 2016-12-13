@@ -69,7 +69,7 @@ namespace Pluton.Path
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public static Point[] getControlsPoints(Point p0, Point p1, Point p2, float tension = 0.5f)
+        public static Point[] getControlsPoints(Point p0, Point p1, Point p2, float tension)
         {
             // get length of lines [p0-p1] and [p1-p2]
             float d01 = distance(p0, p1);
@@ -112,7 +112,7 @@ namespace Pluton.Path
             // generate control point pairs for each non-end knot 
             for (int i = 1; i < knots.Count - 1; ++i)
             {
-                Point[] cps = getControlsPoints(knots[i - 1], knots[i], knots[i + 1]);
+                Point[] cps = getControlsPoints(knots[i - 1], knots[i], knots[i + 1], 0.5f);
                 res.AddRange(cps);
             }
             
