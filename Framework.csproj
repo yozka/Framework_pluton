@@ -210,6 +210,7 @@
     <Compile Include="Source\System\Stream\fwStreamMemory.cs" />
     <Compile Include="Source\System\Stream\fwTypeContent.cs" />
     <Compile Include="Source\Utils\fwCollections.cs" />
+    <Compile Include="Source\Utils\fwPathCurveGenerate.cs" />
     <Compile Include="Source\Utils\fwHelper.cs" />
     <Compile Include="Source\Utils\fwMutex.cs" />
     <Compile Include="Source\Utils\fwPathWave.cs" />
