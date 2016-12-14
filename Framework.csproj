@@ -137,6 +137,7 @@
     <Compile Include="Source\Platform\WindowsPhone7\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwUdpClient.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsPhone7\License\fwLicense_trial.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\Network\fwAuthorization.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\Network\fwNetworkWeb.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\Network\fwQuery.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Source\Platform\WindowsPhone8\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\fwVibration.cs" />
+    <Compile Include="Source\Platform\WindowsPhone8\License\fwLicense_trial.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\Network\fwAuthorization.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\Network\fwNetworkWeb.cs" />
     <Compile Include="Source\Platform\WindowsPhone8\Network\fwQuery.cs" />
