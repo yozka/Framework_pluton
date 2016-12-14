@@ -237,16 +237,16 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
-            base.onRender(spriteBatch, rect);
+            base.onRender(spriteBatch);
             
             float fAlpha = alpha;
             float fScale = 1.0f;
 
 
             //отрисуем название
-            Vector2 ptPos = rect.Center.toVector2() + mTextPosition;
+            Vector2 ptPos = screenCenter + mTextPosition;
             //отрисовка тени на словом
 
 

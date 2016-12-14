@@ -116,12 +116,12 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
             float alpha = this.alpha;
 
             //по умолчанию, выравнивание идет слева
-            Vector2 pos = new Vector2(rect.X, rect.Y);
+            Vector2 pos = screenLeftTop;
 
 
             spriteBatch.Draw(spriteBatch.getSprite(ATheme.displayScore_spriteID), pos, null, Color.White * alpha, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 1.0f);

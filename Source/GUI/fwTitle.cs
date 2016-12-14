@@ -265,7 +265,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
             if (mText == null)
             {
@@ -274,11 +274,11 @@ namespace Pluton.GUI
 
             float alpha = this.alpha;
 
-            Vector2 center = new Vector2(rect.Width, rect.Height) / 2;
+            Vector2 center = new Vector2(screenWidth, screenHeight) / 2;
 
 
 
-            Vector2 pos = rect.Center.toVector2();
+            Vector2 pos = screenCenter;
             spriteBatch.Draw(spriteBatch.getSprite(mSpriteID), pos, null, Color.White * alpha, 0, center, 1, SpriteEffects.None, 1.0f);
 
 

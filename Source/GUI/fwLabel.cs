@@ -351,10 +351,12 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
             //по умолчанию, выравнивание идет слева
-            Vector2 pos = new Vector2(rect.X, rect.Y);
+            Vector2 pos = screenLeftTop;
+            int screenWidth = this.screenWidth;
+            int screenHeight = this.screenHeight;
 
             switch (mHrzAlign)
             {
@@ -362,12 +364,12 @@ namespace Pluton.GUI
                 case enAlign.centerAuto:
                     {
                         //выравнивание поцентру
-                        pos.X += (rect.Width - mTextWidth) / 2;
+                        pos.X += (screenWidth - mTextWidth) / 2;
                         break;
                     }
                 case enAlign.right:
                     {
-                        pos.X += rect.Width - mTextWidth;
+                        pos.X += screenWidth - mTextWidth;
                         break;
                     }
             }
@@ -377,13 +379,13 @@ namespace Pluton.GUI
                 case enAlign.center:
                     {
                         //выравнивание поцентру
-                        pos.Y += (rect.Height - mTextHeight) / 2;
+                        pos.Y += (screenHeight - mTextHeight) / 2;
                         break;
                     }
                 case enAlign.bottom:
                     {
                         //выравнивание по нижниу краю
-                        pos.Y += (rect.Height - mTextHeight);
+                        pos.Y += (screenHeight - mTextHeight);
                         break;
                     }
             }

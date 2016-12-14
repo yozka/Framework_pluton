@@ -239,7 +239,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
             if (mContentWidget != null)
             {

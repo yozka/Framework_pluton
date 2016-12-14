@@ -589,9 +589,9 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
-            base.onRender(spriteBatch, rect);
+            base.onRender(spriteBatch);
         }
 
 
@@ -958,7 +958,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
             animation(spriteBatch.gameTime);
 
@@ -994,22 +994,25 @@ namespace Pluton.GUI
                 spriteIcon = mSpriteIconCheckID;
             }
 
-
-
+            int screenLeft      = this.screenLeft;
+            int screenTop       = this.screenTop;
+            int screenWidth     = this.screenWidth;
+            int screenHeight    = this.screenHeight;
+            int screenRight     = this.screenRight;
 
             //отрисуем кнопки
-            Vector2 pos = new Vector2(rect.Right - cWidth / 2, rect.Top + cHeight / 2);
+            Vector2 pos = new Vector2(screenRight - cWidth / 2, screenTop + cHeight / 2);
             if (mSpriteButtonID != 0)
             {
                 //основной правй элемент
                 spriteBatch.Draw(spriteBatch.getSprite(mSpriteButtonID), pos, srcRect, Color.White, 0, new Vector2(cImgWidth / 2, cImgHeight / 2 - 3), fScale, SpriteEffects.None, 0.1f);
 
                 //растяжка элемента
-                float fStretch = rect.Width - cWidth + 1;
+                float fStretch = screenWidth - cWidth + 1;
                 if (fStretch > 0)
                 {
 
-                    Vector2 posStretch = new Vector2(rect.Left, pos.Y);
+                    Vector2 posStretch = new Vector2(screenLeft, pos.Y);
                     Rectangle scrStretch = new Rectangle(srcRect.Left, srcRect.Top, 10, srcRect.Height);
                     spriteBatch.Draw(spriteBatch.getSprite(mSpriteButtonID), posStretch, scrStretch, Color.White, 0, new Vector2(0, cImgHeight / 2 - 3), new Vector2(fScale * fStretch / 10, fScale), SpriteEffects.None, 0.11f);
                 }

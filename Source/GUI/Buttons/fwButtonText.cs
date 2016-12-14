@@ -162,10 +162,10 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
             //base.onRender(gameTime, spriteBatch, rect);
-
+            Vector2 screenCenter = this.screenCenter;
 
             Rectangle scrButton = new Rectangle(0, 0, cImgWidth, cImgHeight);
             float fAlpha = alpha;
@@ -192,13 +192,13 @@ namespace Pluton.GUI
             }
 
             //отрисуем кнопки
-            Vector2 pos = rect.Center.toVector2();
+            Vector2 pos = screenCenter;
             spriteBatch.Draw(spriteBatch.getSprite(mSpriteID), pos + ATheme.buttonText_imgShift, scrButton, Color.White * fAlpha, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), fScale, SpriteEffects.None, 0.5f);
 
      
 
             //отрисуем название
-            Vector2 ptPos = rect.Center.toVector2() + ATheme.buttonText_shift;
+            Vector2 ptPos = screenCenter + ATheme.buttonText_shift;
 
 
             //отрисовка тени на словом

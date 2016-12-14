@@ -124,7 +124,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
             //base.onRender(gameTime, spriteBatch, rect);
             float alpha = this.alpha;
@@ -155,7 +155,7 @@ namespace Pluton.GUI
 
 
             //отрисуем кнопки
-            Vector2 pos = rect.Center.toVector2();
+            Vector2 pos = screenCenter;
             if (mImageID != 0)
             {
                 spriteBatch.Draw(spriteBatch.getSprite(mImageID), pos, null, Color.White * alpha, 0, new Vector2(mImageWidth / 2, mImageHeight / 2), fScale, SpriteEffects.None, fDepth + 0.0003f);

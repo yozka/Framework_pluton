@@ -358,7 +358,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public Point screenCenter
+        public Point screenCenterPoint
         {
             get
             {
@@ -366,6 +366,28 @@ namespace Pluton.GUI
             }
         }
         ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// экранные центра виджета
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public Vector2 screenCenter
+        {
+            get
+            {
+                return new Vector2(parentLeft + m_left + m_width / 2, parentTop + m_top + m_height / 2);
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
 
 
 
@@ -1355,12 +1377,7 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         public void render(ASpriteBatch spriteBatch)
         {
-            var rect = new Rectangle(
-                                parentLeft + m_left,
-                                parentTop + m_top,
-                                m_width,
-                                m_height);
-            onRender(spriteBatch, rect);
+            onRender(spriteBatch);
 
 
 
@@ -1369,7 +1386,7 @@ namespace Pluton.GUI
             if (AInputDevice.testRenderDebug)
             {
                 spriteBatch.flush();
-                spriteBatch.primitives.drawBorder(rect, 2, Color.HotPink);
+                spriteBatch.primitives.drawBorder(screenRect, 2, Color.HotPink);
             }
             //
 #endif  
@@ -1381,32 +1398,15 @@ namespace Pluton.GUI
 
 
 
-        ///=====================================================================================
-        ///
-        /// <summary>
-        /// Отрисовка контрола в указанных координатах
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        public void renderTo(ASpriteBatch spriteBatch, Rectangle rect)
-        {
-            onRender(spriteBatch, rect);
-        }
-        ///--------------------------------------------------------------------------------------
 
-
-
-
-
-
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// Отрисовка контрола с учетом располжения родителя
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected virtual void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected virtual void onRender(ASpriteBatch spriteBatch)
         {
 
         }

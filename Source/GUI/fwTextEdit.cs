@@ -174,7 +174,7 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
             //base.onRender(gameTime, spriteBatch, rect);
 
@@ -203,7 +203,10 @@ namespace Pluton.GUI
             }
 
             //отрисуем кнопки
-            Vector2 pos = rect.Center.toVector2();
+            Vector2 pos = screenLeftTop;
+            
+            int screenWidth = this.screenWidth;
+            int screenHeight = this.screenHeight;
             //spriteBatch.Draw(spriteBatch.getSprite(sprite.gui_button_text), pos, scrButton, colorSprite, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), scale, SpriteEffects.None, 0);
 
 
@@ -215,20 +218,20 @@ namespace Pluton.GUI
             if (mPassword && mText.Length > 0)
             {
                 Vector2 sz = font.MeasureString("****");
-                Vector2 sw = new Vector2(rect.Width, rect.Height);
-                sz = new Vector2(rect.Left, rect.Top) + new Vector2(iMarginLeft, (sw.Y - sz.Y) / 2);
+                Vector2 sw = new Vector2(screenWidth, screenHeight);
+                sz = pos + new Vector2(iMarginLeft, (sw.Y - sz.Y) / 2);
                 spriteBatch.DrawString(font, "****", sz, colorText);
             }
             else
             {
                 Vector2 sz = font.MeasureString(mText);
-                Vector2 sw = new Vector2(rect.Width, rect.Height);
-                sz = new Vector2(rect.Left, rect.Top) + new Vector2(iMarginLeft, (sw.Y - sz.Y) / 2);
+                Vector2 sw = new Vector2(screenWidth, screenHeight);
+                sz = pos + new Vector2(iMarginLeft, (sw.Y - sz.Y) / 2);
                 spriteBatch.DrawString(font, mText, sz, colorText);
             }
 
 
-            spriteBatch.primitives.drawBorder(rect, 2, Color.Blue);
+            spriteBatch.primitives.drawBorder(screenRect, 2, Color.Blue);
         }
         ///--------------------------------------------------------------------------------------
 

@@ -82,9 +82,8 @@ namespace Pluton.GUI
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        protected override void onRender(ASpriteBatch spriteBatch, Rectangle rect)
+        protected override void onRender(ASpriteBatch spriteBatch)
         {
-            //base.onRender(gameTime, spriteBatch, rect);
 
 
             uint spriteID = m_checkbox ? ATheme.checkbox_chekedSpriteID : ATheme.checkbox_emptySpriteID;
@@ -105,24 +104,26 @@ namespace Pluton.GUI
                 colorSprite = colorText * 0.5f;
             }
 
+            int screenLeft      = this.screenLeft;
+            int screenTop       = this.screenTop;
+            int screenWidth     = this.screenWidth;
+            int screenHeight    = this.screenHeight;
 
             //отрисуем кнопки
             float scale = 1.0f;
-            Vector2 pos = new Vector2(rect.Left + cImgWidth / 2, rect.Top + (rect.Height - cImgHeight) / 2 + cImgHeight / 2);
-            spriteBatch.Draw(spriteBatch.getSprite(spriteID), pos, null, colorSprite, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), scale, SpriteEffects.None, 0);
+            Vector2 pos = new Vector2(screenLeft + cImgWidth / 2, screenTop + (screenHeight - cImgHeight) / 2 + cImgHeight / 2);
+            spriteBatch.Draw(spriteBatch.getSprite(spriteID), pos, null, colorSprite, 0, new Vector2(cImgWidth / 2, cImgHeight / 2), scale, SpriteEffects.None, 0.5f);
 
 
 
-            spriteBatch.flush();
             //отрисуем название
             SpriteFont font = AFonts.normal;
             Vector2 sz = font.MeasureString(mText);
-            Vector2 sw = new Vector2(rect.Width, rect.Height);
+            Vector2 sw = new Vector2(screenWidth, screenHeight);
             sz = (sw - sz) / 2;
-            spriteBatch.DrawString(font, mText, new Vector2(rect.Left + cImgWidth + 10, rect.Top + 0 + sz.Y), colorText);
+            spriteBatch.DrawString(font, mText, new Vector2(screenLeft + cImgWidth + 10, screenTop + 0 + sz.Y), colorText, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0.0f);
 
 
-            //spriteBatch.primitives.drawBorder(rect, 2, Color.Blue);
         }
         ///--------------------------------------------------------------------------------------
 
