@@ -221,7 +221,10 @@ namespace Pluton.GUI
         protected override void onResize(bool changeLeft, bool changeTop, bool changeWidth, bool changeHeight)
         {
             updateViewPort();
-            scrollToHome();
+            if (mScrollBar != null && mContentWidget != null)
+            {
+                mContentWidget.leftTop = mScrollBar.onCorrectPosition(this).toPoint();
+            }
         }
         ///--------------------------------------------------------------------------------------
 
@@ -732,7 +735,27 @@ namespace Pluton.GUI
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// перенести скрол в указанную точку
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void moveToPosition(Point position)
+        {
+            if (mContentWidget == null)
+            {
+                return;
+            }
 
+            var sz = new Vector2(contentWidth, contentHeight);
+            sz = sz / 2;
+            mContentWidget.leftTop = (-position.toVector2() + sz).toPoint();
+            Vector2 pt = mScrollBar.onCorrectPosition(this);
+            mContentWidget.leftTop = pt.toPoint();
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 

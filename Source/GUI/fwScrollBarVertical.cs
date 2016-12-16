@@ -152,31 +152,52 @@ namespace Pluton.GUI
                 return;
             }
 
+
+            //выравнивание окнтента по вертикали
+            widget.left = positionLeftWidget(area);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// изменение позиции виджета скроллинга
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        private int positionLeftWidget(AScrollArea area)
+        {
+            var widget = area.contentWidget;
+            if (widget == null)
+            {
+                return 0;
+            }
+
             //выравнивание окнтента по вертикали
             switch (mAlignH)
             {
                 case EScrollAlign.none: break;
                 case EScrollAlign.left:
                     {
-                        widget.left = 0;
-                        break;
+                        return 0;
                     }
                 case EScrollAlign.right:
                     {
-                        widget.left = area.contentWidth - widget.width;
-                        break;
+                        return area.contentWidth - widget.width;
                     }
                 case EScrollAlign.center:
                     {
-                        widget.left = (area.contentWidth - widget.width) / 2;
-                        break;
+                        return (area.contentWidth - widget.width) / 2;
                     }
             }
             //
-
+            return 0;
         }
         ///--------------------------------------------------------------------------------------
-
 
 
 
@@ -302,8 +323,8 @@ namespace Pluton.GUI
             int tt = top + widget.height;
             showRenderBottom(tt <= area.contentHeight ? false : true);
 
-
-            return new Vector2(widget.left, top);
+            int left = positionLeftWidget(area);
+            return new Vector2(left, top);
         }
         ///--------------------------------------------------------------------------------------
 
