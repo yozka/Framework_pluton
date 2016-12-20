@@ -528,7 +528,7 @@ namespace Pluton.SystemProgram
             {
                 if (scr == screen)
                 {
-                    screen.onReinclusion();
+                    screen.reinclusion();
                     return false; //такой экран ужо есть
                 }
             }
