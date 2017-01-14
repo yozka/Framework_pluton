@@ -186,6 +186,7 @@ namespace Pluton.GUI
             {
                 return;
             }
+            /*
             float alpha = 0.7f;
 
             if (m_checkbox)
@@ -201,8 +202,8 @@ namespace Pluton.GUI
 
             }
 
-
             //spriteBatch.Draw(ASpritePrimitives.textureWhite, rect, Color.WhiteSmoke * alpha);
+            */ 
         }
         ///--------------------------------------------------------------------------------------
 
