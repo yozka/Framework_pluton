@@ -129,6 +129,7 @@
     <Compile Include="Source\Platform\Linux\Network\fwWebRequest.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwMarketplace.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwUdpClient.cs" />
+    <Compile Include="Source\Platform\WindowsGL\Social\Steam_SDK\fwSocial_steam.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwJson.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwAnalytics_flurry.cs" />
     <Compile Include="Source\Platform\WindowsPhone7\fwCulture.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Source\Platform\WindowsGL\fwInputDevice.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwStorage.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwVibration.cs" />
+    <Compile Include="Source\System\Devices\fwSocial.cs" />
     <Compile Include="Source\System\Devices\proxiVibration.cs" />
     <Compile Include="Source\System\fwDateTime.cs" />
     <Compile Include="Source\Platform\WindowsGL\fwCulture.cs" />
@@ -245,6 +247,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Target Name="Rebuild">
   </Target>
   <Target Name="Clean">

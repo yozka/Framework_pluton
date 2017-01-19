@@ -89,8 +89,6 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-
-
         /// <summary>
         /// Доступ к текущему времени
         /// </summary>
@@ -116,6 +114,14 @@ namespace Pluton.SystemProgram.Devices
         /// Рекламная система
         /// </summary>
         public readonly AAdvertisements advertisements;
+
+
+
+
+        /// <summary>
+        /// Социальная система
+        /// </summary>
+        public readonly ASocial_group social;
 
 
 
@@ -187,6 +193,7 @@ namespace Pluton.SystemProgram.Devices
             license         = new ALicense(this);
             marketplace     = new AMarketplace();
             advertisements  = new AAdvertisements();
+            social          = new ASocial_group();
         }
         ///--------------------------------------------------------------------------------------
 
