@@ -32,7 +32,8 @@ namespace Pluton.Social
         ///--------------------------------------------------------------------------------------
         private readonly List<string> mSendAchievement = new List<string>();
         private bool mInit = false;
-        
+
+        private Task mSendTask = null;
         ///--------------------------------------------------------------------------------------
 
 
@@ -69,36 +70,33 @@ namespace Pluton.Social
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public async void openAchievement(string name)
+        public void openAchievement(string name)
         {
             mSendAchievement.Add(name);
-            //await Task.Run(sendAchievement());
-            await sendAchievement();
+
+            if (mSendTask != null && !mSendTask.IsCompleted)
+            {
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                init();
+                while (mSendAchievement.Count > 0)
+                {
+                    string sName = mSendAchievement[0];
+                    mSendAchievement.Remove(sName);
+                    SteamUserStats.SetAchievement(sName);
+                }
+            });
         }
-        ///--------------------------------------------------------------------------------------
+        ///---------------------------------------------------------------------------------------
 
 
 
 
 
-
-         ///=====================================================================================
-        ///
-        /// <summary>
-        /// асинхронная отправка сообщения
-        /// </summary>
-        /// 
-        ///--------------------------------------------------------------------------------------
-        static Task sendAchievement()
-        {
-            //init();
-            
-            //SteamUserStats.SetAchievement(name);
-            
-        }
-        ///--------------------------------------------------------------------------------------
-
-
+        
 
 
 
