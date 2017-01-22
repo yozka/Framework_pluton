@@ -72,9 +72,15 @@ namespace Pluton.Social
         ///--------------------------------------------------------------------------------------
         public void openAchievement(string name)
         {
+            /*
             init();
             SteamUserStats.SetAchievement(name);
-            /*
+            SteamAPI.RunCallbacks();
+     //       SteamUserStats.ResetAllStats(true);
+            SteamUserStats.StoreStats();
+            */
+            
+  
             
             mSendAchievement.Add(name);
 
@@ -91,8 +97,11 @@ namespace Pluton.Social
                     string sName = mSendAchievement[0];
                     mSendAchievement.Remove(sName);
                     SteamUserStats.SetAchievement(sName);
+
+                    SteamAPI.RunCallbacks();
+                    SteamUserStats.StoreStats();
                 }
-            });*/
+            });
         }
         ///---------------------------------------------------------------------------------------
 
@@ -120,6 +129,7 @@ namespace Pluton.Social
             }
 
             mInit = SteamAPI.Init();
+            var b1 = SteamUserStats.RequestCurrentStats();
         }
         ///--------------------------------------------------------------------------------------
 
