@@ -72,6 +72,10 @@ namespace Pluton.Social
         ///--------------------------------------------------------------------------------------
         public void openAchievement(string name)
         {
+            init();
+            SteamUserStats.SetAchievement(name);
+            /*
+            
             mSendAchievement.Add(name);
 
             if (mSendTask != null && !mSendTask.IsCompleted)
@@ -88,7 +92,7 @@ namespace Pluton.Social
                     mSendAchievement.Remove(sName);
                     SteamUserStats.SetAchievement(sName);
                 }
-            });
+            });*/
         }
         ///---------------------------------------------------------------------------------------
 
