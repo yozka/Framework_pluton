@@ -30,10 +30,9 @@ namespace Pluton.Social
             ISocial
     {
         ///--------------------------------------------------------------------------------------
-        private readonly List<string> mSendAchievement = new List<string>();
+        private readonly List<string> mAchievement = new List<string>(); //все открытые ачивки
         private bool mInit = false;
-
-        private Task mSendTask = null;
+        private bool mProcess = false; //процесс запущен
         ///--------------------------------------------------------------------------------------
 
 
@@ -66,6 +65,55 @@ namespace Pluton.Social
          ///=====================================================================================
         ///
         /// <summary>
+        /// Загрузка настроек
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void loadSettings(AStorage settings)
+        {
+            string all = settings.readString("steamAchiv", string.Empty);
+            if (all != string.Empty)
+            {
+                foreach (string name in all.Split('$'))
+                {
+                    if (name != string.Empty && !mAchievement.Contains(name))
+                    {
+                        mAchievement.Add(name);
+                    }
+                }
+            }
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Сохранение настроек
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void saveSettings(AStorage settings)
+        {
+            string all = mAchievement.join("$");
+            settings.writeString("steamAchiv", all);
+        }
+        ///--------------------------------------------------------------------------------------
+       
+
+
+
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
         /// открытие ачивки
         /// </summary>
         /// 
@@ -80,28 +128,8 @@ namespace Pluton.Social
             SteamUserStats.StoreStats();
             */
             
-  
-            
-            mSendAchievement.Add(name);
-
-            if (mSendTask != null && !mSendTask.IsCompleted)
-            {
-                return;
-            }
-
-            Task.Run(() =>
-            {
-                init();
-                while (mSendAchievement.Count > 0)
-                {
-                    string sName = mSendAchievement[0];
-                    mSendAchievement.Remove(sName);
-                    SteamUserStats.SetAchievement(sName);
-
-                    SteamAPI.RunCallbacks();
-                    SteamUserStats.StoreStats();
-                }
-            });
+            mAchievement.Add(name);
+            reopenAchievement();
         }
         ///---------------------------------------------------------------------------------------
 
@@ -109,7 +137,59 @@ namespace Pluton.Social
 
 
 
-        
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// переоткроем ачивки
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void reopenAchievement()
+        {
+            if (mProcess)
+            {
+                return;
+            }
+
+            mProcess = true;
+            Task.Run(() =>
+            {
+                if (!init())
+                {
+                    mProcess = false;
+                    return;
+                }
+                
+                int i = 0;
+                while (i < mAchievement.Count)
+                {
+                    string sName = mAchievement[i];
+                    i++;
+                    if (sName == string.Empty)
+                    {
+                        continue;
+                    }
+
+                    bool pbAchieved = false;
+                    bool ok = SteamUserStats.GetAchievement(sName, out pbAchieved);
+                    if (ok && !pbAchieved)
+                    {
+                        SteamUserStats.SetAchievement(sName);
+                        SteamAPI.RunCallbacks();
+                        SteamUserStats.StoreStats();
+                    }
+                }
+
+                mProcess = false;
+            });
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
 
 
 
@@ -121,15 +201,20 @@ namespace Pluton.Social
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        private void init()
+        private bool init()
         {
             if (mInit)
             {
-                return;
+                return mInit;
             }
 
             mInit = SteamAPI.Init();
-            var b1 = SteamUserStats.RequestCurrentStats();
+            if (mInit)
+            {
+                SteamUserStats.RequestCurrentStats();
+            }
+
+            return mInit;
         }
         ///--------------------------------------------------------------------------------------
 
