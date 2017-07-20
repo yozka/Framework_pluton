@@ -180,8 +180,25 @@ namespace Pluton.SystemProgram
 
 
 
-
          ///=====================================================================================
+        ///
+        /// <summary>
+        /// Отрисовка прямоугольника
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void drawRectangle(Rectangle rect, Color color, float rotation, float depth)
+        {
+            Rectangle rt = new Rectangle(rect.X + (int)(rect.Width * 0.5f), rect.Y + (int)(rect.Height * 0.5f), rect.Width, rect.Height);
+            m_spriteBatch.Draw(textureWhite, rt, null, color, rotation, new Vector2(0.5f, 0.5f), SpriteEffects.None, depth);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
+        ///=====================================================================================
         ///
         /// <summary>
         /// Отрисовка бордюра
