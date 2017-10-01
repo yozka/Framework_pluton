@@ -25,9 +25,7 @@ namespace Pluton.Utils
     public class AMutex
     {
         ///--------------------------------------------------------------------------------------
-        private bool    mLock   = false;
-        private Thread  mThread = null;
-        //private int     mCount  = 0;
+        private readonly Mutex mMutex = new Mutex();
         ///--------------------------------------------------------------------------------------
 
 
@@ -36,7 +34,7 @@ namespace Pluton.Utils
 
 
 
-        ///=====================================================================================
+         ///=====================================================================================
         ///
         /// <summary>
         /// Инциализация блокировки
@@ -64,21 +62,7 @@ namespace Pluton.Utils
         ///--------------------------------------------------------------------------------------
         public void mutexLock()
         {
-            /*
-            if (mThread == Thread.CurrentThread)
-            {
-                int bMutex = 0;
-
-            }
-            */
-
-
-            while (mLock)
-            {
-                Thread.Sleep(5);
-            }
-            mLock = true;
-            mThread = Thread.CurrentThread;
+            mMutex.WaitOne();
         }
         ///--------------------------------------------------------------------------------------
 
@@ -96,8 +80,7 @@ namespace Pluton.Utils
         ///--------------------------------------------------------------------------------------
         public void mutexUnlock()
         {
-            mLock = false;
-            mThread = null;
+            mMutex.ReleaseMutex();
         }
         ///--------------------------------------------------------------------------------------
 
