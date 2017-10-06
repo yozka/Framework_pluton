@@ -181,10 +181,7 @@ namespace Pluton.SystemProgram.Devices
         protected void executeError(string error)
         {
             mStatus = EStatus.error;
-            if (signal_error != null)
-            {
-                signal_error(error, this);
-            }
+            signal_error?.Invoke(error, this);
             if (network != null)
             {
                 network.waitExecute();
@@ -219,10 +216,7 @@ namespace Pluton.SystemProgram.Devices
         {
             mStatus = EStatus.executeCompleted;
             mCountSend = 0;
-            if (signal_completed != null)
-            {
-                signal_completed(this);
-            }
+            signal_completed?.Invoke(this);
             if (network != null)
             {
                 network.nextExecute();
