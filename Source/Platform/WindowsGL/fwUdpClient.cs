@@ -157,12 +157,11 @@ namespace Pluton.SystemProgram.Devices
 
 
             IPAddress address = null;
-            if (!IPAddress.TryParse(ipString, out address))
+               if (!IPAddress.TryParse(ipString, out address))
             {
                 return false;
             }
-
-            try
+               try
             {
                 mAddress = new IPEndPoint(address, port);
                 mUdp = new UdpClient();
