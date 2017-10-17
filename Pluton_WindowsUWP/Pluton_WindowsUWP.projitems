@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>b1becbf0-0a7d-46de-bee5-fa481a39d1cb</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Pluton_WindowsUWP</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwAnalytics_microsoft.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwCulture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwInputDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwMarketplace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwTypeExt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwVibration.cs" />
+  </ItemGroup>
+</Project>

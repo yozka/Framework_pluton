@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>7d20cf98-5b81-4b1c-85e8-32ea8dc4d9c7</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Pluton_Android</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Source\ADS\fwAdvertisement_appodeal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwAnalytics_flurry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwCulture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwInputDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwVibration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Marketplace\fwMarketplace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Marketplace\fwMarketplace_empty.cs" />
+  </ItemGroup>
+</Project>

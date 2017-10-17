@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>12ded5a3-71ce-4780-8154-97984d5b2500</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Pluton_Linux</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwCulture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwInputDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwMarketplace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwMusic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwUdpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwVibration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwAuthorization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwNetworkWeb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwWebBinary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwWebCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwWebRequest.cs" />
+  </ItemGroup>
+</Project>

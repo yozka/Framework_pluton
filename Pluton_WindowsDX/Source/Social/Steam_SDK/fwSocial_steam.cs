@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if PLUTON_STEAM
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -259,3 +260,4 @@ namespace Pluton.Social
         ///--------------------------------------------------------------------------------------
     }
 }
+#endif

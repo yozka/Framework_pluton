@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>994ad882-bb32-46f0-889e-3f3a74dd2300</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Pluton_iOS</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwAnalytics_flurry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwCulture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwInputDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwVibration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Marketplace\fwAPI_payment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Marketplace\fwAPI_products.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Marketplace\fwMarketplace.cs" />
+  </ItemGroup>
+</Project>
