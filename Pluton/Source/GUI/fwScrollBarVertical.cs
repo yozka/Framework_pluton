@@ -264,7 +264,6 @@ namespace Pluton.GUI
 
 
             //spriteBatch.primitives.drawBorder(rect, 2, Color.Red);
-
         }
         ///--------------------------------------------------------------------------------------
 

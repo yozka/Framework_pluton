@@ -71,6 +71,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwTabs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwTextEdit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwTitle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwTransitionScreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwWidget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\fwAdvertisements.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\fwAnalytics.cs" />
