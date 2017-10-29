@@ -478,6 +478,8 @@ namespace Pluton.GUI
         ///--------------------------------------------------------------------------------------
         protected override void onResize(bool changeLeft, bool changeTop, bool changeWidth, bool changeHeight)
         {
+            base.onResize(changeLeft, changeTop, changeWidth, changeHeight);
+
             if (mTabs != null)
             {
                 mTabs.resize();

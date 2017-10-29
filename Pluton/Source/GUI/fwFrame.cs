@@ -160,6 +160,27 @@ namespace Pluton.GUI
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// изменение размеров и позиция виджета
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        protected override void onResize(bool changeLeft, bool changeTop, bool changeWidth, bool changeHeight)
+        {
+            base.onResize(changeLeft, changeTop, changeWidth, changeHeight);
+            foreach (var obj in mChilds)
+            {
+                obj.resize();
+            }
+     
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
         ///=====================================================================================
         ///
         /// <summary>
