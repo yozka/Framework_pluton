@@ -199,9 +199,9 @@ namespace Pluton.SystemProgram.Devices
 
 
 
-                if (signal_receive != null && remoteEP.Address.Equals(mAddress.Address))
+                if (remoteEP.Address.Equals(mAddress.Address))
                 {
-                    signal_receive(buffer, buffer.Length);
+                    signal_receive?.Invoke(buffer, buffer.Length);
                 }
 
                 mReceiving = false;
