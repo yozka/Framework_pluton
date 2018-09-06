@@ -157,32 +157,35 @@ namespace Pluton.Social
             mProcess = true;
             Task.Run(() =>
             {
-                if (!init())
+                try
                 {
-                    mProcess = false;
-                    return;
-                }
-                
-                int i = 0;
-                while (i < mAchievement.Count)
-                {
-                    string sName = mAchievement[i];
-                    i++;
-                    if (sName == string.Empty)
+                    if (!init())
                     {
-                        continue;
+                        mProcess = false;
+                        return;
                     }
 
-                    bool pbAchieved = false;
-                    bool ok = SteamUserStats.GetAchievement(sName, out pbAchieved);
-                    if (ok && !pbAchieved)
+                    int i = 0;
+                    while (i < mAchievement.Count)
                     {
-                        SteamUserStats.SetAchievement(sName);
-                        SteamAPI.RunCallbacks();
-                        SteamUserStats.StoreStats();
+                        string sName = mAchievement[i];
+                        i++;
+                        if (sName == string.Empty)
+                        {
+                            continue;
+                        }
+
+                        bool pbAchieved = false;
+                        bool ok = SteamUserStats.GetAchievement(sName, out pbAchieved);
+                        if (ok && !pbAchieved)
+                        {
+                            SteamUserStats.SetAchievement(sName);
+                            SteamAPI.RunCallbacks();
+                            SteamUserStats.StoreStats();
+                        }
                     }
                 }
-
+                catch { }
                 mProcess = false;
             });
         }
@@ -208,17 +211,56 @@ namespace Pluton.Social
                 return mInit;
             }
 
-            mInit = SteamAPI.Init();
-            if (mInit)
+            try
             {
-                SteamUserStats.RequestCurrentStats();
+                mInit = SteamAPI.Init();
+                if (mInit)
+                {
+                    SteamUserStats.RequestCurrentStats();
+                }
+            }
+            catch
+            {
+
             }
 
             return mInit;
         }
+        ///--------
+        ///------------------------------------------------------------------------------
+
+
+
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// индификатор пользователя
+        /// </summary>
+        /// 
         ///--------------------------------------------------------------------------------------
+        public string getUserID()
+        {
+            try
+            {
+                if (init())
+                {
+                    var steamId = SteamUser.GetSteamID();
+                    var s = steamId.ToString();
+                    return s;
+                }
+                var app = Pluton.SystemProgram.AApp.instance;
+                if (app != null)
+                {
+                    return app.screenManager.devices.getDeviceGuid();
+                }
+            }
+            catch
+            {
 
-
+            }
+            return Pluton.SystemProgram.AApp.instance.screenManager.devices.getDeviceGuid();
+        }
+        ///--------------------------------------------------------------------------------------
 
 
 
