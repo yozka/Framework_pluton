@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>2b99464f-8b03-47a4-9255-fe612c62f2b8</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Pluton_WindowsPhone8.1</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsPhone8.1\fwAnalytics_microsoft.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsPhone8.1\fwCulture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsPhone8.1\fwInputDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsPhone8.1\fwJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsPhone8.1\fwMarketplace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsPhone8.1\fwStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsPhone8.1\fwTypeExt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WindowsPhone8.1\fwVibration.cs" />
+  </ItemGroup>
+</Project>

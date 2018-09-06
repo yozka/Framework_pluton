@@ -1,4 +1,5 @@
-﻿#region Using framework
+﻿#if PLUTON_JSON
+#region Using framework
 using System;
 using Newtonsoft.Json;
 #endregion
@@ -28,7 +29,6 @@ namespace Pluton.SystemProgram.Devices
         {
             return JsonConvert.DeserializeObject<T>(value);
         }
-
     }
     ///--------------------------------------------------------------------------------------
 
@@ -37,3 +37,4 @@ namespace Pluton.SystemProgram.Devices
 
 
 }
+#endif

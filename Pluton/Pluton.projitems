@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>432c8a4a-bd68-4233-91fc-bb70e2022349</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Pluton</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationLoop.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationLoopOnce.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationLoopSin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationLoopSin2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationLoopTween.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationOnce.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationOnceSinFade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationOnceTween.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationShow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwAnimationShowTween.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwBackgroundBand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwBackgroundSprite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwInterface_camera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwShadowEdge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\fwStoragePicture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Lightning\fwLCircle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Lightning\fwLLightningBolt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Lightning\fwLLine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Back.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Bounce.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Circular.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Cubic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Elastic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Exponential.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Linear.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Quadratic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Quartic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Quintic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Sinusoidal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GraphicsElement\Tween\Tweener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Align\fwAlignCentral.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Align\fwAlignFrame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Align\fwAlignHorizontalCenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Align\fwAlignSysButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Align\fwAlignVertical.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Align\fwAlignVerticalCenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Animator\fwFrameMoveAnimator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Buttons\fwButtonIcon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Buttons\fwButtonIconText.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Buttons\fwButtonImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Buttons\fwButtonText.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\Buttons\fwButtonTextData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwCheckbox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwControlButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwDisplayScore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwDisplayTime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwDockMenu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwDockwidget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwFrame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwLabel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwMessageBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwPaginator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwPanel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwScrollArea.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwScrollBar.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwScrollBarHorizontal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwScrollBarVertical.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwTabs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwTextEdit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwTitle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwTransitionScreen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\GUI\fwWidget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\fwAdvertisements.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\fwAnalytics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\fwDevices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\fwMusic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\fwSocial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\fwSound.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\proxiAnalytics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\proxiSound.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Devices\proxiVibration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\fwDateTime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\fwFonts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\fwScreen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\fwScreenFrame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\fwScreenManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\fwSpriteBatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\fwSpriteContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\fwSpritePrimitives.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\License\fwLicense_free.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Network\fwInterface_UdpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Network\fwNetworkWeb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Network\fwQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Network\fwWebBinary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Network\fwWebRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Network\Potocol\fwAuthorization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Network\Potocol\fwWebCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Network\Potocol\fwWebParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Stream\fwBinaryReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Stream\fwBinaryWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Stream\fwMemberData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Stream\fwStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Stream\fwStreamMemory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\System\Stream\fwTypeContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwCollections.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwMutex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwPathCurveGenerate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwPathWave.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwPointExt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwSingleton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwStringExt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\fwVector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\MD5\lib_MD5.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Utils\MD5\md5_portable.cs" />
+  </ItemGroup>
+</Project>

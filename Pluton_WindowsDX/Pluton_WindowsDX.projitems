@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>76ceb88b-b2a8-4d16-89c7-924752bbcdc8</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Pluton_WindowsDX</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwCulture.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwInputDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwMarketplace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwUdpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwVibration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Social\Steam_SDK\fwSocial_steam.cs" />
+  </ItemGroup>
+</Project>

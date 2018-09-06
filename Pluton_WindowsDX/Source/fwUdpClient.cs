@@ -123,11 +123,16 @@ namespace Pluton.SystemProgram.Devices
         /// Проверка на предмет занятости сервера
         /// </summary>
         ///--------------------------------------------------------------------------------------
-        public bool isBussy()
+        public bool isBusy()
         {
             if (mUdp == null)
             {
                 return false;
+            }
+
+            if (mUdp.Available > 0)
+            {
+                return true;
             }
 
             return mSending || mReceiving;
@@ -152,15 +157,18 @@ namespace Pluton.SystemProgram.Devices
 
 
             IPAddress address = null;
-            if (!IPAddress.TryParse(ipString, out address))
+               if (!IPAddress.TryParse(ipString, out address))
             {
                 return false;
             }
-
-            try
+               try
             {
                 mAddress = new IPEndPoint(address, port);
                 mUdp = new UdpClient();
+
+                mUdp.Client.ReceiveBufferSize = 1024 * 1024;
+                mUdp.Client.SendBufferSize = 1024 * 1024;
+
                 mUdp.Connect(mAddress);
                 mUdp.BeginReceive(slot_receive, null);
             }
