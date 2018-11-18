@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+#if (MARKETPLACE)
 
 namespace Pluton.SystemProgram.Devices
 {
@@ -624,3 +624,4 @@ namespace Pluton.SystemProgram.Devices
 
 
 
+#endif

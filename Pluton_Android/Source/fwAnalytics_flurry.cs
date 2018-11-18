@@ -1,6 +1,12 @@
-﻿using System;
+﻿
+#if (FLURRY)
+
+using System;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+
+
+
 
 using Android;
 using Android.Content;
@@ -144,3 +150,5 @@ namespace Pluton.SystemProgram.Devices
 
     }
 }
+
+#endif

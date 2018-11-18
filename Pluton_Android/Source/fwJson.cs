@@ -1,4 +1,7 @@
-﻿#region Using framework
+﻿
+
+#if (NEWTONSOFT)
+#region Using framework
 using System;
 using Newtonsoft.Json;
 #endregion
@@ -33,7 +36,7 @@ namespace Pluton.SystemProgram.Devices
     ///--------------------------------------------------------------------------------------
 
 
-
-
-
 }
+
+
+#endif

@@ -198,6 +198,25 @@ namespace Pluton.SystemProgram
 
 
 
+         ///=====================================================================================
+        ///
+        /// <summary>
+        /// Отрисовка прямоугольника
+        /// </summary>
+        /// 
+        ///--------------------------------------------------------------------------------------
+        public void drawRectangle(Rectangle rect, Color color, float rotation, Vector2 origin, float depth)
+        {
+            Vector2 org = new Vector2((1.0f / rect.Width) * origin.X, (1.0f / rect.Height) * origin.Y);
+            Rectangle rt = new Rectangle(rect.X + (int)(rect.Width * 0.5f), rect.Y + (int)(rect.Height * 0.5f), rect.Width, rect.Height);
+            m_spriteBatch.Draw(textureWhite, rt, null, color, rotation, org, SpriteEffects.None, depth);
+        }
+        ///--------------------------------------------------------------------------------------
+
+
+
+
+
         ///=====================================================================================
         ///
         /// <summary>

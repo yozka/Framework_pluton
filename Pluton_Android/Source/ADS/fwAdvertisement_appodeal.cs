@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
+#if (APPODEAL)
 
 namespace Pluton.SystemProgram.Devices
 {
@@ -223,3 +223,4 @@ namespace Pluton.SystemProgram.Devices
 
     }
 }
+#endif
