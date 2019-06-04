@@ -809,7 +809,8 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         public void exitGame(Game game)
         {
-            game.Exit();
+            //game.Exit();
+            Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
         }
         ///--------------------------------------------------------------------------------------
 
