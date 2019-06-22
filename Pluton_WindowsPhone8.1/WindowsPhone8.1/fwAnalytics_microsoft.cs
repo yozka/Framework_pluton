@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if (ANALITICS_MICROSOFT)
+using System;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Microsoft.ApplicationInsights;
@@ -132,3 +133,4 @@ namespace Pluton.SystemProgram.Devices
 
     }
 }
+#endif

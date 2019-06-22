@@ -14,8 +14,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwMarketplace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwVibration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\License\fwLicense_trial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwNetHttp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Source\Analytics\" />
