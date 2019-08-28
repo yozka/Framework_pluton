@@ -31,7 +31,7 @@ namespace Pluton.SystemProgram
         private readonly IServiceProvider   mProvider;      //Контент провайдер 
         private readonly Texture2D[]        mListSprites;   //Колллекция текстур
         private readonly uint[]             mAddLoad;       //Спрайты которые нужно загрузить в систему
-
+        private readonly string             mRootDirectory; //адрес где находятся спрайты
 
 
         private ContentManager      mContent = null;        //провайдер для создания контента
@@ -51,8 +51,9 @@ namespace Pluton.SystemProgram
         /// </summary>
         /// 
         /// -------------------------------------------------------------------------------------
-        public ASpriteContent(IServiceProvider provider)
+        public ASpriteContent(IServiceProvider provider, string rootDirectory)
         {
+            mRootDirectory = rootDirectory;
             mProvider = provider;
             mListSprites = new Texture2D[sprite.maxNumber + 1];
             mAddLoad = new uint[sprite.count];
@@ -183,7 +184,7 @@ namespace Pluton.SystemProgram
             {
                 if (mContent == null)
                 {
-                    mContent = new ContentManager(mProvider, "Content");
+                    mContent = new ContentManager(mProvider, mRootDirectory);
                 }
                 mListSprites[index] = mContent.Load<Texture2D>(sName);
             }

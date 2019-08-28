@@ -178,7 +178,7 @@ namespace Pluton.SystemProgram
         {
             Type tp = obj.GetType();
             string nm = tp.FullName;
-            nm = nm.Replace(tp.Assembly.FullName, "");
+            nm = nm.Replace(tp.AssemblyQualifiedName, "");
             nm = nm.Replace(tp.Namespace, "");
             nm = nm.Replace("]", "");
             nm = nm.Replace("[", "");

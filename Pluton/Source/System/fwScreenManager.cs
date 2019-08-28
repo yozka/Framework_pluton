@@ -121,7 +121,7 @@ namespace Pluton.SystemProgram
             : base(deviceGame)
         {
             devices = new ADevices(this);
-            mSpriteContent = new ASpriteContent(Game.Content.ServiceProvider);
+            mSpriteContent = new ASpriteContent(Game.Content.ServiceProvider, Game.Content.RootDirectory);
 
             AApp.instance.screenManager = this;
         }
