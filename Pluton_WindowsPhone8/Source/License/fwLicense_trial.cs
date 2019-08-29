@@ -29,7 +29,7 @@ namespace Pluton.SystemProgram.License
     /// </summary>
     /// 
     ///--------------------------------------------------------------------------------------
-    public class ALicense
+    public class ALicense_trial
     {
         ///--------------------------------------------------------------------------------------
         private readonly ADevices mDevice = null;
@@ -51,7 +51,7 @@ namespace Pluton.SystemProgram.License
         /// </summary>
         /// 
         ///--------------------------------------------------------------------------------------
-        public ALicense(ADevices device)
+        public ALicense_trial(ADevices device)
         {
             mDevice = device;
         }

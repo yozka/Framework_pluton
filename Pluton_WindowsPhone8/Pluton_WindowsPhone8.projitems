@@ -9,20 +9,17 @@
     <Import_RootNamespace>Pluton_WindowsPhone8</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Source\fwAnalytics_flurry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\fwAnalytics_microsoft.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwCulture.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwInputDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwMarketplace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\fwThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\fwVibration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\License\fwLicense_trial.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwAuthorization.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwNetworkWeb.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwQuery.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwWebBinary.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwWebCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwWebRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Network\fwNetHttp.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Source\Analytics\" />
   </ItemGroup>
 </Project>

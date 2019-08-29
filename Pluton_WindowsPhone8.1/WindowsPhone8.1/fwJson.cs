@@ -27,20 +27,8 @@ namespace Pluton.SystemProgram.Devices
     {
         public static T DeserializeObject<T>(string value) 
         {
-         /*   JsonParser parser = new JsonParser();
-            var data = parser.Parse(value);
-            */
-            
-            //return data;
-            //return default(T) ;
-            //int k = 0;
-            //var s = value.ToString();
-
             var data =  Newtonsoft.Json.JsonConvert.DeserializeObject<T>(value);
-
-
             return data;
-            //return  JsonConvert.DeserializeObject<T>(value);
         }
 
     }

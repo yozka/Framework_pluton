@@ -98,7 +98,8 @@ namespace Pluton.SystemProgram.Devices
         ///--------------------------------------------------------------------------------------
         private void loadMusic(string name, ContentManager content)
         {
-            mMusics[name] = content.Load<Song>("Music\\" + name);
+            var ms = content.Load<Song>("Music\\" + name);
+            mMusics[name] = ms;
         }
         ///--------------------------------------------------------------------------------------
 

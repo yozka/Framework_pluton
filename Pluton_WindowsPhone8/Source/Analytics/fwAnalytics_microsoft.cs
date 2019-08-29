@@ -1,7 +1,7 @@
-﻿#if (ANALITICS_MICROSOFT)
-using System;
+﻿using System;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Microsoft.Phone.Tasks;
 using Microsoft.ApplicationInsights;
 
 namespace Pluton.SystemProgram.Devices
@@ -133,4 +133,3 @@ namespace Pluton.SystemProgram.Devices
 
     }
 }
-#endif

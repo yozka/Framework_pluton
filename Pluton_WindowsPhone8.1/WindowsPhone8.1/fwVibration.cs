@@ -49,8 +49,6 @@ namespace Pluton.SystemProgram.Devices
         public AVibrationDevice()
         {
             mRig = VibrationDevice.GetDefault();
-
-            gVibration.setInstance(this);
         }
         ///--------------------------------------------------------------------------------------
 
