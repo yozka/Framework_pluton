@@ -7,6 +7,8 @@ using Android;
 using Android.Content;
 using Android.OS;
 using Android.App;
+using Android.OS.Health;
+
 
 
 
@@ -165,10 +167,16 @@ namespace Pluton.SystemProgram.Devices
                     {
                         //длительность звучания
                         int time = mCurrent[mIndex];
-                        mVibrator.Vibrate(time);
 
-                        //длительность паузы после звучания
-                        mIndex++;
+
+
+						var effect = VibrationEffect.CreateOneShot(time, 10);
+						mVibrator.Vibrate(effect);
+						//mVibrator.Vibrate(time);
+
+
+						//длительность паузы после звучания
+						mIndex++;
                         if (mIndex < iLength)
                         {
                             time += mCurrent[mIndex];//пауза после звука
